@@ -6,7 +6,7 @@ from django.db import models
 class producto(models.Model):
 	"""docstring for producto"""
 	
-	nombre = models.TextField(max_length=20)
+	nombre = models.TextField(max_length=10)
 	cantidad = models.IntegerField(max_length=50)
 	precio = models.IntegerField(max_length=20)
 	fecha = models.DateTimeField()
@@ -31,4 +31,17 @@ class distribuidor(models.Model):
 	def __str__(self):
 		return self.nombre		
 		
+
+class cliente(object):
+	"""docstring for cliente"""
+	nombre = models.TextField(max_length=20)
+	apellido = models.TextField(max_length=20)
+	nombre_tienda = models.TextField(max_length=20)
+	regimen = models.TextField(max_length=20)
+	direccion = models.CharField(max_length=20)
+	#def __init__(self, arg):
+		#super(cliente, self).__init__()
+		#self.arg = arg
 		
+	def __str__(self):
+		return self.nombre
