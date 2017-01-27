@@ -6,9 +6,9 @@ from django.db import models
 class producto(models.Model):
 	"""docstring for producto"""
 	
-	nombre = models.TextField(max_length=10)
-	cantidad = models.IntegerField(max_length=50)
-	precio = models.IntegerField(max_length=20)
+	nombre = models.TextField(max_length=50)
+	cantidad = models.IntegerField()
+	precio = models.IntegerField()
 	fecha = models.DateTimeField()
 
 	#def __init__(self, arg):
@@ -22,7 +22,7 @@ class distribuidor(models.Model):
 	"""docstring for ClassName"""
 	nombre = models.TextField(max_length=20)
 	apellido = models.TextField(max_length=20)
-	cedula = models.IntegerField(max_length=20)
+	cedula = models.IntegerField()
 	
 	#def __init__(self, arg):
 	#	super(ClassName, self).__init__()

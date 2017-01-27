@@ -7,12 +7,12 @@ class ProductoForm(forms.Form):
         fields = "__all__"
 
 class DistribuidorForm(forms.Form):
-	class Meta:
+	class Meta1:
 		model = distribuidor
 		fields = "__all__"
 		
 class ClienteForm(forms.Form):
-	class Meta:
+	class Meta2:
 		model = cliente
 		fields = "__all__"
 			
