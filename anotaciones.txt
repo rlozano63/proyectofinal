@@ -1,0 +1,1 @@
+Si crea una aplicacion debe registrarla en el archivo settings.py

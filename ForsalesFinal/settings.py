@@ -32,6 +32,9 @@ ALLOWED_HOSTS = []
 
 CUSTOM_APPS = [
     'base',
+    'facturacion',
+    'inventario',
+    'rutas',
 ]
 
 APPS_DJANGO = [

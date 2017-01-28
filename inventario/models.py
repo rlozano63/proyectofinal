@@ -6,11 +6,11 @@ from django.db import models
 
 class inventario(models.Model):
 	"""docstring for inventario"""
-	fecha_creacion = DateTimeField()
-	factualizacion = DateTimeField()
-	valor_total = IntegerField(max_length=20)
-	
+	fecha_creacion = models.DateTimeField()
+	factualizacion = models.DateTimeField()
+	valor_total = models.IntegerField()
+
 	def __init__(self, arg):
 		super(inventario, self).__init__()
 		self.arg = arg
-		
+
