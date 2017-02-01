@@ -2,6 +2,8 @@ from __future__ import unicode_literals
 
 from django.db import models
 
+from base.models import producto
+
 # Create your models here.
 
 class inventario(models.Model):
@@ -10,7 +12,10 @@ class inventario(models.Model):
 	factualizacion = models.DateTimeField()
 	valor_total = models.IntegerField()
 
-	def __init__(self, arg):
-		super(inventario, self).__init__()
-		self.arg = arg
+class inventario_detalle(models.Model):
+	"""docstring for inventario"""
+	producto = models.ForeignKey(producto)
+	cantidad = models.IntegerField()
+	costo = models.IntegerField()
+	valor_total = models.IntegerField()
 
