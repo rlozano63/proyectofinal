@@ -16,6 +16,9 @@ urlpatterns = [
 	url(r'^clientes/borrar/(?P<pk>\d+)$', BorrarCliente.as_view(), name="borrar_cliente"),
 	
 
-
+	url(r'^distribuidores/$', ListarDistribuidor.as_view(), name="listar_distribuidores"),
 	url(r'^distribuidores/crear/$', DistribuidorCreation.as_view(), name="crear_distribuidor"),
+	url(r'^distribuidores/actualizar/(?P<pk>\d+)$', ActualizarDistribuidor.as_view(), name="actualizar_distribuidor"),
+	url(r'^distribuidores/borrar/(?P<pk>\d+)$', BorrarDistribuidor.as_view(), name="borrar_distribuidor"),
+	
 ]

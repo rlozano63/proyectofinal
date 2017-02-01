@@ -27,6 +27,7 @@ class ActualizarProducto(UpdateView):
 	model = producto
 	fields = '__all__'
 	template_name = 'productos/actualizar.html'
+	success_url = reverse_lazy('listar_productos')
 
 class ListarProductos(ListView):
 
@@ -70,3 +71,20 @@ class DistribuidorCreation(CreateView):
 	model = distribuidor
 	template_name = 'distribuidores/create.html'
 	fields = '__all__'
+	success_url = reverse_lazy('listar_distribuidores')
+
+class BorrarDistribuidor(DeleteView):
+	model = distribuidor
+	success_url = reverse_lazy('listar_distribuidores')
+	template_name = 'distribuidores/borrar.html'
+
+class ActualizarDistribuidor(UpdateView):
+	model = distribuidor
+	fields = '__all__'
+	template_name = 'distribuidores/actualizar.html'
+	success_url = reverse_lazy('listar_distribuidores')
+
+class ListarDistribuidor(ListView):
+
+	model = distribuidor
+	template_name = 'distribuidores/listar.html'

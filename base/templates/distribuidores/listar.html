@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+{% block content %}
+	<h1>distribuidores</h1>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Nombre</th>
+				<th>Apellido</th>
+				<th>Cedula</th>
+				
+			</tr>
+		</thead>
+		<tbody>
+			{% for distribuidor in object_list %}
+				<tr>
+					<td>{{ distribuidor.nombre }}</td>
+					<td>{{ distribuidor.apellido }}</td>
+					<td>{{ distribuidor.cedula }}</td>
+					<td><a href="{% url 'actualizar_distribuidor' distribuidor.pk %}">Editar</a></td>
+					<td><a href="{% url 'borrar_distribuidor' distribuidor.pk %}">Borrar</a></td>
+				</tr>
+			{% empty %}
+				<tr>
+					<td>Sin distribuidor</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+{% endblock content %}

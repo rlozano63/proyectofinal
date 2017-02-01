@@ -1,0 +1,7 @@
+{% extends 'index.html' %}
+{% block content %}
+	<form action="" method="post">{% csrf_token %}
+		<p>Desea borrar el distribuidor "{{ object.nombre }}"?</p>
+		<input type="submit" value="Si" />
+	</form>
+{% endblock content %}
