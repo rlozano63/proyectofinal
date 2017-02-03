@@ -1,0 +1,1 @@
+crear factura al igual que inventario 

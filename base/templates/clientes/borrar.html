@@ -1,4 +1,4 @@
-{% extends 'index.html' %}
+{% extends 'index.html' %} 
 {% block content %}
 	<form action="" method="post">{% csrf_token %}
 		<p>Desea borrar el cliente "{{ object.nombre }}"?</p>
