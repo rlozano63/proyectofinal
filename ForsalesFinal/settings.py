@@ -35,6 +35,11 @@ CUSTOM_APPS = [
     'facturacion',
     'inventario',
     'rutas',
+    'catalogo',
+]
+
+THIRD_APPS = [
+    'bootstrapform',
 ]
 
 APPS_DJANGO = [
@@ -46,7 +51,7 @@ APPS_DJANGO = [
     'django.contrib.staticfiles',
 ]
 
-INSTALLED_APPS = CUSTOM_APPS + APPS_DJANGO
+INSTALLED_APPS = APPS_DJANGO + THIRD_APPS + CUSTOM_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -126,4 +131,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
+#STATIC_ROOT = 'static'
 STATIC_URL = '/static/'
+#MEDIA_ROOT = os.path.join(BASE_DIR,'static')
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]

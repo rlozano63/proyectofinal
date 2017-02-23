@@ -22,6 +22,16 @@ class distribuidor(models.Model):
 	def __str__(self):
 		return self.nombre
 
+class proveedor(models.Model):
+	"""docstring for ClassName"""
+	nombre = models.TextField(max_length=20)
+	apellido = models.TextField(max_length=20)
+	cedula = models.IntegerField()
+	empresa = models.TextField(max_length=20)
+
+	def __str__(self):
+		return self.nombre
+
 
 class cliente(models.Model):
 	"""docstring for cliente"""
@@ -30,6 +40,11 @@ class cliente(models.Model):
 	nombre_tienda = models.TextField(max_length=20)
 	regimen = models.TextField(max_length=20)
 	direccion = models.CharField(max_length=20)
+	
+	#orden_ruta = models.IntegerField()
+	#pos_x = TextField(max_length=50)
+	#pos_y = TextField(max_length=50)
+
 
 	def __str__(self):
 		return self.nombre

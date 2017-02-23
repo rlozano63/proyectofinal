@@ -7,8 +7,8 @@ from django.views.generic.edit import DeleteView
 
 from django.core.urlresolvers import reverse_lazy
 
-from base.models import producto, distribuidor, cliente
-from base.forms import ProductoForm, DistribuidorForm, ClienteForm
+from base.models import producto, distribuidor, cliente, proveedor
+from base.forms import ProductoForm, DistribuidorForm, ClienteForm, ProveedorForm 
 from django.core import serializers
 from django.http import JsonResponse
 
@@ -121,3 +121,26 @@ class ListarDistribuidor(ListView):
 
 	model = distribuidor
 	template_name = 'distribuidores/listar.html'
+
+
+class ProveedorCreation(CreateView):
+	model = proveedor
+	template_name = 'proveedores/create.html'
+	fields = '__all__'
+	success_url = reverse_lazy('listar_proveedores')
+
+class BorrarProveedor(DeleteView):
+	model = proveedor
+	success_url = reverse_lazy('listar_proveedores')
+	template_name = 'proveedores/borrar.html'
+
+class ActualizarProveedor(UpdateView):
+	model = proveedor
+	fields = '__all__'
+	template_name = 'proveedores/actualizar.html'
+	success_url = reverse_lazy('listar_proveedores')
+
+class ListarProveedor(ListView):
+
+	model = proveedor
+	template_name = 'proveedores/listar.html'

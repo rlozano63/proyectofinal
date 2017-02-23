@@ -16,11 +16,18 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.generic import TemplateView
+import os
+
+from django.conf import settings
+from django.conf.urls.static import static
+from django.views.static import serve
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 	url('', include('base.urls')),
-	url(r'^facturacion/', include('facturacion.urls')),
+	url('', include('facturacion.urls')),
 	url('', include('inventario.urls')),
-	url(r'^rutas/', include('rutas.urls')),
-]
+    url('', include('rutas.urls')),
+	url('', include('catalogo.urls')),
+
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

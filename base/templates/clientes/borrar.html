@@ -1,4 +1,6 @@
-{% extends 'index.html' %} 
+{% extends 'AdminLTE/index.html' %}
+{% load bootstrap %}
+
 {% block content %}
 	<form action="" method="post">{% csrf_token %}
 		<p>Desea borrar el cliente "{{ object.nombre }}"?</p>

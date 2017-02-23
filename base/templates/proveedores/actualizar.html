@@ -1,0 +1,15 @@
+{% extends 'AdminLTE/index.html' %}
+{% load bootstrap %}
+
+{% block content %}
+
+<form method="post" role="form">
+    <legend>Proveedores</legend>
+    {% csrf_token %}
+    {{ form|bootstrap }}
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Editar</button>
+    </div>
+</form>
+
+{% endblock content %}
