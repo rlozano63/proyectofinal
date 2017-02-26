@@ -1,0 +1,104 @@
+{% extends 'AdminLTE/index.html' %}
+
+{% block content %}
+	<form method="post" id="form">
+		{% csrf_token %}
+		<input type="hidden" id="catalogo_pk">
+		{{ form.as_p }}
+		<input type="submit" value="Guardar" />
+	</form>
+
+	<form method="post" id="form_detalle">
+		{% csrf_token %}
+		{{ form_detalle.as_p }}
+		<input type="submit" value="Guardar" />
+	</form>
+
+
+{% endblock content %}
+
+{% block scripts %}
+	<script type="text/javascript">
+		$("#form").submit(function(event){
+			var currentForm = $(this)
+			event.preventDefault()
+
+			var formData = new FormData(this);
+			$('input[type=file]').each(function(i, file) {
+				$.each(file.files, function(n, file) {
+					formData.append('file-'+i, file);
+				})
+			})
+
+			$.ajax({
+				url: "/catalogo/crear/",
+				type: 'POST',
+				data:formData,
+				cache:false,
+				contentType: false,
+				processData: false,
+				error: function(response){
+					$('<ul class="errorlist"></ul>')
+					var data = JSON.parse(response.responseText)
+					for (field in data.errors){
+						var ul = $('<ul class="errorlist"></ul>')
+						var selector = "[name=" + field + "]"
+						for (var error of data.errors[field]){
+							var message = alertBootstrap(error,"danger")
+							ul.append($("<li>").append(message))
+						}
+						$(selector).closest(".form-group").find("ul.errorlist").remove()
+						$(selector).closest(".form-group").prepend(ul)
+					}
+				},
+				success: function(response){
+					console.log(response)
+					response.object = JSON.parse(response.object)[0]
+					$("#catalogo_pk").val(response.object.pk)
+				}
+
+			});
+		})
+		$("#form_detalle").submit(function(event){
+			var currentForm = $(this)
+			event.preventDefault()
+
+			var formData = new FormData(this);
+			$('input[type=file]').each(function(i, file) {
+				$.each(file.files, function(n, file) {
+					formData.append('file-'+i, file);
+				})
+			})
+
+			formData.append("catalogo",$("#catalogo_pk").val())
+
+			$.ajax({
+				url: "/catalogo/detalle/crear/",
+				type: 'POST',
+				data:formData,
+				cache:false,
+				contentType: false,
+				processData: false,
+				error: function(response){
+					$('<ul class="errorlist"></ul>')
+					var data = JSON.parse(response.responseText)
+					for (field in data.errors){
+						var ul = $('<ul class="errorlist"></ul>')
+						var selector = "[name=" + field + "]"
+						for (var error of data.errors[field]){
+							var message = alertBootstrap(error,"danger")
+							ul.append($("<li>").append(message))
+						}
+						$(selector).closest(".form-group").find("ul.errorlist").remove()
+						$(selector).closest(".form-group").prepend(ul)
+					}
+				},
+				success: function(response){
+					console.log(response)
+				}
+
+			});
+		})
+
+	</script>
+{% endblock scripts %}

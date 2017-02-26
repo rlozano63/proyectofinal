@@ -28,6 +28,6 @@ urlpatterns = [
 	url('', include('facturacion.urls')),
 	url('', include('inventario.urls')),
     url('', include('rutas.urls')),
-	url('', include('catalogo.urls')),
+	url('', include('catalogos.urls')),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
