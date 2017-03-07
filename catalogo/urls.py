@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from catalogos.views import *
+from catalogo.views import *
 
 urlpatterns = [
 	url(r'^catalogo/crear/$', CatalogoCreation.as_view(), name="catalogo"),

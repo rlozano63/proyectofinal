@@ -21,13 +21,15 @@ import os
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.static import serve
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-	url('', include('base.urls')),
-	url('', include('facturacion.urls')),
-	url('', include('inventario.urls')),
+    url('', include('base.urls')),
+    url('', include('facturacion.urls')),
+    url('', include('inventario.urls')),
     url('', include('rutas.urls')),
-	url('', include('catalogos.urls')),
+    url('', include('catalogo.urls')),
+    url(r'^accounts/login/$', auth_views.login,name="login"),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

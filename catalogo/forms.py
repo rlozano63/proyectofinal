@@ -4,7 +4,7 @@ from catalogo.models import catalogo, catalogo_detalle
 
 class catalogoForm(forms.ModelForm):
 	class Meta:
-		model = factura
+		model = catalogo
 		fields = "__all__"
 		widgets = {}
 		labels = {}

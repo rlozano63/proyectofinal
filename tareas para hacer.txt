@@ -2,7 +2,7 @@ ok - crear factura al igual que inventario
 
 pip install -r requirements.txt
 
-+ crear app catalogos 
+ok - crear app catalogos 
 + crear crud proveedores
 + crear catalogos igual que facturas
 ++ crear movimientos(entrada salida) 

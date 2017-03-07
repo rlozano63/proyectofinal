@@ -14,7 +14,7 @@ class catalogo(models.Model):
 
 class catalogo_detalle(models.Model):
 	"""docstring for factura"""
-	producto = models.ForeignKey(producto)
+	producto = models.ForeignKey(producto,related_name="item")
 	cantidad = models.IntegerField()
 	valor = models.IntegerField()
 	valor_total = models.IntegerField()

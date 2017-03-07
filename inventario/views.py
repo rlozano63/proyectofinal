@@ -31,3 +31,27 @@ class InventarioDetaleCreation(AjaxableResponseMixin,CreateView):
 	fields = "__all__"
 	success_url = reverse_lazy('listar_productos')
 		
+
+
+# Create your views here.
+
+class MovimientoCreation(AjaxableResponseMixin,CreateView):
+	model = movimiento
+	template_name = 'movimiento/crear.html'
+	#form_class = movimientoForm
+	fields = "__all__"
+	success_url = reverse_lazy('listar_productos')
+
+	def get_context_data(self,**kwargs):
+		context = super(MovimientoCreation, self).get_context_data(**kwargs)
+		context['form_detalle'] = movimientoDetalleForm()
+		print context['form_detalle']
+		return context
+
+class MovimientoDetaleCreation(AjaxableResponseMixin,CreateView):
+	model = movimiento_detalle
+	#template_name = 'movimiento/detalle_crear.html'
+	#form_class = movimientoForm
+	fields = "__all__"
+	success_url = reverse_lazy('listar_productos')
+
