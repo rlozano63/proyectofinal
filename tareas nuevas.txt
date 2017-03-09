@@ -1,0 +1,17 @@
+falta en inventario:
+-unidad de medida
+-mercancia metodo peps
+-flujo de caja(cuando me esta entrando y saliendo)
+falta movimiento
+-entradas(compras) y salidas(ventas)
+
+
+vista del distribuidor(repartidor)
+-venta(disponibilidad de productos)
+-catalogo cuando halla nuevo cliente
+rutas
+
+para la proxima semana
+rutas
+-libreria google
+- 

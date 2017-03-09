@@ -14,7 +14,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{% for distribuidor in object_list %}
+			{% for proveedor in object_list %}
 				<tr>
 					<td>{{ proveedor.nombre }}</td>
 					<td>{{ proveedor.apellido }}</td>
@@ -30,6 +30,6 @@
 			{% endfor %}
 		</tbody>
 	</table>	
-					<button class="btn btn-success"><a href="{% url 'crear_proveedor' %}">Crear</a></button>
+					<button class="btn btn-success"><a href="{% url 'crear_proveedor' %}">Nuevo</a></button>
 
 {% endblock content %}

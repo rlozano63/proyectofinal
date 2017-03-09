@@ -1,3 +1,6 @@
 from django.conf.urls import url
+from rutas.views import *
 
-urlpatterns = []
+urlpatterns = [
+	url(r'^rutas/mapa/$', mapa, name="rutas-mapa"),
+]
