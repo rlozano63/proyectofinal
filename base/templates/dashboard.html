@@ -1,3 +1,18 @@
 {% extends 'AdminLTE/index.html' %}
 {% block content %}
+    <div class="row">
+	    <h2>Productos Con Escasez</h2>
+		{% for producto in escazes %}
+	        <div class="col-md-3 col-sm-6 col-xs-12">
+	          <div class="info-box">
+	            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+
+	            <div class="info-box-content">
+	              <span class="info-box-text">{{ producto.nombre }}</span>
+	              <span class="info-box-number">{{ producto.cantidad }}</span>
+	            </div>
+	          </div>
+	        </div>
+		{%  endfor %}
+    </div>
 {% endblock content %}

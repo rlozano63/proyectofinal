@@ -1,0 +1,33 @@
+{% extends 'AdminLTE/index.html' %}
+
+{% block content %}
+	<h1>Factura</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				
+				<th>fecha_creacion</th>
+				<th>factualizacion</th>
+				<th>valor_total</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for factura in object_list %}
+				<tr>
+					<td>{{ factura.pk }}</td>
+					<td>{{ factura.fecha_creacion }}</td>
+					<td>{{ factura.factualizacion }}</td>
+					<td>{{ factura.valor_total }}</td>
+
+					<td><a href="{% url 'ver_factura_detalle' factura.pk %}">Ver</a></td>
+				</tr>
+			{% empty %}
+				<tr>
+					<td>Sin factura</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<button class="btn btn-success"><a href="{% url 'factura' %}">Crear</a></button>
+{% endblock content %}

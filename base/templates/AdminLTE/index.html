@@ -11,9 +11,9 @@
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="{% static 'css/AdminLTE/bootstrap/css/bootstrap.min.css' %}">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">-->
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">-->
   <!-- Theme style -->
   <link rel="stylesheet" href="{% static 'css/AdminLTE/AdminLTE.min.css' %}">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -60,7 +60,7 @@
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
           <!-- Messages: style can be found in dropdown.less-->
-         
+
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -104,7 +104,7 @@
             </ul>
           </li>
           <!-- Control Sidebar Toggle Button -->
-   
+
         </ul>
       </div>
     </nav>
@@ -115,8 +115,8 @@
     <section class="sidebar">
       <!-- Sidebar user panel -->
       <div class="user-panel">
-       
-        
+
+
       </div>
       <!-- search form -->
       <form action="#" method="get" class="sidebar-form">
@@ -184,7 +184,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class=""><a href="{% url 'catalogo' %}"><i class="fa fa-circle-o"></i> Lista</a></li>
+            <li class=""><a href="{% url 'catalogos' %}"><i class="fa fa-circle-o"></i> Lista</a></li>
           </ul>
         </li>
         <li treeview">
@@ -245,71 +245,13 @@
         <li class="active">Dashboard</li>
       </ol>
     </section>
-     <div class="row">
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
 
-            <div class="info-box-content">
-              <span class="info-box-text">CPU Traffic</span>
-              <span class="info-box-number">90<small>%</small></span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Likes</span>
-              <span class="info-box-number">41,410</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-
-        <!-- fix for small devices only -->
-        <div class="clearfix visible-sm-block"></div>
-
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Sales</span>
-              <span class="info-box-number">760</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          <div class="info-box">
-            <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">New Members</span>
-              <span class="info-box-number">2,000</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-      </div>
     <!-- Main content -->
     <section class="content">
-   
 
       {% block content %}
       {% endblock content %}
-      
+
     </section>
     <!-- /.content -->
   </div>
@@ -529,7 +471,7 @@
 <!-- Bootstrap 3.3.6 -->
 <script src="{% static 'js/AdminLTE/bootstrap/js/bootstrap.min.js' %}"></script>
 <!-- Morris.js charts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>-->
 <script src="{% static 'js/AdminLTE/plugins/morris/morris.min.js' %}"></script>
 <!-- Sparkline -->
 <script src="{% static 'js/AdminLTE/plugins/sparkline/jquery.sparkline.min.js' %}"></script>
@@ -539,7 +481,7 @@
 <!-- jQuery Knob Chart -->
 <script src="{% static 'js/AdminLTE/plugins/knob/jquery.knob.js' %}"></script>
 <!-- daterangepicker -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>-->
 <script src="{% static 'js/AdminLTE/plugins/daterangepicker/daterangepicker.js' %}"></script>
 <!-- datepicker -->
 <script src="{% static 'js/AdminLTE/plugins/datepicker/bootstrap-datepicker.js' %}"></script>

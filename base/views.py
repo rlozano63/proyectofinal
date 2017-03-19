@@ -47,7 +47,13 @@ class AjaxableResponseMixin(object):
 			return response
 
 def Dashboard(request):
-	context = {}
+	escazes = []
+	for objproducto in producto.objects.all():
+		if objproducto.cantidad < objproducto.stock_minimo:
+			print objproducto
+			escazes.append(objproducto)
+
+	context = {"escazes":escazes}
 	return render(request, 'dashboard.html', context)
 
 

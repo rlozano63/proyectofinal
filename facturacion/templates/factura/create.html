@@ -14,10 +14,20 @@
 		<input type="submit" value="Guardar" />
 	</form>
 
+
 {% endblock content %}
 
 {% block scripts %}
 	<script type="text/javascript">
+	$("#form_detalle :input").prop("disabled",true)
+
+	$("#form_detalle").find("#id_cantidad,#id_costo").change(function(){
+		var t = 0
+		t = parseFloat($("#form_detalle #id_cantidad").val()) * parseFloat($("#form_detalle #id_costo").val())
+		$("#form_detalle #id_valor_total").val(t)
+	})
+
+	$("#id_factura").closest("p").remove()
 		$("#form").submit(function(event){
 			var currentForm = $(this)
 			event.preventDefault()
@@ -53,6 +63,10 @@
 				success: function(response){
 					console.log(response)
 					response.object = JSON.parse(response.object)[0]
+
+					alert("Factura Creada. \n Ingrese los datos ")
+					$("#form :input").prop("disabled",true)
+					$("#form_detalle :input").prop("disabled",false)
 					$("#factura_pk").val(response.object.pk)
 				}
 
@@ -94,6 +108,11 @@
 				},
 				success: function(response){
 					console.log(response)
+
+					currentForm.trigger("reset")
+					alert("Item Creada. \n ingrese nuevo item ")
+					var vt = parseFloat($("#form #id_valor_total").val())
+					$("#id_valor_total").val( vt + response.object.fields.valor_total )
 				}
 
 			});

@@ -19,6 +19,8 @@
 
 {% block scripts %}
 	<script type="text/javascript">
+		$("#id_movimiento").closest("p").remove()
+
 		$("#form").submit(function(event){
 			var currentForm = $(this)
 			event.preventDefault()

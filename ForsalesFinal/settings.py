@@ -36,6 +36,7 @@ CUSTOM_APPS = [
     'inventario',
     'rutas',
     'catalogo',
+   
 ]
 
 THIRD_APPS = [

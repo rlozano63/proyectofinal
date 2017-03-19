@@ -1,0 +1,31 @@
+{% extends 'AdminLTE/index.html' %}
+
+{% block content %}
+	<h1>Catalogos</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Nombre</th>
+				<th>fecha_creacion</th>
+				<th>factualizacion</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for catalogo in object_list %}
+				<tr>
+					<td>{{ catalogo.pk }}</td>
+					<td>{{ catalogo.fecha_creacion }}</td>
+					<td>{{ catalogo.factualizacion }}</td>
+					<td><a href="{% url 'ver_catalogo_detalle' catalogo.pk %}">Ver</a></td>
+					<td><a href="{% url 'borrar_catalogo' catalogo.pk %}">Borrar</a></td>
+				</tr>
+			{% empty %}
+				<tr>
+					<td>Sin catalogo</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<button class="btn btn-success"><a href="{% url 'catalogo' %}">Crear</a></button>
+{% endblock content %}

@@ -1,0 +1,9 @@
+{% extends 'AdminLTE/index.html' %}
+{% load bootstrap %}
+
+{% block content %}
+	<form action="" method="post">{% csrf_token %}
+		<p>Desea borrar el catalogo? "{{ object.nombre }}"?</p>
+		<input type="submit" value="Si" />
+	</form>
+{% endblock content %}
