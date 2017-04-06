@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 from base.views import AjaxableResponseMixin
+from base.models import distribuidor
 
 from facturacion.forms import *
 from django.views.generic.edit import CreateView
@@ -8,8 +9,6 @@ from django.views.generic.list import ListView
 from django.core.urlresolvers import reverse_lazy
 
 from inventario.views import calcular_cantidad
-
-
 
 # Create your views here.
 
@@ -55,3 +54,25 @@ class FacturaDetaleCreation(AjaxableResponseMixin,CreateView):
 		calcular_cantidad(deta.producto.pk,tipo_movimiento,deta.cantidad)
 
 		return super(FacturaDetaleCreation, self).form_valid(form)
+
+
+
+	
+
+def reportes(request):
+	distribuidores = distribuidor.objects.all()
+	return render(request,"reportes/index.html",{"distribuidores":distribuidores})
+
+def ReporteVentasDistribuidor(request,id_distribuidor):
+	pass
+
+def ReporteVentasTotal(request):
+	data = request.body
+	facturas = factura.objects.filter()
+	for fac in facturas:
+		fac.detalle = factura_detalle.objects.filter(factura = fac)
+
+
+	context = {"facturas":facturas}
+	return render(request,"reportes/ventasTotal.html",context)
+	

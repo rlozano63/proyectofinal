@@ -8,6 +8,7 @@ from django.views.generic.edit import DeleteView
 from django.core.urlresolvers import reverse_lazy
 
 from base.models import producto, distribuidor, cliente, proveedor
+from catalogo.models import catalogo, catalogo_detalle
 from base.forms import ProductoForm, DistribuidorForm, ClienteForm, ProveedorForm 
 from django.core import serializers
 from django.http import JsonResponse
@@ -72,6 +73,8 @@ class ListarProductos(ListView):
 
 	model = producto
 	template_name = 'productos/listar.html'
+
+
 
 
 class ProductoCreation(CreateView):
@@ -150,3 +153,14 @@ class ListarProveedor(ListView):
 
 	model = proveedor
 	template_name = 'proveedores/listar.html'
+
+class ListarCatalogoDistribuidor(ListView):
+
+	model = catalogo_detalle
+	template_name = 'distribuidores/catalogo.html'
+
+	def get_queryset(self):
+		dist = distribuidor.objects.get(usuario=self.request.user)
+		catalogo_user = catalogo.objects.filter(distribuidor=dist)
+		catalogo_det = catalogo_detalle.objects.filter(catalogo=catalogo_user)
+		return catalogo_det

@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
-
+#from catalogo.models import catalogo
 from django.db import models
+from django.contrib.auth.models import User
 
 class unidades(models.Model):
 	nombre = models.CharField(max_length=20)
@@ -39,6 +40,8 @@ class distribuidor(models.Model):
 	nombre = models.CharField(max_length=20)
 	apellido = models.CharField(max_length=20)
 	cedula = models.IntegerField()
+	usuario = models.ForeignKey(User,blank=True,null=True,default=None)
+	#catalogo = models.ForeignKey(catalogo)
 
 	def __str__(self):
 		return self.nombre

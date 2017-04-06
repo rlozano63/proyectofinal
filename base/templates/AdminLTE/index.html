@@ -65,7 +65,7 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
              <img style="width: 10%; " src="http://taxipy.com/files/caradibujo.png">
-              <span class="hidden-xs">USUARIO</span>
+              <span class="hidden-xs">{{ request.user.username }}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -162,7 +162,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class=""><a href="{% url 'factura' %}"><i class="fa fa-circle-o"></i> Facturar</a></li>
+            <li class=""><a href="{% url 'factura' %}"><i class="fa fa-circle-o"></i> Listar</a></li>
           </ul>
         </li>
         <li treeview">
@@ -223,6 +223,17 @@
               <li class=""><a href="{% url 'rutas-mapa' %}"><i class="fa fa-circle-o"></i> Rutas</a></li>
             </ul>
           </li>
+        <li treeview">
+          <a href="#">
+            <i class="fa fa-dashboard"></i> <span>Catalogo</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class=""><a href="{% url 'distribuidor_catalogo' %}"><i class="fa fa-circle-o"></i> Lista</a></li>
+          </ul>
+        </li>
         {% endif %}
       {% endif %}
 

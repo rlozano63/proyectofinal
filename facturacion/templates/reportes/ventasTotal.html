@@ -1,0 +1,25 @@
+{% extends 'AdminLTE/index.html' %}
+
+{% block content %}
+
+	<table>
+		<thead>
+			<tr>
+				<th>id</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for factura in facturas %}
+				<tr>
+					<td>{{ factura.pk }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+{% endblock content %}
+
+{% block scripts %}
+	<script type="text/javascript">
+	</script>
+{% endblock scripts %}

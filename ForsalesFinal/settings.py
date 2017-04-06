@@ -55,6 +55,7 @@ APPS_DJANGO = [
 INSTALLED_APPS = APPS_DJANGO + THIRD_APPS + CUSTOM_APPS
 
 MIDDLEWARE = [
+    #'base.middleware.verificar_usuario_distribuidor',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

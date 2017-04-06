@@ -33,7 +33,7 @@
 			})
 
 			$.ajax({
-				url: "/catalogo/crear/",
+				url: "{{url}}",
 				type: 'POST',
 				data:formData,
 				cache:false,
@@ -75,7 +75,7 @@
 			formData.append("catalogo",$("#catalogo_pk").val())
 
 			$.ajax({
-				url: "/catalogo/detalle/crear/",
+				url: "{{ url_detalle }}",
 				type: 'POST',
 				data:formData,
 				cache:false,

@@ -1,0 +1,20 @@
+{% extends 'AdminLTE/index.html' %}
+
+{% block content %}
+	<form method="POST" id="form" action="{% url 'ReporteVentasTotal' %}" target="_blank">
+		{% csrf_token %}
+		<select name="distribuidor">
+			{% for distribuidor in distribuidores %}
+				<option value="{{ distribuidor.pk }}">{{ distribuidor.nombre }}</option>
+			{% endfor %}
+		</select>
+		<input type="text" name="fini">
+		<input type="text" name="ffin">
+		<input type="submit" value="Guardar" />
+	</form>
+{% endblock content %}
+
+{% block scripts %}
+	<script type="text/javascript">
+	</script>
+{% endblock scripts %}

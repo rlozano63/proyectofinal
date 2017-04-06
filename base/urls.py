@@ -22,6 +22,7 @@ urlpatterns = [
 	url(r'^distribuidores/crear/$', DistribuidorCreation.as_view(), name="crear_distribuidor"),
 	url(r'^distribuidores/actualizar/(?P<pk>\d+)$', ActualizarDistribuidor.as_view(), name="actualizar_distribuidor"),
 	url(r'^distribuidores/borrar/(?P<pk>\d+)$', BorrarDistribuidor.as_view(), name="borrar_distribuidor"),
+	url(r'^distribuidor/catalogo/$', ListarCatalogoDistribuidor.as_view(), name="distribuidor_catalogo"),
 
 	url(r'^proveedores/$', ListarProveedor.as_view(), name="listar_proveedores"),
 	url(r'^proveedores/crear/$', ProveedorCreation.as_view(), name="crear_proveedor"),

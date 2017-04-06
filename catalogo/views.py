@@ -26,6 +26,7 @@ class CatalogoList(AjaxableResponseMixin,ListView):
 	def get_context_data(self,**kwargs):
 		context = super(CatalogoList, self).get_context_data(**kwargs)
 		return context
+
 def CatalogoDetail(request, pkcatalogo):
 	objcatalogo = catalogo.objects.get(pk=pkcatalogo)
 	queryset = catalogo_detalle.objects.filter(catalogo=objcatalogo)
@@ -64,27 +65,39 @@ class CatalogoCreation(AjaxableResponseMixin,CreateView):
 	def get_context_data(self,**kwargs):
 		context = super(CatalogoCreation, self).get_context_data(**kwargs)
 		context['form_detalle'] = catalogoDetalleForm()
+		context['url'] = "/catalogo/crear/"
+		context['url_detalle'] = "/catalogo/detalle/crear/"
+		print context['form_detalle']
+		return context
+
+class CatalogoUpdate(AjaxableResponseMixin,UpdateView):
+	model = catalogo
+	template_name = 'catalogo/create.html'
+	#form_class = facturaForm
+	fields = "__all__"
+	success_url = reverse_lazy('listar_productos')
+
+	def get_context_data(self,**kwargs):
+		context = super(CatalogoUpdate, self).get_context_data(**kwargs)
+		context['form_detalle'] = catalogoDetalleForm()
+		context['url'] = "/catalogo/editar/" + self.kwargs["pk"]
+		context['url_detalle'] = "/catalogo/detalle/editar/" + self.kwargs["pk"]
 		print context['form_detalle']
 		return context
 
 class CatalogoDetaleCreation(AjaxableResponseMixin,CreateView):
-	model = catalogo
+	model = catalogo_detalle
 	#template_name = 'factura/detalle_crear.html'
 	#form_class = facturaForm
 	fields = "__all__"
 	success_url = reverse_lazy('listar_productos')
 
-	deta = form.instance
-		#tipo_movimiento = 1 # Entrada
-
-		calculo_cantidad(deta.producto.pk,deta.cantidad)
-
-		deta.inventario.valor_total += (deta.cantidad*deta.costo)
-		deta.inventario.save()
-
-		return super(CatalogoDetaleCreation, self).form_valid(form)
-
-
+class CatalogoDetaleUpdate(AjaxableResponseMixin,UpdateView):
+	model = catalogo_detalle
+	#template_name = 'factura/detalle_crear.html'
+	#form_class = facturaForm
+	fields = "__all__"
+	success_url = reverse_lazy('listar_productos')
 
 class BorrarCatalogo(AjaxableResponseMixin, CreateView):
 	"""docstring for BorrarCatalogo"""
@@ -92,9 +105,4 @@ class BorrarCatalogo(AjaxableResponseMixin, CreateView):
 	template_name = 'catalogo/borrar.html'
 	fields = "__all__"
 	success_url = reverse_lazy('listar_catalogo')
-
-		
-def calculo_cantidad(pk_producto,cantidad):
-	objproducto = producto.objects.get(pk=pk_producto)
-		objproducto.cantidad += cantidad
 	
