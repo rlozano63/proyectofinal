@@ -13,10 +13,10 @@
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAioVIsP4V4tVrkVs57zYlezhfwRchBkoM&libraries=geometry&callback=initMap" async defer></script>
 	<script type="text/javascript">
 		function initMap() {
-			var myLatLng = {lat: 4.791610, lng: -75.383090}
+			var myLatLng = {lat: 4.305146, lng: -74.804411}
 			console.log(document.getElementById('map'))
 			map = new google.maps.Map(document.getElementById('map'), {
-				zoom: 6,
+				zoom: 15,
 				center: myLatLng
 				//disableDefaultUI: true
 			})
@@ -24,34 +24,44 @@
 				map.setZoom(13)
 			},4000)
 
-			clientes = [{position:{lat:4.306011,lng:-74.804434}},{position:{lat:4.307292,lng:-74.804486}}]
-			clientes.forEach(function (cliente,index) {
+			$.ajax({
+				url : "{% url 'get_positions_clientes' %}",
+				type : "GET",
+				success: function(response) {
+					console.log(response)
+					//[{position:{lat:4.306011,lng:-74.804434}},{position:{lat:4.307292,lng:-74.804486}}]
+					response.positions.forEach(function (cliente,index) {
+	
+						
+						cliente.position.lng = parseFloat(cliente.position.lng)
+						cliente.position.lat = parseFloat(cliente.position.lat)
+						console.info(cliente)
 
-				
-
-				var marker = new google.maps.Marker({
-					position: cliente.position,
-					//shape: shape,
-					map: map,
-					//icon:icon,
-					draggable: false,
-					animation: google.maps.Animation.DROP,
-
-					title: 'Cliente ' + index
-				});
-				//marker.addListener('click', actionBomb.bind(marker));
-				//markers.push(marker)
-			})
-
-			document.body.addEventListener("keydown",function(event){
-				if(event.ctrlKey){creando_zona = true}
-				console.log("creando_zona " + creando_zona)
-			})
-			document.body.addEventListener("keyup",function(event){
-				if(!event.ctrlKey){creando_zona = false}
-				console.log("creando_zona " + creando_zona)
-
-				cercar_zona(positions_new_zone)
+						var marker = new google.maps.Marker({
+							position: cliente.position,
+							//shape: shape,
+							map: map,
+							//icon:icon,
+							draggable: false,
+							animation: google.maps.Animation.DROP,
+	
+							title: 'Cliente ' + cliente.name
+						});
+						//marker.addListener('click', actionBomb.bind(marker));
+						//markers.push(marker)
+					})
+	
+					document.body.addEventListener("keydown",function(event){
+						if(event.ctrlKey){creando_zona = true}
+						console.log("creando_zona " + creando_zona)
+					})
+					document.body.addEventListener("keyup",function(event){
+						if(!event.ctrlKey){creando_zona = false}
+						console.log("creando_zona " + creando_zona)
+	
+						cercar_zona(positions_new_zone)
+					})
+					}
 			})
 		}
 	</script>

@@ -57,7 +57,7 @@ class FacturaDetaleCreation(AjaxableResponseMixin,CreateView):
 
 
 
-	
+from django.db.models import Sum
 
 def reportes(request):
 	distribuidores = distribuidor.objects.all()
@@ -67,12 +67,16 @@ def ReporteVentasDistribuidor(request,id_distribuidor):
 	pass
 
 def ReporteVentasTotal(request):
-	data = request.body
-	facturas = factura.objects.filter()
+	fini = request.POST.get("fini")
+	ffin = request.POST.get("ffin")
+	distribuidor_id = request.POST.get("distribuidor")
+	facturas = factura.objects.filter(fecha_creacion__date__gte=fini,fecha_creacion__date__lte=ffin)
+	vttotal = factura.objects.filter(fecha_creacion__date__gte=fini,fecha_creacion__date__lte=ffin).aggregate(Sum("valor_total"))["valor_total__sum"]
+	print vttotal
 	for fac in facturas:
 		fac.detalle = factura_detalle.objects.filter(factura = fac)
 
 
-	context = {"facturas":facturas}
+	context = {"facturas":facturas,"vttotal":vttotal}
 	return render(request,"reportes/ventasTotal.html",context)
 	

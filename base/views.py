@@ -57,6 +57,14 @@ def Dashboard(request):
 	context = {"escazes":escazes}
 	return render(request, 'dashboard.html', context)
 
+def getClientesPositions(request):
+	clientes = cliente.objects.all()
+	positions = []
+	for ocliente in clientes:
+		positions.append({"name":"%s %s" % (ocliente.nombre,ocliente.apellido),"position":{"lat":ocliente.pos_x,"lng":ocliente.pos_y}})
+	print positions
+	return JsonResponse({"positions":positions})
+
 
 class BorrarProducto(DeleteView):
 	model = producto

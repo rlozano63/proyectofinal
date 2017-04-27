@@ -73,8 +73,8 @@
                 <!--<img src="http://forsales.it/site/wp-content/uploads/2016/03/logo-forsales-black.png" class="img-circle" alt="User Image">-->
 
                 <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2012</small>
+                  
+                  <small></small>
                 </p>
               </li>
               <!-- Menu Body -->
@@ -98,7 +98,7 @@
                   <a href="#" class="btn btn-default btn-flat">Perfil</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Salir</a>
+                  <a href="{% url 'logout' %}" class="btn btn-default btn-flat">Salir</a>
                 </div>
               </li>
             </ul>
@@ -136,7 +136,7 @@
         <li class="header">PANEL DE CONTROL</li>
         <li>
           <a href="{% url 'listar_productos' %}">
-            <i class="fa fa-th"></i> <span>Productos</span>
+            <i class="fa fa-shopping-basket" aria-hidden="true"><span>Productos</span></i>
           </a>
         </li>
         <li>
@@ -163,6 +163,9 @@
           </a>
           <ul class="treeview-menu">
             <li class=""><a href="{% url 'factura' %}"><i class="fa fa-circle-o"></i> Listar</a></li>
+          </ul>
+           <ul class="treeview-menu">
+            <li class=""><a href="{% url 'reportes' %}"><i class="fa fa-circle-o"></i> reportes</a></li>
           </ul>
         </li>
         <li treeview">

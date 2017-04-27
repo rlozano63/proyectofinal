@@ -16,6 +16,7 @@ urlpatterns = [
 	url(r'^clientes/crear/$', ClienteCreation.as_view(), name="crear_cliente"),
 	url(r'^clientes/actualizar/(?P<pk>\d+)$', ActualizarCliente.as_view(), name="actualizar_cliente"),
 	url(r'^clientes/borrar/(?P<pk>\d+)$', BorrarCliente.as_view(), name="borrar_cliente"),
+	url(r'^clientes/positions/$', getClientesPositions, name="get_positions_clientes"),
 
 
 	url(r'^distribuidores/$', ListarDistribuidor.as_view(), name="listar_distribuidores"),
