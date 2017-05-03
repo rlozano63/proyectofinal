@@ -1,0 +1,24 @@
+mapa cuando agregue clientes, se busca la direccion de google maps para la ubicacion
+crear la ruta que permita ahorrar tiempo y consumo de gasolina
+relacion entre las ventas con la ruta segun el dia 	
+
+preguntar cuantos kilometros recorrio esa ruta para determinar consumo de gasolina
+
+crear diferentes rutas
+
+la factura corregirlo	
+
+
+se debe alimentar el inventario segun las compras y las ventas
+tener en cuenta si hace devoluciones
+
+
+en rutas habra un boton "crear rutero"
+
+al cliquear el boton
+	- me mostrara los clientes y a su lado un checkbox
+	- seleccionara los clientes que visitara
+	- habra un boton de crear ruta
+	- el sistema creara la ruta en forma de lineas siguiendo la ruta mas corta
+	- el sistema dejara solo visible las rutas que fueron seleccionadas
+	- habra un boton el cual limpiara y dejara no visible todas las rutas hasta empezar el paso 1

@@ -203,7 +203,11 @@
         </li>
       {% else %}
         {% if request.user %}
-
+<li>
+          <a href="{% url 'listar_clientes' %}">
+            <i class="fa fa-th"></i> <span>Clientes</span>
+          </a>
+        </li>
           <li treeview">
             <a href="#">
               <i class="fa fa-dashboard"></i> <span>Facturacion</span>

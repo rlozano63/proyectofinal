@@ -1,1 +1,1 @@
-Procfile
+web: gunicorn ForsalesFinal.wsgi --log-file -

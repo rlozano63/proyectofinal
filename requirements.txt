@@ -1,4 +1,4 @@
-appdirs==1.4.0
+appdirs==1.4.3
 Django==1.10.5
 django-bootstrap-form==3.2.1
 gunicorn==19.7.1

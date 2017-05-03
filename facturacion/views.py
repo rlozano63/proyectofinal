@@ -48,10 +48,11 @@ class FacturaDetaleCreation(AjaxableResponseMixin,CreateView):
 	fields = "__all__"
 	success_url = reverse_lazy('listar_productos')
 	def form_valid(self, form):
-
 		deta = form.instance
-		tipo_movimiento = 2 # Salida
-		calcular_cantidad(deta.producto.pk,tipo_movimiento,deta.cantidad)
+		calcular_cantidad(deta.producto.pk,deta.cantidad)
+
+		deta.factura.valor_total += (deta.cantidad*deta.valor)
+		deta.factura.save()
 
 		return super(FacturaDetaleCreation, self).form_valid(form)
 

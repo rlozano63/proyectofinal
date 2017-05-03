@@ -8,6 +8,26 @@
     {% csrf_token %}
     {{ form|bootstrap }}
     <div class="form-group">
+    <script type="text/javascript">
+
+	function localizacion(posicion){
+
+		var latitude = posicion.coords.latitude;
+		var longitude = posicion.coords.longitude;
+		alert("tu latitude es: "+latitude+ "tu longitude es: " +longitude );
+		output.innerHTML = "<p>latitude:  "+ latitude+ "<br>longitude:  "+ longitude+"</p>";
+		
+
+	}
+
+		function error(){
+
+			output.innerHTML = "<p> no se pudo obtener tu ubicacion</p>";
+		}
+
+		navigator.geolocation.getCurrentPosition(localizacion, error);
+
+	</script>
       <button type="submit" class="btn btn-primary">Guardar</button>
     </div>
 </form>
