@@ -22,3 +22,5 @@ al cliquear el boton
 	- el sistema creara la ruta en forma de lineas siguiendo la ruta mas corta
 	- el sistema dejara solo visible las rutas que fueron seleccionadas
 	- habra un boton el cual limpiara y dejara no visible todas las rutas hasta empezar el paso 1
+
+	configurar los estaticos para hacer el deploy

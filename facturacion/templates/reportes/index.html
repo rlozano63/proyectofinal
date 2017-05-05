@@ -3,14 +3,15 @@
 {% block content %}
 	<form method="POST" id="form" action="{% url 'ReporteVentasTotal' %}" target="_blank">
 		{% csrf_token %}
-		<select name="distribuidor">
+		<!--<select name="distribuidor">
 			{% for distribuidor in distribuidores %}
 				<option value="{{ distribuidor.pk }}">{{ distribuidor.nombre }}</option>
 			{% endfor %}
-		</select>
+		</select>-->
+		<h1>ingrese fecha de facturacion</h1>
 		<input type="text" name="fini">
 		<input type="text" name="ffin">
-		<input type="submit" value="Guardar" />
+		<input type="submit" value="ver" />
 	</form>
 {% endblock content %}
 

@@ -48,8 +48,9 @@ class FacturaDetaleCreation(AjaxableResponseMixin,CreateView):
 	fields = "__all__"
 	success_url = reverse_lazy('listar_productos')
 	def form_valid(self, form):
+		tipo_movimiento = 2 # salida
 		deta = form.instance
-		calcular_cantidad(deta.producto.pk,deta.cantidad)
+		calcular_cantidad(deta.producto.pk,tipo_movimiento,deta.cantidad)
 
 		deta.factura.valor_total += (deta.cantidad*deta.valor)
 		deta.factura.save()
@@ -81,3 +82,4 @@ def ReporteVentasTotal(request):
 	context = {"facturas":facturas,"vttotal":vttotal}
 	return render(request,"reportes/ventasTotal.html",context)
 	
+

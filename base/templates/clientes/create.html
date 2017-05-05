@@ -11,11 +11,7 @@
       <button type="submit" class="btn btn-primary">Guardar</button>
     </div>
 </form>
-
-{% endblock content %}
-% block scripts %}
 	<script type="text/javascript">
-	    $(document).readey(function(){
 
 			function localizacion(posicion){
 
@@ -32,11 +28,15 @@
 
 			function error(){
 				//output.innerHTML = "<p> no se pudo obtener tu ubicacion</p>";
+				alert("no");
 			}
 
 			navigator.geolocation.getCurrentPosition(localizacion, error);
-	    })
+	  
 
 
 	</script>
+
 {% endblock content %}
+{% block scripts %}
+{% endblock scripts %}
