@@ -6,7 +6,7 @@
 				height: 300px;
 			}
 	</style>
-	<section id="map"></section>
+	<section id="map"> </section>
 
 {% endblock content %}
 {% block scripts %}
@@ -21,7 +21,7 @@
 				//disableDefaultUI: true
 			})
 			setTimeout(function(){
-				map.setZoom(13)
+				map.setZoom(20)
 			},4000)
 
 			$.ajax({
@@ -65,5 +65,6 @@
 			})
 		}
 	</script>
+
 
 {% endblock scripts %}
