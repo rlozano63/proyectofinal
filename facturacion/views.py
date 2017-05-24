@@ -1,7 +1,11 @@
 from django.shortcuts import render
 
 from base.views import AjaxableResponseMixin
-from base.models import distribuidor
+from base.models import distribuidor, cliente
+
+from django.http import JsonResponse
+
+from django.views.decorators.csrf import csrf_exempt
 
 from facturacion.forms import *
 from django.views.generic.edit import CreateView
@@ -21,6 +25,7 @@ class FacturaList(AjaxableResponseMixin,ListView):
 	def get_context_data(self,**kwargs):
 		context = super(FacturaList, self).get_context_data(**kwargs)
 		return context
+
 def FacturaDetail(request, pkfactura):
 	objfactura = factura.objects.get(pk=pkfactura)
 	queryset = factura_detalle.objects.filter(factura=objfactura)
@@ -41,6 +46,14 @@ class FacturaCreation(AjaxableResponseMixin,CreateView):
 		print context['form_detalle']
 		return context
 
+	def form_valid(self, form):
+		tipo_movimiento = 2 # salida
+		deta = form.instance
+
+		verificacion_ventas_cliente(deta.cliente.id)
+
+		return super(FacturaCreation, self).form_valid(form)
+
 class FacturaDetaleCreation(AjaxableResponseMixin,CreateView):
 	model = factura_detalle
 	#template_name = 'factura/detalle_crear.html'
@@ -60,6 +73,32 @@ class FacturaDetaleCreation(AjaxableResponseMixin,CreateView):
 
 
 from django.db.models import Sum
+from django.core import serializers
+
+def verificacion_ventas_cliente(cliente_id = None):
+	compra_minima_cliente = 0
+	response = []
+	if cliente_id:
+		oclientes = [cliente.objects.get(id=cliente_id)]
+	else:
+		oclientes = cliente.objects.all()
+
+	for ocliente in oclientes:
+		total_ventas_cliente = factura.objects.filter(cliente=ocliente).aggregate(Sum("valor_total"))["valor_total__sum"]
+		ocliente.ruta_activa = 1
+		if total_ventas_cliente < compra_minima_cliente:
+			ocliente.ruta_activa = 0
+		ocliente.save()
+	print response
+	response = serializers.serialize('json', cliente.objects.all())
+	return response
+
+@csrf_exempt
+def url_verificacion_ventas_cliente(request):
+	response = verificacion_ventas_cliente()
+	return JsonResponse(response,safe=False)
+
+
 
 def reportes(request):
 	distribuidores = distribuidor.objects.all()

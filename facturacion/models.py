@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 
-from base.models import producto, distribuidor
+from base.models import producto, distribuidor, cliente
 import datetime
 
 
@@ -13,6 +13,7 @@ class factura(models.Model):
 	fecha_creacion = models.DateTimeField(default=datetime.datetime.now())
 	factualizacion = models.DateTimeField(default=datetime.datetime.now())
 	valor_total = models.IntegerField(default=0)
+	cliente = models.ForeignKey(cliente)
 
 class factura_detalle(models.Model):
 	"""docstring for factura"""

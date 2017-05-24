@@ -70,6 +70,8 @@ class cliente(models.Model):
 	orden_ruta = models.IntegerField()
 	pos_x = models.CharField(max_length=50)
 	pos_y = models.CharField(max_length=50)
+	
+	ruta_activa = models.CharField(max_length=1,default=1)
 
 
 	def __str__(self):

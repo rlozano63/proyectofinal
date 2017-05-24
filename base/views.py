@@ -58,7 +58,7 @@ def Dashboard(request):
 	return render(request, 'dashboard.html', context)
 
 def getClientesPositions(request):
-	clientes = cliente.objects.all()
+	clientes = cliente.objects.filter(ruta_activa=1)
 	positions = []
 	for ocliente in clientes:
 		positions.append({"name":"%s %s" % (ocliente.nombre,ocliente.apellido),"position":{"lat":ocliente.pos_x,"lng":ocliente.pos_y}})
