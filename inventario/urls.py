@@ -2,7 +2,7 @@ from django.conf.urls import url
 from inventario.views import *
 
 urlpatterns = [
-	url(r'^inventario/crear/$', InventarioCreation.as_view(), name="inventario"),
+	url(r'^inventario/crear/$', InventarioCreation.as_view(), name="inventario_crear"),
 	url(r'^inventario/$', InventarioList.as_view(), name="inventario"),
 	url(r'^inventario/(?P<pkinventario>\d+)$', InventarioDetail, name="ver_inventario_detalle"),
 	url(r'^inventario/detalle/crear/$', InventarioDetaleCreation.as_view(), name="inventario_detalle"),

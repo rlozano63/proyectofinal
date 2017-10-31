@@ -40,8 +40,8 @@
   <![endif]-->
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
-
+<div class="wrapper" id="vue-root">
+  {% csrf_token %}
   <header class="main-header">
     <!-- Logo -->
     <a href="forsales.png" class="logo">
@@ -154,7 +154,7 @@
             <i class="fa fa-th"></i> <span>Proveedores</span>
           </a>
         </li>
-        <li treeview">
+        <li class="treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Facturacion</span>
             <span class="pull-right-container">
@@ -168,7 +168,7 @@
             <li class=""><a href="{% url 'reportes' %}"><i class="fa fa-circle-o"></i> reportes</a></li>
           </ul>
         </li>
-        <li treeview">
+        <li class="treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Inventario</span>
             <span class="pull-right-container">
@@ -176,10 +176,10 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class=""><a href="{% url 'inventario' %}"><i class="fa fa-circle-o"></i> Listar</a></li>
+            <li class=""><a href="{% url 'movimiento' %}"><i class="fa fa-circle-o"></i> Movimientos</a></li>
           </ul>
         </li>
-        <li treeview">
+        <li class="treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Catalogo</span>
             <span class="pull-right-container">
@@ -190,7 +190,7 @@
             <li class=""><a href="{% url 'catalogos' %}"><i class="fa fa-circle-o"></i> Lista</a></li>
           </ul>
         </li>
-        <li treeview">
+        <li class="treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Rutas</span>
             <span class="pull-right-container">
@@ -208,7 +208,7 @@
             <i class="fa fa-th"></i> <span>Clientes</span>
           </a>
         </li>
-          <li treeview">
+          <li class="treeview">
             <a href="#">
               <i class="fa fa-dashboard"></i> <span>Facturacion</span>
               <span class="pull-right-container">
@@ -219,7 +219,7 @@
               <li class=""><a href="{% url 'factura' %}"><i class="fa fa-circle-o"></i> Facturar</a></li>
             </ul>
           </li>
-          <li treeview">
+          <li class="treeview">
             <a href="#">
               <i class="fa fa-dashboard"></i> <span>Rutas</span>
               <span class="pull-right-container">
@@ -230,7 +230,7 @@
               <li class=""><a href="{% url 'rutas-mapa' %}"><i class="fa fa-circle-o"></i> Rutas</a></li>
             </ul>
           </li>
-        <li treeview">
+        <li class="treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Catalogo</span>
             <span class="pull-right-container">
@@ -499,7 +499,7 @@
 <!-- jQuery Knob Chart -->
 <script src="{% static 'js/AdminLTE/plugins/knob/jquery.knob.js' %}"></script>
 <!-- daterangepicker -->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>-->
+<script src="{% static 'js/moment-with-locales.js' %}"></script>
 <script src="{% static 'js/AdminLTE/plugins/daterangepicker/daterangepicker.js' %}"></script>
 <!-- datepicker -->
 <script src="{% static 'js/AdminLTE/plugins/datepicker/bootstrap-datepicker.js' %}"></script>
@@ -514,7 +514,12 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{% static 'js/AdminLTE/dist/pages/dashboard.js' %}"></script>
 <!-- AdminLTE for demo purposes -->
+<script src="{% static 'js/qs.js' %}"></script>
+<script src="{% static 'js/vue.js' %}"></script>
+<script src="{% static 'js/axios.min.js' %}"></script>
+<!--<script src="{% static '/js/vue.min.js' %}"></script>-->
 <script src="{% static 'js/AdminLTE/dist/demo.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
 
   {% block scripts %}
   {% endblock scripts %}

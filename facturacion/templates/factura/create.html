@@ -2,121 +2,134 @@
 
 {% block content %}
 	<form method="post" id="form">
-		{% csrf_token %}
 		<input type="hidden" id="factura_pk">
 		{{ form.as_p }}
-		<input type="submit" value="Guardar" />
 	</form>
-
-	<form method="post" id="form_detalle">
-		{% csrf_token %}
+	
+	<form method="post" id="form_detalle" @submit.prevent="facFormCreateAddDetalle">
 		{{ form_detalle.as_p }}
 		<input type="submit" value="Guardar" />
 	</form>
+	
+	<table class="table">
+		<thead>
+			<tr>
+				<th> producto </th>
+				<th> cantidad  </th>
+				<th> valor  </th>
+				<th> valor_total  </th> 
+			</tr>
+		</thead>
+		<tbody>
+			<tr v-for="producto in facturacion.forms.create.productos">
+				<td> [[ producto.producto ]] </td>
+				<td> <input v-model="producto.cantidad" @change="facFormCreateUpdateeVT(producto)" type="number" > </td>
+				<td> <input v-model="producto.valor" @change="facFormCreateUpdateeVT(producto)" type="number" > </td>
+				<td> [[ producto.valor_total ]] </td>
+				<td> <button @click="facFormCreateDeleteProducto(producto)">Borrar</button></td>
+			</tr>
+		</tbody>
+	</table>
+	<input type="button" value="Facturar" @click="facFormCreateFacturar" />
 
 
 {% endblock content %}
 
 {% block scripts %}
 	<script type="text/javascript">
-	$("#form_detalle :input").prop("disabled",true)
+	// $("#form_detalle :input").prop("disabled",true)
 
-	$("#form_detalle").find("#id_cantidad,#id_costo").change(function(){
-		var t = 0
-		t = parseFloat($("#form_detalle #id_cantidad").val()) * parseFloat($("#form_detalle #id_costo").val())
-		$("#form_detalle #id_valor_total").val(t)
-	})
-
+	
 	$("#id_factura").closest("p").remove()
-		$("#form").submit(function(event){
-			var currentForm = $(this)
-			event.preventDefault()
+	$("#form").submit(function(event){
+		var currentForm = $(this)
+		event.preventDefault()
 
-			var formData = new FormData(this);
-			$('input[type=file]').each(function(i, file) {
-				$.each(file.files, function(n, file) {
-					formData.append('file-'+i, file);
-				})
+		var formData = new FormData(this);
+		$('input[type=file]').each(function(i, file) {
+			$.each(file.files, function(n, file) {
+				formData.append('file-'+i, file);
 			})
-
-			$.ajax({
-				url: "/factura/crear/",
-				type: 'POST',
-				data:formData,
-				cache:false,
-				contentType: false,
-				processData: false,
-				error: function(response){
-					$('<ul class="errorlist"></ul>')
-					var data = JSON.parse(response.responseText)
-					for (field in data.errors){
-						var ul = $('<ul class="errorlist"></ul>')
-						var selector = "[name=" + field + "]"
-						for (var error of data.errors[field]){
-							var message = alertBootstrap(error,"danger")
-							ul.append($("<li>").append(message))
-						}
-						$(selector).closest(".form-group").find("ul.errorlist").remove()
-						$(selector).closest(".form-group").prepend(ul)
-					}
-				},
-				success: function(response){
-					console.log(response)
-					response.object = JSON.parse(response.object)[0]
-
-					alert("Factura Creada. \n Ingrese los datos ")
-					$("#form :input").prop("disabled",true)
-					$("#form_detalle :input").prop("disabled",false)
-					$("#factura_pk").val(response.object.pk)
-				}
-
-			});
 		})
-		$("#form_detalle").submit(function(event){
-			var currentForm = $(this)
-			event.preventDefault()
 
-			var formData = new FormData(this);
-			$('input[type=file]').each(function(i, file) {
-				$.each(file.files, function(n, file) {
-					formData.append('file-'+i, file);
-				})
+		$.ajax({
+			url: "/factura/crear/",
+			type: 'POST',
+			data:formData,
+			cache:false,
+			contentType: false,
+			processData: false,
+			error: function(response){
+				$('<ul class="errorlist"></ul>')
+				var data = JSON.parse(response.responseText)
+				for (field in data.errors){
+					var ul = $('<ul class="errorlist"></ul>')
+					var selector = "[name=" + field + "]"
+					for (var error of data.errors[field]){
+						var message = alertBootstrap(error,"danger")
+						ul.append($("<li>").append(message))
+					}
+					$(selector).closest(".form-group").find("ul.errorlist").remove()
+					$(selector).closest(".form-group").prepend(ul)
+				}
+			},
+			success: function(response){
+				console.log(response)
+				response.object = JSON.parse(response.object)[0]
+
+				alert("Factura Creada. \n Ingrese los datos ")
+				$("#form :input").prop("disabled",true)
+				$("#form_detalle :input").prop("disabled",false)
+				$("#factura_pk").val(response.object.pk)
+			}
+
+		});
+	})
+	/*$("#form_detalle").submit(function(event){
+		var currentForm = $(this)
+		event.preventDefault()
+
+		var formData = new FormData(this);
+		$('input[type=file]').each(function(i, file) {
+			$.each(file.files, function(n, file) {
+				formData.append('file-'+i, file);
 			})
-
-			formData.append("factura",$("#factura_pk").val())
-
-			$.ajax({
-				url: "/factura/detalle/crear/",
-				type: 'POST',
-				data:formData,
-				cache:false,
-				contentType: false,
-				processData: false,
-				error: function(response){
-					$('<ul class="errorlist"></ul>')
-					var data = JSON.parse(response.responseText)
-					for (field in data.errors){
-						var ul = $('<ul class="errorlist"></ul>')
-						var selector = "[name=" + field + "]"
-						for (var error of data.errors[field]){
-							var message = alertBootstrap(error,"danger")
-							ul.append($("<li>").append(message))
-						}
-						$(selector).closest(".form-group").find("ul.errorlist").remove()
-						$(selector).closest(".form-group").prepend(ul)
-					}
-				},
-				success: function(response){
-					console.log(response)
-
-					currentForm.trigger("reset")
-					alert("Item Creada. \n ingrese nuevo item ")
-					var vt = parseFloat($("#form #id_valor_total").val())
-					$("#id_valor_total").val( vt + response.object.fields.valor_total )
-				}
-
-			});
 		})
+
+		formData.append("factura",$("#factura_pk").val())
+
+		$.ajax({
+			url: "/factura/detalle/crear/",
+			type: 'POST',
+			data:formData,
+			cache:false,
+			contentType: false,
+			processData: false,
+			error: function(response){
+				$('<ul class="errorlist"></ul>')
+				var data = JSON.parse(response.responseText)
+				for (field in data.errors){
+					var ul = $('<ul class="errorlist"></ul>')
+					var selector = "[name=" + field + "]"
+					for (var error of data.errors[field]){
+						var message = alertBootstrap(error,"danger")
+						ul.append($("<li>").append(message))
+					}
+					$(selector).closest(".form-group").find("ul.errorlist").remove()
+					$(selector).closest(".form-group").prepend(ul)
+				}
+			},
+			success: function(response){
+				console.log(response)
+
+				currentForm.trigger("reset")
+				alert("Item Creada. \n ingrese nuevo item ")
+				var vt = parseFloat($("#form #id_valor_total").val())
+				$("#id_valor_total").val( vt + response.object.fields.valor_total )
+			}
+
+		});
+	})*/
 
 	</script>
 {% endblock scripts %}

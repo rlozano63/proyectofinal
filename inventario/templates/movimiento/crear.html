@@ -5,14 +5,38 @@
 		{% csrf_token %}
 		<input type="hidden" id="movimiento_pk">
 		{{ form.as_p }}
-		<input type="submit" value="Guardar" />
 	</form>
 
-	<form method="post" id="form_detalle">
+	<form method="post" id="form_detalle" @submit.prevent="movFormCreateAddDetalle">
 		{% csrf_token %}
 		{{ form_detalle.as_p }}
 		<input type="submit" value="Guardar" />
 	</form>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th> producto </th>
+				<th> cantidad </th>
+				<th> valor </th>
+				<th> valor_total </th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr v-for="producto in movimientos.forms.create.productos">
+				<td> [[ producto.producto ]] </td>
+				<td>
+					<input v-model="producto.cantidad" @change="movFormCreateUpdateeVT(producto)" type="number"> </td>
+				<td>
+					<input v-model="producto.valor" @change="movFormCreateUpdateeVT(producto)" type="number"> </td>
+				<td> [[ producto.valor_total ]] </td>
+				<td>
+					<button @click="movFormCreateDeleteProducto(producto)">Borrar</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<input type="button" value="Facturar" @click="movFormCreateFacturar" />
 
 
 {% endblock content %}
@@ -20,6 +44,7 @@
 {% block scripts %}
 	<script type="text/javascript">
 		$("#id_movimiento").closest("p").remove()
+		/*
 
 		$("#form").submit(function(event){
 			var currentForm = $(this)
@@ -100,7 +125,7 @@
 				}
 
 			});
-		})
+		})*/
 
 	</script>
 {% endblock scripts %}

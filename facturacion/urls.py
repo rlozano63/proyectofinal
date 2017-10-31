@@ -13,8 +13,6 @@ urlpatterns = [
 	url(r'^factura/reportes/ventasTotal$', ReporteVentasTotal, name="ReporteVentasTotal"),
 	
 	url(r'^verificacion_ventas_cliente$', url_verificacion_ventas_cliente, name="verificacion_ventas_cliente"),
-	
-	
-	
+
 ]
 

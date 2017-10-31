@@ -1,9 +1,10 @@
 from django.shortcuts import render
-
+import json
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
 from django.views.generic.list import ListView
 from django.views.generic.edit import DeleteView
+from django.views.decorators.csrf import csrf_exempt
 
 from django.core.urlresolvers import reverse_lazy
 
@@ -13,7 +14,12 @@ from base.forms import ProductoForm, DistribuidorForm, ClienteForm, ProveedorFor
 from django.core import serializers
 from django.http import JsonResponse
 
-
+@csrf_exempt
+def GetProduct(request,id):
+	p = producto.objects.get(id = id)
+	response = serializers.serialize('json', [p])
+	response = json.loads(response)[0]
+	return JsonResponse(response,safe=False)
 
 class AjaxableResponseMixin(object):
 	"""
@@ -41,7 +47,8 @@ class AjaxableResponseMixin(object):
 			message = "OK"
 			data = {
 				'message':message,
-				'object': serializers.serialize("json", [self.object],use_natural_foreign_keys=True, use_natural_primary_keys=True)
+				'object': serializers.serialize("json", [self.object],use_natural_foreign_keys=True, use_natural_primary_keys=True),
+				'json': json.loads(serializers.serialize("json", [self.object],use_natural_foreign_keys=True, use_natural_primary_keys=True))[0],
 			}
 			return JsonResponse(data)
 		else:

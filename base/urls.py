@@ -10,7 +10,8 @@ urlpatterns = [
 	url(r'^productos/crear/$', ProductoCreation.as_view(), name="crear_producto"),
 	url(r'^productos/actualizar/(?P<pk>\d+)$', ActualizarProducto.as_view(), name="actualizar_producto"),
 	url(r'^productos/borrar/(?P<pk>\d+)$', BorrarProducto.as_view(), name="borrar_producto"),
-
+	
+	url(r'^api/product/(?P<id>\d+)$', GetProduct, name="get_product"),
 
 	url(r'^clientes/$', ListarCliente.as_view(), name="listar_clientes"),
 	url(r'^clientes/crear/$', ClienteCreation.as_view(), name="crear_cliente"),

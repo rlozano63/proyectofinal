@@ -63,8 +63,8 @@ class InventarioDetaleCreation(AjaxableResponseMixin,CreateView):
 class MovimientoCreation(AjaxableResponseMixin,CreateView):
 	model = movimiento
 	template_name = 'movimiento/crear.html'
-	#form_class = movimientoForm
-	fields = "__all__"
+	form_class = movimientoForm
+	# fields = "__all__"
 	success_url = reverse_lazy('listar_productos')
 
 	def get_context_data(self,**kwargs):
