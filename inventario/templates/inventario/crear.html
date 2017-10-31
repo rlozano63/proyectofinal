@@ -6,21 +6,45 @@
 
 		{% csrf_token %}
 		{{ form.as_p }}
-		<input type="submit" value="Guardar" />
 	</form>
 
-	<form method="post" id="form_detalle">
+	<form method="post" id="form_detalle" @submit.prevent="invFormCreateAddDetalle">
 		{% csrf_token %}
 		{{ form_detalle.as_p }}
 		<input type="submit" value="Guardar" />
 	</form>
-
+<table class="table">
+	<thead>
+		<tr>
+			<th> producto </th>
+			<th> cantidad </th>
+			<th> valor </th>
+			<th> valor_total </th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr v-for="producto in inventarios.forms.create.productos">
+			<td> [[ producto.producto ]] </td>
+			<td>
+				<input v-model="producto.cantidad" @change="invFormCreateUpdateeVT(producto)" type="number"> </td>
+			<td>
+				<input v-model="producto.costo" @change="invFormCreateUpdateeVT(producto)" type="number"> </td>
+			<td> [[ producto.valor_total ]] </td>
+			<td>
+				<button @click="invFormCreateDeleteProducto(producto)">Borrar</button>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<input type="button" value="Facturar" @click="invFormCreateFacturar" />
 
 <!--{% endblock content %}
 
 {% block scripts %}-->
 	<script type="text/javascript">
-	$("#form_detalle :input").prop("disabled",true)
+	$("#id_inventario").closest("p").remove()
+
+	/*$("#form_detalle :input").prop("disabled",true)
 
 	$("#form_detalle").find("#id_cantidad,#id_costo").change(function(){
 		var t = 0
@@ -28,103 +52,102 @@
 		$("#form_detalle #id_valor_total").val(t)
 	})
 
-		$("#id_inventario").closest("p").remove()
 
-		$("#form").submit(function(event){
-			var currentForm = $(this)
-			event.preventDefault()
+	$("#form").submit(function(event){
+		var currentForm = $(this)
+		event.preventDefault()
 
-			var formData = new FormData(this);
-			$('input[type=file]').each(function(i, file) {
-				$.each(file.files, function(n, file) {
-					formData.append('file-'+i, file);
-				})
+		var formData = new FormData(this);
+		$('input[type=file]').each(function(i, file) {
+			$.each(file.files, function(n, file) {
+				formData.append('file-'+i, file);
 			})
-
-			$.ajax({
-				url: "/inventario/crear/",
-				type: 'POST',
-				data:formData,
-				cache:false,
-				contentType: false,
-				processData: false,
-				error: function(response){
-					$('<ul class="errorlist"></ul>')
-					var data = JSON.parse(response.responseText)
-					for (field in data.errors){
-						var ul = $('<ul class="errorlist"></ul>')
-						var selector = "[name=" + field + "]"
-						for (var error of data.errors[field]){
-							var message = alertBootstrap(error,"danger")
-							ul.append($("<li>").append(message))
-						}
-						$(selector).closest(".form-group").find("ul.errorlist").remove()
-						$(selector).closest(".form-group").prepend(ul)
-						alert("Ocurrio un Error.")
-					}
-				},
-				success: function(response){
-					console.log(response)
-					response.object = JSON.parse(response.object)[0]
-
-					alert("Inventario Creado. \n Ingrese los productos")
-					$("#form :input").prop("disabled",true)
-					$("#form_detalle :input").prop("disabled",false)
-					$("#inventario_pk").val(response.object.pk)
-
-				}
-
-			});
 		})
-		$("#form_detalle").submit(function(event){
-			var currentForm = $(this)
-			event.preventDefault()
 
-			var formData = new FormData(this);
-			$('input[type=file]').each(function(i, file) {
-				$.each(file.files, function(n, file) {
-					formData.append('file-'+i, file);
-				})
+		$.ajax({
+			url: "/inventario/crear/",
+			type: 'POST',
+			data:formData,
+			cache:false,
+			contentType: false,
+			processData: false,
+			error: function(response){
+				$('<ul class="errorlist"></ul>')
+				var data = JSON.parse(response.responseText)
+				for (field in data.errors){
+					var ul = $('<ul class="errorlist"></ul>')
+					var selector = "[name=" + field + "]"
+					for (var error of data.errors[field]){
+						var message = alertBootstrap(error,"danger")
+						ul.append($("<li>").append(message))
+					}
+					$(selector).closest(".form-group").find("ul.errorlist").remove()
+					$(selector).closest(".form-group").prepend(ul)
+					alert("Ocurrio un Error.")
+				}
+			},
+			success: function(response){
+				console.log(response)
+				response.object = JSON.parse(response.object)[0]
+
+				alert("Inventario Creado. \n Ingrese los productos")
+				$("#form :input").prop("disabled",true)
+				$("#form_detalle :input").prop("disabled",false)
+				$("#inventario_pk").val(response.object.pk)
+
+			}
+
+		});
+	})
+	$("#form_detalle").submit(function(event){
+		var currentForm = $(this)
+		event.preventDefault()
+
+		var formData = new FormData(this);
+		$('input[type=file]').each(function(i, file) {
+			$.each(file.files, function(n, file) {
+				formData.append('file-'+i, file);
 			})
-			formData.append("inventario",$("#inventario_pk").val())
-
-			$.ajax({
-				url: "/inventario/detalle/crear/",
-				type: 'POST',
-				data:formData,
-				cache:false,
-				contentType: false,
-				processData: false,
-				error: function(response){
-					$('<ul class="errorlist"></ul>')
-					var data = JSON.parse(response.responseText)
-					for (field in data.errors){
-						var ul = $('<ul class="errorlist"></ul>')
-						var selector = "[name=" + field + "]"
-						for (var error of data.errors[field]){
-							var message = alertBootstrap(error,"danger")
-							ul.append($("<li>").append(message))
-						}
-						$(selector).closest(".form-group").find("ul.errorlist").remove()
-						$(selector).closest(".form-group").prepend(ul)
-					}
-				},
-				success: function(response){
-					$("#id_producto").find("option[value=" + $("#id_producto").val() + "]").remove()
-					response.object = JSON.parse(response.object)[0]
-					console.log(response)
-
-
-					currentForm.trigger("reset")
-					alert("Producto Creado. \n Ingrese Nuevo Producto")
-					var vt = parseFloat($("#form #id_valor_total").val())
-					$("#id_valor_total").val( vt + response.object.fields.valor_total )
-					
-
-				}
-
-			});
 		})
+		formData.append("inventario",$("#inventario_pk").val())
+
+		$.ajax({
+			url: "/inventario/detalle/crear/",
+			type: 'POST',
+			data:formData,
+			cache:false,
+			contentType: false,
+			processData: false,
+			error: function(response){
+				$('<ul class="errorlist"></ul>')
+				var data = JSON.parse(response.responseText)
+				for (field in data.errors){
+					var ul = $('<ul class="errorlist"></ul>')
+					var selector = "[name=" + field + "]"
+					for (var error of data.errors[field]){
+						var message = alertBootstrap(error,"danger")
+						ul.append($("<li>").append(message))
+					}
+					$(selector).closest(".form-group").find("ul.errorlist").remove()
+					$(selector).closest(".form-group").prepend(ul)
+				}
+			},
+			success: function(response){
+				$("#id_producto").find("option[value=" + $("#id_producto").val() + "]").remove()
+				response.object = JSON.parse(response.object)[0]
+				console.log(response)
+
+
+				currentForm.trigger("reset")
+				alert("Producto Creado. \n Ingrese Nuevo Producto")
+				var vt = parseFloat($("#form #id_valor_total").val())
+				$("#id_valor_total").val( vt + response.object.fields.valor_total )
+				
+
+			}
+
+		});
+	})*/
 
 	</script>
 {% endblock scripts %}

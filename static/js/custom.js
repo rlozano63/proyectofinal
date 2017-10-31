@@ -43,7 +43,23 @@ var AppVue = new Vue({
                     productos: []
                 }
             }
-        }
+        },
+        inventarios:{
+            forms:{
+                create:{
+                    fecha_creacion: moment().format("Y-M-D"),
+                    factualizacion: moment().format("Y-M-D"),
+                    valor_total: 0,
+                    deta:{
+                        producto: null,
+                        cantidad: null,
+                        valor: null,
+                        valor_total: null,
+                    },
+                    productos: []
+                }
+            }
+        },
         
     },
     methods:{
@@ -144,6 +160,52 @@ var AppVue = new Vue({
                     })
                 })
             })
+        },
+
+        /* Inventarios */
+        invFormCreateAddDetalle() {
+            var form = this.inventarios.forms.create
+            var formDeta = this.inventarios.forms.create.deta
+            var obj = {
+                'producto': formDeta.producto,
+                'cantidad': formDeta.cantidad,
+                'costo': formDeta.costo,
+                'valor_total': formDeta.valor_total,
+            }
+            var producto_existe = form.productos.some(p => p.producto == obj.producto)
+            if (producto_existe) {
+                alert("El producto ya se agrego")
+            } else {
+                form.productos.push(obj)
+            }
+        },
+        invFormCreateUpdateeVT(productoEdit) {
+            productoEdit.valor_total = productoEdit.costo * productoEdit.cantidad
+        },
+        invFormCreateDeleteProducto(productDelete) {
+            var form = this.inventarios.forms.create
+            var index = form.productos.findIndex(item => item.producto = productDelete.producto)
+            form.productos.splice(index, 1)
+        },
+        invFormCreateFacturar() {
+            var form = this.inventarios.forms.create;
+            var data = {
+                fecha_creacion: form.fecha_creacion,
+                factualizacion: form.factualizacion,
+                valor_total: form.valor_total,
+            }
+
+            axios.post("/inventario/crear/", Qs.stringify(data)).then(response => {
+                var json = response.data.json
+                alert("inventario Creada. \n Ingrese los datos ")
+                var productos = form.productos
+                productos.forEach(producto => {
+                    producto.inventario = json.pk
+                    axios.post("/inventario/detalle/crear/", Qs.stringify(producto)).then(res => {
+                        alert("inventario Creada. \n Ingrese los datos ")
+                    })
+                })
+            })
         }
     },
     watch:{
@@ -205,6 +267,29 @@ var AppVue = new Vue({
         'movimientos.forms.create.deta.valor': function () {
             var form = this.movimientos.forms.create.deta
             form.valor_total = form.valor * form.cantidad
+        },
+
+        /* Innentarios */
+        'inventarios.forms.create.productos': {
+            handler: function (newValue) {
+                console.log("hola")
+                var form = this.inventarios.forms.create
+                console.log(form.productos)
+                form.valor_total = form.productos.reduce((n, obj) => n + obj.valor_total, 0)
+            },
+            deep: true
+        },
+        'inventarios.forms.create.deta.cantidad': function () {
+            var form = this.inventarios.forms.create
+            var formDeta = this.inventarios.forms.create.deta
+            formDeta.valor_total = formDeta.costo * formDeta.cantidad
+
+            if (formDeta.producto == null) return
+
+        },
+        'inventarios.forms.create.deta.costo': function () {
+            var form = this.inventarios.forms.create.deta
+            form.valor_total = form.costo * form.cantidad
         },
     }
 })

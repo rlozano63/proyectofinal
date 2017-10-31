@@ -31,8 +31,8 @@ def InventarioDetail(request, pkinventario):
 class InventarioCreation(AjaxableResponseMixin,CreateView):
 	model = inventario
 	template_name = 'inventario/crear.html'
-	#form_class = inventarioForm
-	fields = "__all__"
+	form_class = inventarioForm
+	#fields = "__all__"
 	success_url = reverse_lazy('listar_productos')
 
 	def get_context_data(self,**kwargs):

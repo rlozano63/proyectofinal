@@ -6,18 +6,24 @@ class inventarioForm(forms.ModelForm):
 	class Meta:
 		model = inventario
 		fields = "__all__"
-		widgets = {}
-		labels = {}
+	def __init__(self, *args, **kwargs):
+		super(inventarioForm, self).__init__(*args, **kwargs)
+		self.fields['fecha_creacion'].widget.attrs.update({'v-model' : 'inventarios.forms.create.fecha_creacion'})
+		self.fields['factualizacion'].widget.attrs.update({'v-model' : 'inventarios.forms.create.factualizacion'})
+		self.fields['valor_total'].widget.attrs.update({'v-model' : 'inventarios.forms.create.valor_total'})
 
 class inventarioDetalleForm(forms.ModelForm):
-	#cantidad = forms.IntegerField(label='cantidad')
-	#costo = forms.IntegerField(label='costo')
-	#valor_total = forms.IntegerField(label='valor_total')
 	class Meta:
 		model = inventario_detalle
 		fields = "__all__"
-		#widgets = {}
-		#labels = {}
+
+
+	def __init__(self, *args, **kwargs):
+		super(inventarioDetalleForm, self).__init__(*args, **kwargs)
+		self.fields['producto'].widget.attrs.update({'v-model' : 'inventarios.forms.create.deta.producto'})
+		self.fields['cantidad'].widget.attrs.update({'v-model' : 'inventarios.forms.create.deta.cantidad'})
+		self.fields['costo'].widget.attrs.update({'v-model' : 'inventarios.forms.create.deta.costo'})
+		self.fields['valor_total'].widget.attrs.update({'v-model' : 'inventarios.forms.create.deta.valor_total'})
 
 class movimientoForm(forms.ModelForm):
 	class Meta:
@@ -36,7 +42,7 @@ class movimientoDetalleForm(forms.ModelForm):
 	class Meta:
 		model = movimiento_detalle
 		fields = "__all__"
-		
+
 	def __init__(self, *args, **kwargs):
 		super(movimientoDetalleForm, self).__init__(*args, **kwargs)
 		self.fields['producto'].widget.attrs.update({'v-model' : 'movimientos.forms.create.deta.producto'})
