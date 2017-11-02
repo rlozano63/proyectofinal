@@ -10,7 +10,7 @@ class inventarioForm(forms.ModelForm):
 		super(inventarioForm, self).__init__(*args, **kwargs)
 		self.fields['fecha_creacion'].widget.attrs.update({'v-model' : 'inventarios.forms.create.fecha_creacion'})
 		self.fields['factualizacion'].widget.attrs.update({'v-model' : 'inventarios.forms.create.factualizacion'})
-		self.fields['valor_total'].widget.attrs.update({'v-model' : 'inventarios.forms.create.valor_total'})
+		self.fields['valor_total'].widget.attrs.update({'readonly':True, 'v-model' : 'inventarios.forms.create.valor_total'})
 
 class inventarioDetalleForm(forms.ModelForm):
 	class Meta:
@@ -23,7 +23,7 @@ class inventarioDetalleForm(forms.ModelForm):
 		self.fields['producto'].widget.attrs.update({'v-model' : 'inventarios.forms.create.deta.producto'})
 		self.fields['cantidad'].widget.attrs.update({'v-model' : 'inventarios.forms.create.deta.cantidad'})
 		self.fields['costo'].widget.attrs.update({'v-model' : 'inventarios.forms.create.deta.costo'})
-		self.fields['valor_total'].widget.attrs.update({'v-model' : 'inventarios.forms.create.deta.valor_total'})
+		self.fields['valor_total'].widget.attrs.update({'readonly':True, 'v-model' : 'inventarios.forms.create.deta.valor_total'})
 
 class movimientoForm(forms.ModelForm):
 	class Meta:
@@ -35,7 +35,7 @@ class movimientoForm(forms.ModelForm):
 		self.fields['proveedor'].widget.attrs.update({'v-model' : 'movimientos.forms.create.proveedor'})
 		self.fields['tipo'].widget.attrs.update({'v-model' : 'movimientos.forms.create.tipo'})
 		self.fields['factualizacion'].widget.attrs.update({'v-model' : 'movimientos.forms.create.factualizacion'})
-		self.fields['valor_total'].widget.attrs.update({'v-model' : 'movimientos.forms.create.valor_total'})
+		self.fields['valor_total'].widget.attrs.update({'readonly':True, 'v-model' : 'movimientos.forms.create.valor_total'})
 
 
 class movimientoDetalleForm(forms.ModelForm):
@@ -48,4 +48,4 @@ class movimientoDetalleForm(forms.ModelForm):
 		self.fields['producto'].widget.attrs.update({'v-model' : 'movimientos.forms.create.deta.producto'})
 		self.fields['cantidad'].widget.attrs.update({'v-model' : 'movimientos.forms.create.deta.cantidad'})
 		self.fields['valor'].widget.attrs.update({'v-model' : 'movimientos.forms.create.deta.valor'})
-		self.fields['valor_total'].widget.attrs.update({'v-model' : 'movimientos.forms.create.deta.valor_total'})
+		self.fields['valor_total'].widget.attrs.update({'readonly':True, 'v-model' : 'movimientos.forms.create.deta.valor_total'})

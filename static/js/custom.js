@@ -63,6 +63,65 @@ var AppVue = new Vue({
         
     },
     methods:{
+
+        facFormCreateReset(){
+            this.facturacion = {
+                forms: {
+                    create: {
+                        fecha_creacion: moment().format("Y-M-D"),
+                        factualizacion: moment().format("Y-M-D"),
+                        valor_total: 0,
+                        cliente: null,
+                        deta:{
+                            producto: null,
+                            cantidad: null,
+                            valor: null,
+                            valor_total: null,
+                        },
+                        productos: [],
+                    }
+                }
+            };
+        },
+        movFormCreateReset() {
+            this.movimientos =  {
+                forms: {
+                    create: {
+                        fecha_creacion: moment().format("Y-M-D"),
+                        proveedor: null,
+                        tipo: null,
+                        factualizacion: moment().format("Y-M-D"),
+                        valor_total: 0,
+                        deta:{
+                            producto: null,
+                            cantidad: null,
+                            valor: null,
+                            valor_total: null,
+                        },
+                        productos: []
+                    }
+                }
+            };
+        },
+        invFormCreateReset() {
+            this.inventarios = {
+                forms: {
+                    create: {
+                        fecha_creacion: moment().format("Y-M-D"),
+                        factualizacion: moment().format("Y-M-D"),
+                        valor_total: 0,
+                        deta:{
+                            producto: null,
+                            cantidad: null,
+                            valor: null,
+                            valor_total: null,
+                        },
+                        productos: []
+                    }
+                }
+            };
+        },
+
         getProduct(id){
             return axios.get(`/api/product/${id}`).then(data => data.data)
         },
@@ -111,6 +170,7 @@ var AppVue = new Vue({
                         alert("Factura Creada. \n Ingrese los datos ")
                     })
                 })
+                this.facFormCreateReset();
             })
         },
 
@@ -159,6 +219,8 @@ var AppVue = new Vue({
                         alert("Movimiento Creada. \n Ingrese los datos ")
                     })
                 })
+                this.movFormCreateReset();
+                
             })
         },
 
@@ -205,6 +267,8 @@ var AppVue = new Vue({
                         alert("inventario Creada. \n Ingrese los datos ")
                     })
                 })
+                this.invFormCreateReset();
+                
             })
         }
     },

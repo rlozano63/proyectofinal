@@ -5,7 +5,9 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title> Forsales {% block titulo_pagina %} {% endblock titulo_pagina %}</title>
-
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+<link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.0.0-beta.3/dist/css/bootstrap-material-design.min.css"
+  integrity="sha384-k5bjxeyx3S5yJJNRD1eKUMdgxuvfisWKku5dwHQq9Q/Lz6H8CyL89KF52ICpX4cL" crossorigin="anonymous">
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -38,13 +40,19 @@
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
+
+  <style>
+    html, body{
+       font-size: 16px !important;
+    }
+  </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper" id="vue-root">
   {% csrf_token %}
   <header class="main-header">
     <!-- Logo -->
-    <a href="forsales.png" class="logo">
+    <a href="/" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>F</b>V</span>
       <!-- logo for regular state and mobile devices -->
@@ -176,7 +184,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class=""><a href="{% url 'inventario' %}"><i class="fa fa-circle-o"></i> Inventario</a></li>
+            <!--<li class=""><a href="{% url 'inventario' %}"><i class="fa fa-circle-o"></i> Inventario</a></li>-->
             <li class=""><a href="{% url 'movimiento' %}"><i class="fa fa-circle-o"></i> Movimientos</a></li>
           </ul>
         </li>
@@ -489,6 +497,13 @@
 </script>
 <!-- Bootstrap 3.3.6 -->
 <script src="{% static 'js/AdminLTE/bootstrap/js/bootstrap.min.js' %}"></script>
+<!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+  crossorigin="anonymous"></script>-->
+<script src="https://unpkg.com/popper.js@1.12.5/dist/umd/popper.js" integrity="sha384-KlVcf2tswD0JOTQnzU4uwqXcbAy57PvV48YUiLjqpk/MJ2wExQhg9tuozn5A1iVw"
+  crossorigin="anonymous"></script>
+<script src="https://unpkg.com/bootstrap-material-design@4.0.0-beta.3/dist/js/bootstrap-material-design.js" integrity="sha384-hC7RwS0Uz+TOt6rNG8GX0xYCJ2EydZt1HeElNwQqW+3udRol4XwyBfISrNDgQcGA"
+  crossorigin="anonymous"></script>
+<script>$(document).ready(function () { $(":input").addClass("form-control"); $('body').bootstrapMaterialDesign(); });</script>
 <!-- Morris.js charts -->
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>-->
 <script src="{% static 'js/AdminLTE/plugins/morris/morris.min.js' %}"></script>

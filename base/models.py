@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 
 class unidades(models.Model):
 	nombre = models.CharField(max_length=20)
+	def __str__(self):
+		return self.nombre
 	def natural_key(self):
 		return {
 			"nombre" : self.nombre

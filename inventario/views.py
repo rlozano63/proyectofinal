@@ -3,11 +3,22 @@ from django.shortcuts import render
 from base.views import AjaxableResponseMixin
 
 from inventario.forms import *
+from base.forms import producto
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from django.core.urlresolvers import reverse_lazy
 
 
+
+# Create your views here.
+def MovimientoHistorial(request,id):
+	objproducto = producto.objects.get(id=id)
+	movimientosdetalle = movimiento_detalle.objects.filter(producto=objproducto)
+	context = {
+		'producto': objproducto,
+		'movimientosdetalle': movimientosdetalle,
+	}
+	return render(request, 'movimiento/historial.html', context)
 
 # Create your views here.
 class InventarioList(AjaxableResponseMixin,ListView):
