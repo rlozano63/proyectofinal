@@ -10,7 +10,7 @@
 	<form method="post" id="form_detalle" @submit.prevent="movFormCreateAddDetalle">
 		{% csrf_token %}
 		{{ form_detalle.as_p }}
-		<input type="submit" value="Guardar" />
+		<input type="submit" class="btn btn-success" value="Guardar" />
 	</form>
 
 	<table class="table">
@@ -31,12 +31,12 @@
 					<input v-model="producto.valor" @change="movFormCreateUpdateeVT(producto)" type="number"> </td>
 				<td> [[ producto.valor_total ]] </td>
 				<td>
-					<button @click="movFormCreateDeleteProducto(producto)">Borrar</button>
+					<button class="btn btn-danger" @click="movFormCreateDeleteProducto(producto)">Borrar</button>
 				</td>
 			</tr>
 		</tbody>
 	</table>
-	<input type="button" value="Facturar" @click="movFormCreateFacturar" />
+	<input type="button" class="btn btn-success" value="Facturar" @click="movFormCreateFacturar" />
 
 
 {% endblock content %}

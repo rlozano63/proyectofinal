@@ -3,6 +3,6 @@
 {% block content %}
 	<form action="" method="post">{% csrf_token %}
 		<p>Desea borrar el distribuidor "{{ object.nombre }}"?</p>
-		<input type="submit" value="Si" />
+		<input type="submit" class="btn btn-success" value="Si" />
 	</form>
 {% endblock content %}

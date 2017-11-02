@@ -8,5 +8,5 @@ urlpatterns = [
 	url(r'^inventario/detalle/crear/$', InventarioDetaleCreation.as_view(), name="inventario_detalle"),
 	url(r'^movimiento/crear/$', MovimientoCreation.as_view(), name="movimiento"),
 	url(r'^movimiento/detalle/crear/$', MovimientoDetaleCreation.as_view(), name="movimiento_detalle"),
-	url(r'^movimiento/historial/(?P<id>\d+)$', MovimientoHistorial, name="movimiento_historial"),
+	url(r'^movimiento/historial/(?P<id>\d+)$', MovimientoHistorial, name="movimiento_historial_producto"),
 ]

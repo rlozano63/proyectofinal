@@ -8,7 +8,7 @@
 	
 	<form method="post" id="form_detalle" @submit.prevent="facFormCreateAddDetalle">
 		{{ form_detalle.as_p }}
-		<input type="submit" value="Guardar" />
+		<input type="submit" class="btn btn-success" value="Guardar" />
 	</form>
 	
 	<table class="table">
@@ -26,11 +26,11 @@
 				<td> <input v-model="producto.cantidad" @change="facFormCreateUpdateeVT(producto)" type="number" > </td>
 				<td> <input v-model="producto.valor" @change="facFormCreateUpdateeVT(producto)" type="number" > </td>
 				<td> [[ producto.valor_total ]] </td>
-				<td> <button @click="facFormCreateDeleteProducto(producto)">Borrar</button></td>
+				<td> <button class="btn btn-danger" @click="facFormCreateDeleteProducto(producto)">Borrar</button></td>
 			</tr>
 		</tbody>
 	</table>
-	<input type="button" value="Facturar" @click="facFormCreateFacturar" />
+	<input type="button" class="btn btn-success" value="Facturar" @click="facFormCreateFacturar" />
 
 
 {% endblock content %}

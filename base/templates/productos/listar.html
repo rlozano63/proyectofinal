@@ -12,6 +12,7 @@
 				<th>Fecha</th>
 				<th>Editar</th>
 				<th>Borrar</th>
+				<th>Historial</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -23,6 +24,7 @@
 					<td>{{ producto.fecha }}</td>
 					<td><a href="{% url 'actualizar_producto' producto.pk %}">Editar</a></td>
 					<td><a href="{% url 'borrar_producto' producto.pk %}">Borrar</a></td>
+					<td><a href="{% url 'movimiento_historial_producto' producto.pk %}">Historial</a></td>
 				</tr>
 			{% empty %}
 				<tr>
@@ -31,6 +33,6 @@
 			{% endfor %}
 		</tbody>
 	</table>
-					<button class="btn btn-success"><a href="{% url 'crear_producto' %}">Nuevo</a></button>
+	<a class="btn btn-success" href="{% url 'crear_producto' %}">Nuevo</a>
 
 {% endblock content %}

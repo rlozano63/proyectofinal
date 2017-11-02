@@ -5,13 +5,13 @@
 		{% csrf_token %}
 		<input type="hidden" id="catalogo_pk">
 		{{ form.as_p }}
-		<input type="submit" value="Guardar" />
+		<input type="submit" class="btn btn-success"value="Guardar" />
 	</form>
 
 	<form method="post" id="form_detalle">
 		{% csrf_token %}
 		{{ form_detalle.as_p }}
-		<input type="submit" value="Guardar" />
+		<input type="submit" class="btn btn-success" value="Guardar" />
 	</form>
 
 

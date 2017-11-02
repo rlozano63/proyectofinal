@@ -10,6 +10,7 @@
 	<table class="table">
 		<thead>
 			<tr>
+				<th></th>
 				<th>id</th>
 				<th>fecha</th>
 				<th>tipo</th>
@@ -20,7 +21,18 @@
 		</thead>
 		<tbody>
 			{% for movimientodetalle in movimientosdetalle %}
-				<tr>
+				<tr 
+					data-tipo-movimiento="{{ movimientodetalle.movimiento.slug }}"
+				>
+					<td 
+						class="{% if movimientodetalle.movimiento.slug == 'input' %} bg-success {% else %} bg-danger {% endif %}"
+					>
+						{% if movimientodetalle.movimiento.slug == 'input' %}
+							+
+						{% else %}
+							-
+						{% endif %}
+					</td>
 					<td>{{ movimientodetalle.pk }}</td>
 					<td>{{ movimientodetalle.movimiento.fecha_creacion }}</td>
 					<td>{{ movimientodetalle.movimiento.tipo }}</td>

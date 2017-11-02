@@ -45,6 +45,9 @@
     html, body{
        font-size: 16px !important;
     }
+    .navbar {
+      display: inherit !important;
+    }
   </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -503,7 +506,11 @@
   crossorigin="anonymous"></script>
 <script src="https://unpkg.com/bootstrap-material-design@4.0.0-beta.3/dist/js/bootstrap-material-design.js" integrity="sha384-hC7RwS0Uz+TOt6rNG8GX0xYCJ2EydZt1HeElNwQqW+3udRol4XwyBfISrNDgQcGA"
   crossorigin="anonymous"></script>
-<script>$(document).ready(function () { $(":input").addClass("form-control"); $('body').bootstrapMaterialDesign(); });</script>
+<script>$(document).ready(function () { 
+  $("input, select").addClass("form-control"); 
+  $("button, input.btn, a.btn").addClass("btn btn-raised"); 
+  $('body').bootstrapMaterialDesign(); 
+});</script>
 <!-- Morris.js charts -->
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>-->
 <script src="{% static 'js/AdminLTE/plugins/morris/morris.min.js' %}"></script>
