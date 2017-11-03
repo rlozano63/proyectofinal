@@ -58,7 +58,6 @@ def Dashboard(request):
 	escazes = []
 	for objproducto in producto.objects.all():
 		if objproducto.cantidad < objproducto.stock_minimo:
-			print objproducto
 			escazes.append(objproducto)
 
 	context = {"escazes":escazes}
@@ -69,7 +68,6 @@ def getClientesPositions(request):
 	positions = []
 	for ocliente in clientes:
 		positions.append({"name":"%s %s" % (ocliente.nombre,ocliente.apellido),"position":{"lat":ocliente.pos_x,"lng":ocliente.pos_y}})
-	print positions
 	return JsonResponse({"positions":positions})
 
 

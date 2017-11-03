@@ -49,7 +49,6 @@ class InventarioCreation(AjaxableResponseMixin,CreateView):
 	def get_context_data(self,**kwargs):
 		context = super(InventarioCreation, self).get_context_data(**kwargs)
 		context['form_detalle'] = inventarioDetalleForm()
-		print context['form_detalle']
 		return context
 
 class InventarioDetaleCreation(AjaxableResponseMixin,CreateView):
@@ -81,7 +80,6 @@ class MovimientoCreation(AjaxableResponseMixin,CreateView):
 	def get_context_data(self,**kwargs):
 		context = super(MovimientoCreation, self).get_context_data(**kwargs)
 		context['form_detalle'] = movimientoDetalleForm()
-		print context['form_detalle']
 		return context
 
 class MovimientoDetaleCreation(AjaxableResponseMixin,CreateView):
@@ -95,7 +93,6 @@ class MovimientoDetaleCreation(AjaxableResponseMixin,CreateView):
 		deta = form.instance
 		calcular_cantidad(deta.producto.pk,deta.movimiento.tipo.pk,deta.cantidad)
 
-		print form.instance.cantidad
 		return super(MovimientoDetaleCreation, self).form_valid(form)
 
 def calcular_cantidad(pk_producto,pk_tmovi,cantidad):

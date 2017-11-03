@@ -86,7 +86,6 @@ def verificacion_ventas_cliente(cliente_id = None):
 		if total_ventas_cliente < compra_minima_cliente:
 			ocliente.ruta_activa = 0
 		ocliente.save()
-	print response
 	response = serializers.serialize('json', cliente.objects.all())
 	return response
 
@@ -110,7 +109,6 @@ def ReporteVentasTotal(request):
 	distribuidor_id = request.POST.get("distribuidor")
 	facturas = factura.objects.filter(fecha_creacion__date__gte=fini,fecha_creacion__date__lte=ffin)
 	vttotal = factura.objects.filter(fecha_creacion__date__gte=fini,fecha_creacion__date__lte=ffin).aggregate(Sum("valor_total"))["valor_total__sum"]
-	print vttotal
 	for fac in facturas:
 		fac.detalle = factura_detalle.objects.filter(factura = fac)
 

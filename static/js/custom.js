@@ -294,9 +294,7 @@ var AppVue = new Vue({
         /* Facturacion */
         'facturacion.forms.create.productos': {
             handler: function (newValue) {
-                console.log("hola")
                 var form = this.facturacion.forms.create
-                console.log(form.productos)
                 form.valor_total = form.productos.reduce((n, obj)=> n + obj.valor_total,0)
             },
             deep: true
@@ -322,9 +320,7 @@ var AppVue = new Vue({
         /* Movimientos */
         'movimientos.forms.create.productos': {
             handler: function (newValue) {
-                console.log("hola")
                 var form = this.movimientos.forms.create
-                console.log(form.productos)
                 form.valor_total = form.productos.reduce((n, obj) => n + obj.valor_total, 0)
             },
             deep: true
@@ -354,9 +350,7 @@ var AppVue = new Vue({
         /* Innentarios */
         'inventarios.forms.create.productos': {
             handler: function (newValue) {
-                console.log("hola")
                 var form = this.inventarios.forms.create
-                console.log(form.productos)
                 form.valor_total = form.productos.reduce((n, obj) => n + obj.valor_total, 0)
             },
             deep: true

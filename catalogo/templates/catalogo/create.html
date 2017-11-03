@@ -54,7 +54,6 @@
 					}
 				},
 				success: function(response){
-					console.log(response)
 					response.object = JSON.parse(response.object)[0]
 					$("#catalogo_pk").val(response.object.pk)
 				}
@@ -96,7 +95,6 @@
 					}
 				},
 				success: function(response){
-					console.log(response)
 				}
 
 			});

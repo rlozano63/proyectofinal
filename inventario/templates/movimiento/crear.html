@@ -1,42 +1,46 @@
 {% extends 'AdminLTE/index.html' %}
 
 {% block content %}
-	<form method="post" id="form">
+	<form method="post" id="form" @submit.prevent="movFormCreateFacturar">
 		{% csrf_token %}
 		<input type="hidden" id="movimiento_pk">
 		{{ form.as_p }}
 	</form>
+		<div class="card card-default">
+			<div class="card-body">
+			<form method="post" id="form_detalle" @submit.prevent="movFormCreateAddDetalle">
+				{% csrf_token %}
+				{{ form_detalle.as_p }}
+				<input type="submit" class="btn btn-success" value="Guardar" />
+			</form>
 
-	<form method="post" id="form_detalle" @submit.prevent="movFormCreateAddDetalle">
-		{% csrf_token %}
-		{{ form_detalle.as_p }}
-		<input type="submit" class="btn btn-success" value="Guardar" />
-	</form>
+			<table class="table">
+				<thead>
+					<tr>
+						<th> Producto </th>
+						<th> Cantidad </th>
+						<th> Valor Unitario </th>
+						<th> Valor Total </th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="producto in movimientos.forms.create.productos">
+						<td> [[ producto.producto ]] </td>
+						<td>
+							<input v-model="producto.cantidad" @change="movFormCreateUpdateeVT(producto)" type="number"> </td>
+						<td>
+							<input v-model="producto.valor" @change="movFormCreateUpdateeVT(producto)" type="number"> </td>
+						<td> [[ producto.valor_total ]] </td>
+						<td>
+							<button class="btn btn-danger" @click="movFormCreateDeleteProducto(producto)">Borrar</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		</div>
 
-	<table class="table">
-		<thead>
-			<tr>
-				<th> producto </th>
-				<th> cantidad </th>
-				<th> valor </th>
-				<th> valor_total </th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr v-for="producto in movimientos.forms.create.productos">
-				<td> [[ producto.producto ]] </td>
-				<td>
-					<input v-model="producto.cantidad" @change="movFormCreateUpdateeVT(producto)" type="number"> </td>
-				<td>
-					<input v-model="producto.valor" @change="movFormCreateUpdateeVT(producto)" type="number"> </td>
-				<td> [[ producto.valor_total ]] </td>
-				<td>
-					<button class="btn btn-danger" @click="movFormCreateDeleteProducto(producto)">Borrar</button>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	<input type="button" class="btn btn-success" value="Facturar" @click="movFormCreateFacturar" />
+	<input type="submit" form="form" class="btn btn-success btn-fixed" value="Facturar"  />
 
 
 {% endblock content %}

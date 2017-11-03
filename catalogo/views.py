@@ -48,9 +48,6 @@ def CatalogoDetail(request, pkcatalogo):
 		return context
 
 	def get_queryset(self,**kwargs):
-		print "-------------"
-		print kwargs
-		print "-------------"
 		objcatalogo = catalogo.objects.get(pk=kwargs["pkcatalogo"])
 		queryset = catalogo_detalle.objects.get(catalogo=objcatalogo)
 		return queryset
@@ -67,7 +64,6 @@ class CatalogoCreation(AjaxableResponseMixin,CreateView):
 		context['form_detalle'] = catalogoDetalleForm()
 		context['url'] = "/catalogo/crear/"
 		context['url_detalle'] = "/catalogo/detalle/crear/"
-		print context['form_detalle']
 		return context
 
 class CatalogoUpdate(AjaxableResponseMixin,UpdateView):
@@ -82,7 +78,6 @@ class CatalogoUpdate(AjaxableResponseMixin,UpdateView):
 		context['form_detalle'] = catalogoDetalleForm()
 		context['url'] = "/catalogo/editar/" + self.kwargs["pk"]
 		context['url_detalle'] = "/catalogo/detalle/editar/" + self.kwargs["pk"]
-		print context['form_detalle']
 		return context
 
 class CatalogoDetaleCreation(AjaxableResponseMixin,CreateView):
