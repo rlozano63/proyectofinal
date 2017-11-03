@@ -11,29 +11,34 @@
 		<thead>
 			<tr>
 				<th></th>
-				<th>id</th>
-				<th>fecha</th>
-				<th>tipo</th>
-				<th>cantidad</th>
-				<th>valor</th>
-				<th>valor_total</th>
+				<th>Id</th>
+				<th>Fecha</th>
+				<th>Tipo</th>
+				<th>Cantidad</th>
+				<th>Valor</th>
+				<th>Valor Total</th>
 			</tr>
 		</thead>
 		<tbody>
 			{% for movimientodetalle in movimientosdetalle %}
 				<tr 
-					data-tipo-movimiento="{{ movimientodetalle.movimiento.slug }}"
+					data-tipo-movimiento="{{ movimientodetalle.movimiento.tipo.slug }}"
 				>
 					<td 
-						class="{% if movimientodetalle.movimiento.slug == 'input' %} bg-success {% else %} bg-danger {% endif %}"
+						class="{% if movimientodetalle.movimiento.tipo.slug == 'input' %} bg-success {% else %} bg-danger {% endif %}"
 					>
-						{% if movimientodetalle.movimiento.slug == 'input' %}
+						{% if movimientodetalle.movimiento.tipo.slug == 'input' %}
 							+
 						{% else %}
 							-
 						{% endif %}
 					</td>
-					<td>{{ movimientodetalle.pk }}</td>
+					<td>
+						{{ movimientodetalle.pk }}
+						{% if movimientodetalle.movimiento.factura %}
+							<a href="{% url 'ver_factura_detalle' movimientodetalle.movimiento.factura.id %}"> Factura #{{movimientodetalle.movimiento.factura.id}} </a>	
+						{% endif %}
+					</td>
 					<td>{{ movimientodetalle.movimiento.fecha_creacion }}</td>
 					<td>{{ movimientodetalle.movimiento.tipo }}</td>
 					<td>{{ movimientodetalle.cantidad }}</td>

@@ -60,7 +60,7 @@ class FacturaDetaleCreation(AjaxableResponseMixin,CreateView):
 	def form_valid(self, form):
 		tipo_movimiento = 2 # salida
 		deta = form.instance
-		calcular_cantidad(deta.producto.pk,tipo_movimiento,deta.cantidad)
+		#calcular_cantidad(deta.producto.pk,tipo_movimiento,deta.cantidad)
 
 		deta.factura.valor_total += (deta.cantidad*deta.valor)
 		deta.factura.save()

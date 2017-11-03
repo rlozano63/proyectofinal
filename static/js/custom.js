@@ -92,6 +92,7 @@ var AppVue = new Vue({
                         tipo: null,
                         factualizacion: moment().format("Y-M-D"),
                         valor_total: 0,
+                        factura: null,
                         deta:{
                             producto: null,
                             cantidad: null,
@@ -170,6 +171,22 @@ var AppVue = new Vue({
                         alert("Factura Creada. \n Ingrese los datos ")
                     })
                 })
+
+
+                var formMov = this.movimientos.forms.create;
+
+                formMov.factura = json.pk
+                formMov.fecha_creacion = form.fecha_creacion
+                formMov.factualizacion = form.factualizacion
+                formMov.valor_total = form.valor_total
+                // formMov.proveedor
+                formMov.tipo = 2
+                formMov.productos = form.productos
+
+                this.movFormCreateFacturar();
+
+
+                this.movFormCreateReset();
                 this.facFormCreateReset();
             })
         },
@@ -206,6 +223,7 @@ var AppVue = new Vue({
                 factualizacion: form.factualizacion,
                 valor_total: form.valor_total,
                 proveedor: form.proveedor,
+                factura: form.factura,
                 tipo: form.tipo,
             }
             
