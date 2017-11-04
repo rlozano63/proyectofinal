@@ -6,6 +6,7 @@ class facturaForm(forms.ModelForm):
 	class Meta:
 		model = factura
 		fields = "__all__"
+		exclude = ["factualizacion"]
 
 	def __init__(self, *args, **kwargs):
 		super(facturaForm, self).__init__(*args, **kwargs)
@@ -13,10 +14,7 @@ class facturaForm(forms.ModelForm):
 		
 		self.fields['fecha_creacion'].widget.attrs.update({'v-model' : 'facturacion.forms.create.fecha_creacion'})
 		self.fields['fecha_creacion'].label = "Fecha"
-		
-		self.fields['factualizacion'].widget.attrs.update({'v-model' : 'facturacion.forms.create.factualizacion'})
-		self.fields['factualizacion'].label = "Fecha Actualizacion"
-		
+				
 		self.fields['valor_total'].widget.attrs.update({'readonly':True,'v-model' : 'facturacion.forms.create.valor_total'})
 		self.fields['valor_total'].label = "Total"
 		
