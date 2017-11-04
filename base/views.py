@@ -14,7 +14,12 @@ from base.forms import ProductoForm, DistribuidorForm, ClienteForm, ProveedorFor
 from django.core import serializers
 from django.http import JsonResponse
 
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+
+
 @csrf_exempt
+@login_required
 def GetProduct(request,id):
 	p = producto.objects.get(id = id)
 	response = serializers.serialize('json', [p])
@@ -54,6 +59,7 @@ class AjaxableResponseMixin(object):
 		else:
 			return response
 
+@login_required
 def Dashboard(request):
 	escazes = []
 	for objproducto in producto.objects.all():
@@ -63,6 +69,7 @@ def Dashboard(request):
 	context = {"escazes":escazes}
 	return render(request, 'dashboard.html', context)
 
+@login_required
 def getClientesPositions(request):
 	clientes = cliente.objects.filter(ruta_activa=1)
 	positions = []
@@ -70,104 +77,96 @@ def getClientesPositions(request):
 		positions.append({"name":"%s %s" % (ocliente.nombre,ocliente.apellido),"position":{"lat":ocliente.pos_x,"lng":ocliente.pos_y}})
 	return JsonResponse({"positions":positions})
 
-
-class BorrarProducto(DeleteView):
+class BorrarProducto(LoginRequiredMixin,DeleteView):
 	model = producto
 	success_url = reverse_lazy('listar_productos')
 	template_name = 'productos/borrar.html'
 
-class ActualizarProducto(UpdateView):
+class ActualizarProducto(LoginRequiredMixin,UpdateView):
 	model = producto
 	fields = '__all__'
 	template_name = 'productos/actualizar.html'
 	success_url = reverse_lazy('listar_productos')
 
-class ListarProductos(ListView):
+class ListarProductos(LoginRequiredMixin,ListView):
 
 	model = producto
 	template_name = 'productos/listar.html'
 
-
-
-
-class ProductoCreation(CreateView):
+class ProductoCreation(LoginRequiredMixin,CreateView):
     model = producto
     template_name = 'productos/create.html'
     fields = '__all__'
     #form_class = ProductoForm
     success_url = reverse_lazy('listar_productos')
 
-
-
-class ClienteCreation(CreateView):
+class ClienteCreation(LoginRequiredMixin,CreateView):
 	model = cliente
 	template_name = 'clientes/create.html'
 	fields = '__all__'
 	success_url = reverse_lazy('listar_clientes')
 
-class BorrarCliente(DeleteView):
+class BorrarCliente(LoginRequiredMixin,DeleteView):
 	model = cliente
 	success_url = reverse_lazy('listar_clientes')
 	template_name = 'clientes/borrar.html'
 
-class ActualizarCliente(UpdateView):
+class ActualizarCliente(LoginRequiredMixin,UpdateView):
 	model = cliente
 	fields = '__all__'
 	template_name = 'clientes/actualizar.html'
 	success_url = reverse_lazy('listar_clientes')
 
-class ListarCliente(ListView):
+class ListarCliente(LoginRequiredMixin,ListView):
 
 	model = cliente
 	template_name = 'clientes/listar.html'
 
-
-class DistribuidorCreation(CreateView):
+class DistribuidorCreation(LoginRequiredMixin,CreateView):
 	model = distribuidor
 	template_name = 'distribuidores/create.html'
 	fields = '__all__'
 	success_url = reverse_lazy('listar_distribuidores')
 
-class BorrarDistribuidor(DeleteView):
+class BorrarDistribuidor(LoginRequiredMixin,DeleteView):
 	model = distribuidor
 	success_url = reverse_lazy('listar_distribuidores')
 	template_name = 'distribuidores/borrar.html'
 
-class ActualizarDistribuidor(UpdateView):
+class ActualizarDistribuidor(LoginRequiredMixin,UpdateView):
 	model = distribuidor
 	fields = '__all__'
 	template_name = 'distribuidores/actualizar.html'
 	success_url = reverse_lazy('listar_distribuidores')
 
-class ListarDistribuidor(ListView):
+class ListarDistribuidor(LoginRequiredMixin,ListView):
 
 	model = distribuidor
 	template_name = 'distribuidores/listar.html'
 
-
-class ProveedorCreation(CreateView):
+class ProveedorCreation(LoginRequiredMixin,CreateView):
 	model = proveedor
 	template_name = 'proveedores/create.html'
 	fields = '__all__'
 	success_url = reverse_lazy('listar_proveedores')
 
-class BorrarProveedor(DeleteView):
+class BorrarProveedor(LoginRequiredMixin,DeleteView):
 	model = proveedor
 	success_url = reverse_lazy('listar_proveedores')
 	template_name = 'proveedores/borrar.html'
 
-class ActualizarProveedor(UpdateView):
+class ActualizarProveedor(LoginRequiredMixin,UpdateView):
 	model = proveedor
 	fields = '__all__'
 	template_name = 'proveedores/actualizar.html'
 	success_url = reverse_lazy('listar_proveedores')
 
-class ListarProveedor(ListView):
+class ListarProveedor(LoginRequiredMixin,ListView):
 
 	model = proveedor
 	template_name = 'proveedores/listar.html'
 
-class ListarCatalogoDistribuidor(ListView):
+class ListarCatalogoDistribuidor(LoginRequiredMixin,ListView):
 
 	model = catalogo_detalle
 	template_name = 'distribuidores/catalogo.html'

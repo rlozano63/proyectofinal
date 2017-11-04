@@ -8,7 +8,8 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import DeleteView
 from django.views.generic.edit import UpdateView
 
-
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 
 from django.core.urlresolvers import reverse_lazy
@@ -17,7 +18,7 @@ from django.core.urlresolvers import reverse_lazy
 
 # Create your views here.
 
-class CatalogoList(AjaxableResponseMixin,ListView):
+class CatalogoList(LoginRequiredMixin,AjaxableResponseMixin,ListView):
 	model = catalogo
 	template_name = 'catalogo/listar.html'
 	fields = "__all__"
@@ -27,13 +28,12 @@ class CatalogoList(AjaxableResponseMixin,ListView):
 		context = super(CatalogoList, self).get_context_data(**kwargs)
 		return context
 
+@login_required
 def CatalogoDetail(request, pkcatalogo):
 	objcatalogo = catalogo.objects.get(pk=pkcatalogo)
 	queryset = catalogo_detalle.objects.filter(catalogo=objcatalogo)
 	context = {"catalogo":objcatalogo,"detalle":queryset}
 	return render(request,"catalogo/detalle.html",context)
-
-	
 
 """class CatalogoDetail(AjaxableResponseMixin,ListView):
 	model = catalogo_detalle
@@ -52,7 +52,7 @@ def CatalogoDetail(request, pkcatalogo):
 		queryset = catalogo_detalle.objects.get(catalogo=objcatalogo)
 		return queryset
 """
-class CatalogoCreation(AjaxableResponseMixin,CreateView):
+class CatalogoCreation(LoginRequiredMixin,AjaxableResponseMixin,CreateView):
 	model = catalogo
 	template_name = 'catalogo/create.html'
 	#form_class = facturaForm
@@ -66,7 +66,7 @@ class CatalogoCreation(AjaxableResponseMixin,CreateView):
 		context['url_detalle'] = "/catalogo/detalle/crear/"
 		return context
 
-class CatalogoUpdate(AjaxableResponseMixin,UpdateView):
+class CatalogoUpdate(LoginRequiredMixin,AjaxableResponseMixin,UpdateView):
 	model = catalogo
 	template_name = 'catalogo/create.html'
 	#form_class = facturaForm
@@ -80,21 +80,21 @@ class CatalogoUpdate(AjaxableResponseMixin,UpdateView):
 		context['url_detalle'] = "/catalogo/detalle/editar/" + self.kwargs["pk"]
 		return context
 
-class CatalogoDetaleCreation(AjaxableResponseMixin,CreateView):
+class CatalogoDetaleCreation(LoginRequiredMixin,AjaxableResponseMixin,CreateView):
 	model = catalogo_detalle
 	#template_name = 'factura/detalle_crear.html'
 	#form_class = facturaForm
 	fields = "__all__"
 	success_url = reverse_lazy('listar_productos')
 
-class CatalogoDetaleUpdate(AjaxableResponseMixin,UpdateView):
+class CatalogoDetaleUpdate(LoginRequiredMixin,AjaxableResponseMixin,UpdateView):
 	model = catalogo_detalle
 	#template_name = 'factura/detalle_crear.html'
 	#form_class = facturaForm
 	fields = "__all__"
 	success_url = reverse_lazy('listar_productos')
 
-class BorrarCatalogo(AjaxableResponseMixin, CreateView):
+class BorrarCatalogo(LoginRequiredMixin,AjaxableResponseMixin, CreateView):
 	"""docstring for BorrarCatalogo"""
 	model = catalogo
 	template_name = 'catalogo/borrar.html'

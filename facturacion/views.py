@@ -14,9 +14,11 @@ from django.core.urlresolvers import reverse_lazy
 
 from inventario.views import calcular_cantidad
 
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
-class FacturaList(AjaxableResponseMixin,ListView):
+class FacturaList(LoginRequiredMixin,AjaxableResponseMixin,ListView):
 	model = factura
 	template_name = 'factura/listar.html'
 	fields = "__all__"
@@ -26,6 +28,7 @@ class FacturaList(AjaxableResponseMixin,ListView):
 		context = super(FacturaList, self).get_context_data(**kwargs)
 		return context
 
+@login_required
 def FacturaDetail(request, pkfactura):
 	objfactura = factura.objects.get(pk=pkfactura)
 	queryset = factura_detalle.objects.filter(factura=objfactura)
@@ -33,7 +36,7 @@ def FacturaDetail(request, pkfactura):
 	return render(request,"factura/detalle.html",context)
 
 
-class FacturaCreation(AjaxableResponseMixin,CreateView):
+class FacturaCreation(LoginRequiredMixin,AjaxableResponseMixin,CreateView):
 	model = factura
 	template_name = 'factura/create.html'
 	form_class = facturaForm
@@ -51,7 +54,7 @@ class FacturaCreation(AjaxableResponseMixin,CreateView):
 
 		return super(FacturaCreation, self).form_valid(form)
 
-class FacturaDetaleCreation(AjaxableResponseMixin,CreateView):
+class FacturaDetaleCreation(LoginRequiredMixin,AjaxableResponseMixin,CreateView):
 	model = factura_detalle
 	#template_name = 'factura/detalle_crear.html'
 	#form_class = facturaForm
@@ -90,18 +93,22 @@ def verificacion_ventas_cliente(cliente_id = None):
 	return response
 
 @csrf_exempt
+@login_required
 def url_verificacion_ventas_cliente(request):
 	response = verificacion_ventas_cliente()
 	return JsonResponse(response,safe=False)
 
 
+@login_required
 
 def reportes(request):
 	distribuidores = distribuidor.objects.all()
 	return render(request,"reportes/index.html",{"distribuidores":distribuidores})
+@login_required
 
 def ReporteVentasDistribuidor(request,id_distribuidor):
 	pass
+@login_required
 
 def ReporteVentasTotal(request):
 	fini = request.POST.get("fini")

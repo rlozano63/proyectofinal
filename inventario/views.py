@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from base.views import AjaxableResponseMixin
+from base.views import LoginRequiredMixin,AjaxableResponseMixin
 
 from inventario.forms import *
 from base.forms import producto
@@ -8,9 +8,11 @@ from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from django.core.urlresolvers import reverse_lazy
 
-
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required
 def MovimientoHistorial(request,id):
 	objproducto = producto.objects.get(id=id)
 	movimientosdetalle = movimiento_detalle.objects.filter(producto=objproducto)
@@ -21,7 +23,7 @@ def MovimientoHistorial(request,id):
 	return render(request, 'movimiento/historial.html', context)
 
 # Create your views here.
-class InventarioList(AjaxableResponseMixin,ListView):
+class InventarioList(LoginRequiredMixin,AjaxableResponseMixin,ListView):
 	model = inventario
 	template_name = 'inventario/listar.html'
 	fields = "__all__"
@@ -31,6 +33,7 @@ class InventarioList(AjaxableResponseMixin,ListView):
 		context = super(InventarioList, self).get_context_data(**kwargs)
 		return context
 	
+@login_required
 def InventarioDetail(request, pkinventario):
 	objinventario = inventario.objects.get(pk=pkinventario)
 	queryset = inventario_detalle.objects.filter(inventario=objinventario)
@@ -39,7 +42,7 @@ def InventarioDetail(request, pkinventario):
 
 
 
-class InventarioCreation(AjaxableResponseMixin,CreateView):
+class InventarioCreation(LoginRequiredMixin,AjaxableResponseMixin,CreateView):
 	model = inventario
 	template_name = 'inventario/crear.html'
 	form_class = inventarioForm
@@ -51,7 +54,7 @@ class InventarioCreation(AjaxableResponseMixin,CreateView):
 		context['form_detalle'] = inventarioDetalleForm()
 		return context
 
-class InventarioDetaleCreation(AjaxableResponseMixin,CreateView):
+class InventarioDetaleCreation(LoginRequiredMixin,AjaxableResponseMixin,CreateView):
 	model = inventario_detalle
 	#template_name = 'inventario/detalle_crear.html'
 	#form_class = inventarioForm
@@ -70,7 +73,7 @@ class InventarioDetaleCreation(AjaxableResponseMixin,CreateView):
 
 # Create your views here.
 
-class MovimientoCreation(AjaxableResponseMixin,CreateView):
+class MovimientoCreation(LoginRequiredMixin,AjaxableResponseMixin,CreateView):
 	model = movimiento
 	template_name = 'movimiento/crear.html'
 	form_class = movimientoForm
@@ -82,7 +85,7 @@ class MovimientoCreation(AjaxableResponseMixin,CreateView):
 		context['form_detalle'] = movimientoDetalleForm()
 		return context
 
-class MovimientoDetaleCreation(AjaxableResponseMixin,CreateView):
+class MovimientoDetaleCreation(LoginRequiredMixin,AjaxableResponseMixin,CreateView):
 	model = movimiento_detalle
 	#template_name = 'movimiento/detalle_crear.html'
 	#form_class = movimientoForm
