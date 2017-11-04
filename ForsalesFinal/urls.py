@@ -33,4 +33,4 @@ urlpatterns = [
     url(r'^accounts/login/$', auth_views.login,name="login"),
     url(r"^logout/$", auth_views.logout_then_login,name="logout"),
 
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_URL)
