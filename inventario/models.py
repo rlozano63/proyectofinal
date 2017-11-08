@@ -31,10 +31,10 @@ class tipo_movimiento(models.Model):
 
 class movimiento(models.Model):
 	"""docstring for movimiento"""
-	fecha_creacion = models.DateTimeField()
+	fecha_creacion = models.DateTimeField(default=datetime.datetime.now())
 	proveedor = models.ForeignKey(proveedor, blank=True,null=True)
 	tipo = models.ForeignKey(tipo_movimiento)
-	factualizacion = models.DateTimeField()
+	factualizacion = models.DateTimeField(default=datetime.datetime.now())
 	factura = models.ForeignKey(factura, blank=True,null=True)
 	valor_total = models.IntegerField(default=0)
 
