@@ -18,7 +18,7 @@ var AppVue = new Vue({
                     cliente: null,
                     deta:{
                         producto: null,
-                        cantidad: null,
+                        cantidad: 1,
                         valor: null,
                         valor_total: null,
                     },
@@ -74,7 +74,7 @@ var AppVue = new Vue({
                         cliente: null,
                         deta:{
                             producto: null,
-                            cantidad: null,
+                            cantidad: 1,
                             valor: null,
                             valor_total: null,
                         },
@@ -324,6 +324,13 @@ var AppVue = new Vue({
                 form.valor_total = form.productos.reduce((n, obj) => n + obj.valor_total, 0)
             },
             deep: true
+        },
+        'facturacion.forms.create.deta.producto': function (newValue) {
+                this.getProduct(newValue).then(producto => {
+                    console.log(producto)
+                    var form = this.facturacion.forms.create.deta
+                    form.valor = producto.fields.precio
+                })
         },
         'movimientos.forms.create.deta.cantidad': function () {
             var form = this.movimientos.forms.create

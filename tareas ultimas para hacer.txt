@@ -1,0 +1,8 @@
+boton para activar o desactivar manualmente un cliente en la ruta
+enumerar en los clientes segun la secuencia de la ruta de las ventas
+-en factura el valor unitario debe ser lista dependiente del producto
+-el inventario: debe ser inventario inicial, conteo fisico en bodega, luego incrementar
+	o decrementar segun entradas y salidas
+-colocar los gastos del distribuidor: los cuales seran arriendo, servicios, rodamiento,
+	el cual ventas - gastos seran la utilidad
+-UTILIDAD: agregar reportes en gastos el cual arroja la fecha de reportes de facturacion y la fecha de gastos
