@@ -98,6 +98,8 @@ if ( os.environ.get("ENV") == "prod" ):
     DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 else:
     url = "sqlite:///" + os.path.join(BASE_DIR, 'db.sqlite3')
+    # MySQL : mysql://USER:PASSWORD@HOST:PORT/NAME
+    url = "mysql://root:SinLimites28*@127.0.0.1:3306/forsales"
     DATABASES['default'] = dj_database_url.config(default=url)
 
 # Password validation

@@ -24,7 +24,7 @@ class inventario_detalle(models.Model):
 
 class tipo_movimiento(models.Model):
 	detalle = models.TextField(max_length=50)
-	slug = models.TextField(max_length=50,unique=True,blank=True,null=True)
+	slug = models.CharField(max_length=50,unique=True,blank=True,null=True)
 
 	def __str__(self):
 		return self.detalle
