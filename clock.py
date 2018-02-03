@@ -16,7 +16,7 @@ import os
 @sched.scheduled_job('interval', minutes=1)
 def timed_job():
     can = os.environ.get('TEST_CLOCK')
-    if ( can ):
+    if ( can == '1' ):
         print('This job is run every minute.')
         os.system("python manage.py resetruta")
         print('Clear ruta.')
