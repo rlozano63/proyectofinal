@@ -36,7 +36,7 @@ CUSTOM_APPS = [
     'inventario',
     'rutas',
     'catalogo',
-   
+
 ]
 
 THIRD_APPS = [
@@ -50,6 +50,7 @@ APPS_DJANGO = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
 ]
 
 INSTALLED_APPS = APPS_DJANGO + THIRD_APPS + CUSTOM_APPS
@@ -99,7 +100,7 @@ if ( os.environ.get("ENV") == "prod" ):
 else:
     url = "sqlite:///" + os.path.join(BASE_DIR, 'db.sqlite3')
     # MySQL : mysql://USER:PASSWORD@HOST:PORT/NAME
-    url = "mysql://root:SinLimites28*@127.0.0.1:3306/forsales"
+    url = "mysql://root:CarlosBenites123@127.0.0.1:3306/forsales"
     DATABASES['default'] = dj_database_url.config(default=url)
 
 # Password validation
@@ -132,7 +133,8 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+# USE_TZ = True
+USE_TZ = False
 
 LOGIN_REDIRECT_URL = '/'
 

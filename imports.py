@@ -1,15 +1,18 @@
-from base.models import producto,distribuidor,cliente, proveedor, unidades
+from base.models import producto,distribuidor,cliente, proveedor, unidades, bodegas
 from facturacion.models import factura, factura_detalle
 from django.contrib.auth.models import User
 
+import datetime
+
 User.objects.all().delete()
-unidades.objects.all().delete()
-producto.objects.all().delete()
-cliente.objects.all().delete()
-proveedor.objects.all().delete()
-distribuidor.objects.all().delete()
+bodegas.objects.all().delete()
 factura.objects.all().delete()
 factura_detalle.objects.all().delete()
+cliente.objects.all().delete()
+unidades.objects.all().delete()
+producto.objects.all().delete()
+proveedor.objects.all().delete()
+distribuidor.objects.all().delete()
 
 d1=User.objects.create_user('root', password='forsales')
 d1.is_superuser=True
@@ -29,7 +32,37 @@ p1 = producto.objects.create(
 	nombre="leche deslactosada",
 	cantidad="100",
 	precio="12000",
-	fecha="2017-05-10",
+	fecha=datetime.datetime(2017, 5, 10),
+	unida=u1,
+	stock_minimo="50",
+	stock_maximo="200",
+)
+
+p2 = producto.objects.create(
+	nombre="leche",
+	cantidad="100",
+	precio="12000",
+	fecha=datetime.datetime(2017, 5, 10),
+	unida=u1,
+	stock_minimo="50",
+	stock_maximo="200",
+)
+
+p3 = producto.objects.create(
+	nombre="leche de fresa",
+	cantidad="100",
+	precio="12000",
+	fecha=datetime.datetime(2017, 5, 10),
+	unida=u1,
+	stock_minimo="50",
+	stock_maximo="200",
+)
+
+p4 = producto.objects.create(
+	nombre="queso",
+	cantidad="100",
+	precio="12000",
+	fecha=datetime.datetime(2017, 5, 10),
 	unida=u1,
 	stock_minimo="50",
 	stock_maximo="200",
@@ -41,7 +74,7 @@ c1 =cliente.objects.create(
 	apellido="lunar",
 	nombre_tienda="Don lunar",
 	regimen ="comun",
-	telefono="3122323123", 
+	telefono="3122323123",
 	orden_ruta="1",
 	pos_x ="4.303876",
 	pos_y="-74.805881",
@@ -54,20 +87,21 @@ c2 =cliente.objects.create(
 	apellido="sol",
 	nombre_tienda="Don myky",
 	regimen ="comun",
-	telefono="3122323", 
+	telefono="3122323",
 	orden_ruta="2",
 	pos_x ="4.303480",
 	pos_y="-74.810741",
 	ruta_activa="1",
 
 )
+
 c3 =cliente.objects.create(
 
 	nombre="sol",
 	apellido="luz",
 	nombre_tienda="Don soluz",
 	regimen ="comun",
-	telefono="312232113", 
+	telefono="312232113",
 	orden_ruta="3",
 	pos_x ="4.306026",
 	pos_y="-74.803811",
@@ -80,7 +114,7 @@ c4 =cliente.objects.create(
 	apellido="pillo",
 	nombre_tienda="pillos",
 	regimen ="comun",
-	telefono="31223212", 
+	telefono="31223212",
 	orden_ruta="4",
 	pos_x ="4.301576 ",
 	pos_y="-74.811879",
@@ -93,7 +127,7 @@ c5 =cliente.objects.create(
 	apellido="suoll",
 	nombre_tienda="musgos",
 	regimen ="comun",
-	telefono="312232113", 
+	telefono="312232113",
 	orden_ruta="5",
 	pos_x ="4.300098",
 	pos_y="-74.801661",
@@ -103,7 +137,7 @@ c5 =cliente.objects.create(
 
 proveedor.objects.create(
 
-	nombre="jose", 
+	nombre="jose",
 	apellido="manuel",
 	cedula="103212312",
 	empresa="ARBOLEDA",
@@ -115,56 +149,56 @@ distribuidor.objects.create(
 	apellido="bermudez",
 	cedula="1231231212",
 	usuario=d1,
-	
+
 
 )
 f1 = factura.objects.create(
 
-	fecha_creacion="2017-05-10 00:00:00",
-	factualizacion="2017-05-10 00:00:00",
+	fecha_creacion=datetime.datetime(2017, 5, 10),
+	factualizacion=datetime.datetime(2017, 5, 10),
 	valor_total="500000",
 	cliente=c1,
 
 )
 factura_detalle.objects.create(
 
-	factura=f1, 
+	factura=f1,
 	producto=p1,
-	cantidad="1", 
+	cantidad="1",
 	valor="12000",
 	valor_total="12000",
 
 )
 f2 = factura.objects.create(
 
-	fecha_creacion="2017-05-14 00:00:00",
-	factualizacion="2017-05-14 00:00:00",
+	fecha_creacion=datetime.datetime(2017, 5, 14),
+	factualizacion=datetime.datetime(2017, 5, 14),
 	valor_total="12000",
 	cliente=c1,
 
 )
 factura_detalle.objects.create(
 
-	factura=f2, 
+	factura=f2,
 	producto=p1,
-	cantidad="1", 
+	cantidad="1",
 	valor="12000",
 	valor_total="12000",
 
 )
 f3 = factura.objects.create(
 
-	fecha_creacion="2017-05-09 00:00:00",
-	factualizacion="2017-05-09 00:00:00",
+	fecha_creacion=datetime.datetime(2017, 5, 9),
+	factualizacion=datetime.datetime(2017, 5, 9),
 	valor_total="24000",
 	cliente=c1,
 
 )
 factura_detalle.objects.create(
 
-	factura=f3, 
-	producto=p1,
-	cantidad="2", 
+	factura=f3,
+	producto=p2,
+	cantidad="2",
 	valor="24000",
 	valor_total="24000",
 
@@ -172,17 +206,17 @@ factura_detalle.objects.create(
 
 f4 = factura.objects.create(
 
-	fecha_creacion="2017-05-13 00:00:00",
-	factualizacion="2017-05-13 00:00:00",
+	fecha_creacion=datetime.datetime(2017, 5, 13),
+	factualizacion=datetime.datetime(2017, 5, 13),
 	valor_total="24000",
 	cliente=c1,
 
 )
 factura_detalle.objects.create(
 
-	factura=f4, 
-	producto=p1,
-	cantidad="1", 
+	factura=f4,
+	producto=p2,
+	cantidad="1",
 	valor="13000",
 	valor_total="13000",
 
@@ -190,17 +224,17 @@ factura_detalle.objects.create(
 
 f5 = factura.objects.create(
 
-	fecha_creacion="2017-05-11 00:00:00",
-	factualizacion="2017-05-11 00:00:00",
+	fecha_creacion=datetime.datetime(2017, 5, 11),
+	factualizacion=datetime.datetime(2017, 5, 11),
 	valor_total="26000",
 	cliente=c1,
 
 )
 factura_detalle.objects.create(
 
-	factura=f5, 
-	producto=p1,
-	cantidad="2", 
+	factura=f5,
+	producto=p3,
+	cantidad="2",
 	valor="26000",
 	valor_total="26000",
 
@@ -208,51 +242,51 @@ factura_detalle.objects.create(
 
 f6 = factura.objects.create(
 
-	fecha_creacion="2017-05-10 00:00:00",
-	factualizacion="2017-05-10 00:00:00",
+	fecha_creacion=datetime.datetime(2017, 5, 10),
+	factualizacion=datetime.datetime(2017, 5, 10),
 	valor_total="500000",
 	cliente=c2,
 
 )
 factura_detalle.objects.create(
 
-	factura=f6, 
-	producto=p1,
-	cantidad="1", 
+	factura=f6,
+	producto=p3,
+	cantidad="1",
 	valor="12000",
 	valor_total="12000",
 
 )
 f7 = factura.objects.create(
 
-	fecha_creacion="2017-05-14 00:00:00",
-	factualizacion="2017-05-14 00:00:00",
+	fecha_creacion=datetime.datetime(2017, 5, 14),
+	factualizacion=datetime.datetime(2017, 5, 14),
 	valor_total="12000",
 	cliente=c2,
 
 )
 factura_detalle.objects.create(
 
-	factura=f7, 
-	producto=p1,
-	cantidad="1", 
+	factura=f7,
+	producto=p4,
+	cantidad="1",
 	valor="12000",
 	valor_total="12000",
 
 )
 f8 = factura.objects.create(
 
-	fecha_creacion="2017-05-09 00:00:00",
-	factualizacion="2017-05-09 00:00:00",
+	fecha_creacion=datetime.datetime(2017, 5, 9),
+	factualizacion=datetime.datetime(2017, 5, 9),
 	valor_total="24000",
 	cliente=c2,
 
 )
 factura_detalle.objects.create(
 
-	factura=f8, 
+	factura=f8,
 	producto=p1,
-	cantidad="2", 
+	cantidad="2",
 	valor="24000",
 	valor_total="24000",
 
@@ -260,17 +294,17 @@ factura_detalle.objects.create(
 
 f9 = factura.objects.create(
 
-	fecha_creacion="2017-05-13 00:00:00",
-	factualizacion="2017-05-13 00:00:00",
+	fecha_creacion=datetime.datetime(2017, 5, 13),
+	factualizacion=datetime.datetime(2017, 5, 13),
 	valor_total="24000",
 	cliente=c2,
 
 )
 factura_detalle.objects.create(
 
-	factura=f9, 
+	factura=f9,
 	producto=p1,
-	cantidad="1", 
+	cantidad="1",
 	valor="13000",
 	valor_total="13000",
 
@@ -278,68 +312,68 @@ factura_detalle.objects.create(
 
 f10 = factura.objects.create(
 
-	fecha_creacion="2017-05-11 00:00:00",
-	factualizacion="2017-05-11 00:00:00",
+	fecha_creacion=datetime.datetime(2017, 5, 11),
+	factualizacion=datetime.datetime(2017, 5, 11),
 	valor_total="26000",
 	cliente=c2,
 
 )
 factura_detalle.objects.create(
 
-	factura=f10, 
+	factura=f10,
 	producto=p1,
-	cantidad="2", 
+	cantidad="2",
 	valor="26000",
 	valor_total="26000",
 
 )
 f11 = factura.objects.create(
 
-	fecha_creacion="2017-05-10 00:00:00",
-	factualizacion="2017-05-10 00:00:00",
+	fecha_creacion=datetime.datetime(2017, 5, 10),
+	factualizacion=datetime.datetime(2017, 5, 10),
 	valor_total="500000",
 	cliente=c3,
 
 )
 factura_detalle.objects.create(
 
-	factura=f11, 
+	factura=f11,
 	producto=p1,
-	cantidad="1", 
+	cantidad="1",
 	valor="12000",
 	valor_total="12000",
 
 )
 f12 = factura.objects.create(
 
-	fecha_creacion="2017-05-14 00:00:00",
-	factualizacion="2017-05-14 00:00:00",
+	fecha_creacion=datetime.datetime(2017, 5, 14),
+	factualizacion=datetime.datetime(2017, 5, 14),
 	valor_total="12000",
 	cliente=c3,
 
 )
 factura_detalle.objects.create(
 
-	factura=f12, 
+	factura=f12,
 	producto=p1,
-	cantidad="1", 
+	cantidad="1",
 	valor="12000",
 	valor_total="12000",
 
 )
 f13 = factura.objects.create(
 
-	fecha_creacion="2017-05-09 00:00:00",
-	factualizacion="2017-05-09 00:00:00",
+	fecha_creacion=datetime.datetime(2017, 5, 9),
+	factualizacion=datetime.datetime(2017, 5, 9),
 	valor_total="24000",
 	cliente=c3,
 
 )
 factura_detalle.objects.create(
 
-	factura=f13, 
+	factura=f13,
 	producto=p1,
-	cantidad="2", 
+	cantidad="2",
 	valor="24000",
 	valor_total="24000",
 
@@ -347,17 +381,17 @@ factura_detalle.objects.create(
 
 f14 = factura.objects.create(
 
-	fecha_creacion="2017-05-13 00:00:00",
-	factualizacion="2017-05-13 00:00:00",
+	fecha_creacion=datetime.datetime(2017, 5, 13),
+	factualizacion=datetime.datetime(2017, 5, 13),
 	valor_total="24000",
 	cliente=c3,
 
 )
 factura_detalle.objects.create(
 
-	factura=f14, 
+	factura=f14,
 	producto=p1,
-	cantidad="1", 
+	cantidad="1",
 	valor="13000",
 	valor_total="13000",
 
@@ -365,68 +399,68 @@ factura_detalle.objects.create(
 
 f15 = factura.objects.create(
 
-	fecha_creacion="2017-05-11 00:00:00",
-	factualizacion="2017-05-11 00:00:00",
+	fecha_creacion=datetime.datetime(2017, 5, 11),
+	factualizacion=datetime.datetime(2017, 5, 11),
 	valor_total="26000",
 	cliente=c3,
 
 )
 factura_detalle.objects.create(
 
-	factura=f15, 
+	factura=f15,
 	producto=p1,
-	cantidad="2", 
+	cantidad="2",
 	valor="26000",
 	valor_total="26000",
 
 )
 f16 = factura.objects.create(
 
-	fecha_creacion="2017-05-10 00:00:00",
-	factualizacion="2017-05-10 00:00:00",
+	fecha_creacion=datetime.datetime(2017, 5, 10),
+	factualizacion=datetime.datetime(2017, 5, 10),
 	valor_total="500000",
 	cliente=c4,
 
 )
 factura_detalle.objects.create(
 
-	factura=f16, 
+	factura=f16,
 	producto=p1,
-	cantidad="1", 
+	cantidad="1",
 	valor="12000",
 	valor_total="12000",
 
 )
 f17 = factura.objects.create(
 
-	fecha_creacion="2017-05-14 00:00:00",
-	factualizacion="2017-05-14 00:00:00",
+	fecha_creacion=datetime.datetime(2017, 5, 14),
+	factualizacion=datetime.datetime(2017, 5, 14),
 	valor_total="12000",
 	cliente=c4,
 
 )
 factura_detalle.objects.create(
 
-	factura=f17, 
+	factura=f17,
 	producto=p1,
-	cantidad="1", 
+	cantidad="1",
 	valor="12000",
 	valor_total="12000",
 
 )
 f18 = factura.objects.create(
 
-	fecha_creacion="2017-05-09 00:00:00",
-	factualizacion="2017-05-09 00:00:00",
+	fecha_creacion=datetime.datetime(2017, 5, 9),
+	factualizacion=datetime.datetime(2017, 5, 9),
 	valor_total="24000",
 	cliente=c4,
 
 )
 factura_detalle.objects.create(
 
-	factura=f18, 
+	factura=f18,
 	producto=p1,
-	cantidad="2", 
+	cantidad="2",
 	valor="24000",
 	valor_total="24000",
 
@@ -434,17 +468,17 @@ factura_detalle.objects.create(
 
 f19 = factura.objects.create(
 
-	fecha_creacion="2017-05-13 00:00:00",
-	factualizacion="2017-05-13 00:00:00",
+	fecha_creacion=datetime.datetime(2017, 5, 13),
+	factualizacion=datetime.datetime(2017, 5, 13),
 	valor_total="24000",
 	cliente=c4,
 
 )
 factura_detalle.objects.create(
 
-	factura=f19, 
+	factura=f19,
 	producto=p1,
-	cantidad="1", 
+	cantidad="1",
 	valor="13000",
 	valor_total="13000",
 
@@ -452,68 +486,68 @@ factura_detalle.objects.create(
 
 f20 = factura.objects.create(
 
-	fecha_creacion="2017-05-11 00:00:00",
-	factualizacion="2017-05-11 00:00:00",
+	fecha_creacion=datetime.datetime(2017, 5, 11),
+	factualizacion=datetime.datetime(2017, 5, 11),
 	valor_total="26000",
 	cliente=c4,
 
 )
 factura_detalle.objects.create(
 
-	factura=f20, 
+	factura=f20,
 	producto=p1,
-	cantidad="2", 
+	cantidad="2",
 	valor="26000",
 	valor_total="26000",
 
 )
 f21 = factura.objects.create(
 
-	fecha_creacion="2017-05-10 00:00:00",
-	factualizacion="2017-05-10 00:00:00",
+	fecha_creacion=datetime.datetime(2017, 5, 10),
+	factualizacion=datetime.datetime(2017, 5, 10),
 	valor_total="500000",
 	cliente=c5,
 
 )
 factura_detalle.objects.create(
 
-	factura=f21, 
+	factura=f21,
 	producto=p1,
-	cantidad="1", 
+	cantidad="1",
 	valor="12000",
 	valor_total="12000",
 
 )
 f22 = factura.objects.create(
 
-	fecha_creacion="2017-05-14 00:00:00",
-	factualizacion="2017-05-14 00:00:00",
+	fecha_creacion=datetime.datetime(2017, 5, 14),
+	factualizacion=datetime.datetime(2017, 5, 14),
 	valor_total="12000",
 	cliente=c5,
 
 )
 factura_detalle.objects.create(
 
-	factura=f22, 
+	factura=f22,
 	producto=p1,
-	cantidad="1", 
+	cantidad="1",
 	valor="12000",
 	valor_total="12000",
 
 )
 f23 = factura.objects.create(
 
-	fecha_creacion="2017-05-09 00:00:00",
-	factualizacion="2017-05-09 00:00:00",
+	fecha_creacion=datetime.datetime(2017, 5, 9),
+	factualizacion=datetime.datetime(2017, 5, 9),
 	valor_total="24000",
 	cliente=c5,
 
 )
 factura_detalle.objects.create(
 
-	factura=f23, 
+	factura=f23,
 	producto=p1,
-	cantidad="2", 
+	cantidad="2",
 	valor="24000",
 	valor_total="24000",
 
@@ -521,17 +555,17 @@ factura_detalle.objects.create(
 
 f24 = factura.objects.create(
 
-	fecha_creacion="2017-05-13 00:00:00",
-	factualizacion="2017-05-13 00:00:00",
+	fecha_creacion=datetime.datetime(2017, 5, 13),
+	factualizacion=datetime.datetime(2017, 5, 13),
 	valor_total="24000",
 	cliente=c5,
 
 )
 factura_detalle.objects.create(
 
-	factura=f24, 
+	factura=f24,
 	producto=p1,
-	cantidad="1", 
+	cantidad="1",
 	valor="13000",
 	valor_total="13000",
 
@@ -539,18 +573,26 @@ factura_detalle.objects.create(
 
 f25 = factura.objects.create(
 
-	fecha_creacion="2017-05-11 00:00:00",
-	factualizacion="2017-05-11 00:00:00",
+	fecha_creacion=datetime.datetime(2017, 5, 11),
+	factualizacion=datetime.datetime(2017, 5, 11),
 	valor_total="26000",
 	cliente=c5,
 
 )
 factura_detalle.objects.create(
 
-	factura=f25, 
+	factura=f25,
 	producto=p1,
-	cantidad="2", 
+	cantidad="2",
 	valor="26000",
 	valor_total="26000",
 
+)
+
+bodega =bodegas.objects.create(
+	nombre="Bodega",
+	telefono="3122323",
+	direccion="3122323",
+	pos_x ="4.303480",
+	pos_y="-74.810741",
 )

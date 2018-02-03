@@ -1,0 +1,67 @@
+{% extends 'AdminLTE/index.html' %}
+{% load humanize %}
+
+
+{% block content %}
+		<h1>
+			Productos Vendidos
+			{% if config.cliente %}
+ 				a {{ config.cliente.nombre }}
+			{% endif %}
+ 			desde {{ config.fini }} Hasta {{ config.ffin }}
+
+		</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>id</th>
+				<th>Producto</th>
+				<th>Cantidad</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for producto in productos %}
+				<tr>
+					<td>{{ producto.pk }}</td>
+					<td>{{ producto.nombre }}</td>
+					<td>{{ producto.cantidad}}</td>
+				</tr>
+			{% endfor %}
+
+		</tbody>
+	</table>
+<div id="piechart" style="width: 900px; height: 500px;"></div>
+
+{% endblock content %}
+
+{% block scripts %}
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+	google.charts.load('current', {
+		'packages': ['corechart']
+	});
+	google.charts.setOnLoadCallback(drawChart);
+
+	function drawChart() {
+ 		var header = [['Producto', 'Cantidad']];
+ 		var data = {{ json|safe }}
+ 		var final = header.concat(data)
+ console.log(final)
+		var data = google.visualization.arrayToDataTable(final);
+
+		var options = {
+			title: `
+				Productos Vendidos {% if config.cliente %} a {{ config.cliente.nombre }} {% endif %}
+				desde {{ config.fini }} Hasta {{ config.ffin }}
+			`
+		};
+
+		var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+		chart.draw(data, options);
+	}
+</script>
+	<script type="text/javascript">
+	</script>
+{% endblock scripts %}

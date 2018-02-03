@@ -58,8 +58,22 @@ class proveedor(models.Model):
 	def __str__(self):
 		return self.nombre
 
+class bodegas(models.Model):
+	"""docstring for ClassName"""
+	nombre = models.CharField(max_length=50)
+	direccion = models.CharField(max_length=50)
+	telefono = models.CharField(max_length=50)
+	pos_x = models.CharField(max_length=50)
+	pos_y = models.CharField(max_length=50)
+
+	def __str__(self):
+		return self.nombre
+
 
 class cliente(models.Model):
+	class Meta:
+		ordering = ['orden_ruta']
+
 	"""docstring for cliente"""
 	nombre = models.CharField(max_length=10)
 	apellido = models.CharField(max_length=10)
@@ -67,12 +81,12 @@ class cliente(models.Model):
 	regimen = models.CharField(max_length=10)
 	direccion = models.CharField(max_length=10)
 	telefono = models.CharField(max_length=10)
-	
-	
+
+
 	orden_ruta = models.IntegerField()
 	pos_x = models.CharField(max_length=50)
 	pos_y = models.CharField(max_length=50)
-	
+
 	ruta_activa = models.CharField(max_length=1,default=1)
 
 

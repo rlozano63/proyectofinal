@@ -1,21 +1,86 @@
 {% extends 'AdminLTE/index.html' %}
 
 {% block content %}
-	<form method="POST" id="form" action="{% url 'ReporteVentasTotal' %}" target="_blank">
+	<div class="text-center">
+
+		<button onclick="anual()" class="btn bnt-primary">Anual</button>
+		<button onclick="mensual()" class="btn bnt-primary">Mensual</button>
+		<button onclick="hoy()" class="btn bnt-primary">Hoy</button>
+
+	</div>
+	<form method="POST" id="form" action="" target="_blank">
 		{% csrf_token %}
-		<!--<select name="distribuidor">
-			{% for distribuidor in distribuidores %}
-				<option value="{{ distribuidor.pk }}">{{ distribuidor.nombre }}</option>
-			{% endfor %}
-		</select>-->
 		<h1>ingrese fecha de facturacion</h1>
-		<input type="text" name="fini">
-		<input type="text" name="ffin">
-		<input type="submit" class="btn btn-success" value="ver" />
+		<div class="row">
+
+			<div class="col-md-6">
+				<input class="form-control" type="text" placeholder="Fecha Inicial" name="fini">
+			</div>
+			<div class="col-md-6">
+				<input class="form-control" type="text" placeholder="Fecha Final" name="ffin">
+			</div>
+		</div>
+		<select name="cliente" id="cliente">
+			<option value="" selected>Todos los Clientes</option>
+			{% for c in clientes %}
+				<option value="{{c.id}}">{{c.nombre}} {{c.apellido}}</option>
+			{% endfor %}
+		</select>
+
+		<input id="report_ventas" data-url="{% url 'ReporteVentasTotal' %}" type="button" class="btn btn-success" value="Reporte de Ventas" />
+		<input id="report_mas_vendidos" data-url="{% url 'ReporteMasVendidos' %}" type="button" class="btn btn-success" value="Mas Vendidos" />
 	</form>
 {% endblock content %}
 
 {% block scripts %}
 	<script type="text/javascript">
+		$("#report_ventas").click(function(event){
+			var url = event.target.dataset.url
+
+			var fini = $('[name=fini]').val()
+			var ffin = $('[name=ffin]').val()
+			var cliente = $('[name=cliente]').val()
+
+			if ( fini &&  ffin  ){
+				url = `${url}?fini=${fini}&ffin=${ffin}&cliente=${cliente}`
+				window.open(url)
+			}else{
+				alert("Verifique los campos")
+			}
+		})
+		$("#report_mas_vendidos").click(function(event){
+			var url = event.target.dataset.url
+
+			var fini = $('[name=fini]').val()
+			var ffin = $('[name=ffin]').val()
+			var cliente = $('[name=cliente]').val()
+
+			if ( fini &&  ffin ){
+				url = `${url}?fini=${fini}&ffin=${ffin}&cliente=${cliente}`
+				window.open(url)
+			}else{
+				alert("Verifique los campos")
+			}
+		})
+
+		function anual(){
+			var fini = moment().month(0).date(1).format('YYYY-MM-DD')
+			$("[name=fini]").val(fini)
+			var ffin = moment().format('YYYY-MM-DD')
+			$("[name=ffin]").val(ffin)
+		}
+		function mensual(){
+			var fini = moment().date(1).format('YYYY-MM-DD')
+			$("[name=fini]").val(fini)
+			var ffin = moment().format('YYYY-MM-DD')
+			$("[name=ffin]").val(ffin)
+		}
+		function hoy(){
+			var fini = moment().format('YYYY-MM-DD')
+			$("[name=fini]").val(fini)
+			var ffin = moment().format('YYYY-MM-DD')
+			$("[name=ffin]").val(ffin)
+		}
+
 	</script>
 {% endblock scripts %}

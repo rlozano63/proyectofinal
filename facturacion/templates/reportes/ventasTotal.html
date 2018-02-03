@@ -1,13 +1,19 @@
 {% extends 'AdminLTE/index.html' %}
+{% load humanize %}
 
 {% block content %}
+	<h1>
+		Reporte de Ventas
+		{% if config.cliente %} a {{ config.cliente.nombre }} {% endif %}
+		desde {{ config.fini }} hasta {{ config.ffin}}
+	</h1>
 
 	<table class="table">
 		<thead>
 			<tr>
 				<th>id</th>
-				<th>fecha_creacion</th>
-				<th>valor_total</th>
+				<th>Fecha</th>
+				<th>Total</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -15,13 +21,13 @@
 				<tr>
 					<td>{{ factura.pk }}</td>
 					<td>{{ factura.fecha_creacion }}</td>
-					<td>{{ factura.valor_total }}</td>
+					<td>${{ factura.valor_total|intcomma}}</td>
 				</tr>
 			{% endfor %}
 			<tr>
 				<td>Total</td>
 				<td></td>
-				<td>{{ vttotal }}</td>
+				<td>${{ vttotal|intcomma }}</td>
 			</tr>
 		</tbody>
 	</table>

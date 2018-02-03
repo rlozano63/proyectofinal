@@ -6,12 +6,13 @@ urlpatterns = [
 	url(r'^factura/(?P<pkfactura>\d+)$', FacturaDetail, name="ver_factura_detalle"),
 	url(r'^factura/crear/$', FacturaCreation.as_view(), name="facturacion"),
 	url(r'^factura/detalle/crear/$', FacturaDetaleCreation.as_view(), name="factura_detalle"),
-	
+
 	url(r'^factura/reportes$', reportes, name="reportes"),
 
 	url(r'^factura/reportes/ventasDistribuidor$', ReporteVentasDistribuidor, name="ReporteVentasDistribuidor"),
 	url(r'^factura/reportes/ventasTotal$', ReporteVentasTotal, name="ReporteVentasTotal"),
-	
+	url(r'^factura/reportes/masVendidos$', ReporteMasVendidos, name="ReporteMasVendidos"),
+
 	url(r'^verificacion_ventas_cliente$', url_verificacion_ventas_cliente, name="verificacion_ventas_cliente"),
 
 ]

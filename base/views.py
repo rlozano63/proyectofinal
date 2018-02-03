@@ -1,5 +1,6 @@
 from django.shortcuts import render
 import json
+import os
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
 from django.views.generic.list import ListView
@@ -8,9 +9,9 @@ from django.views.decorators.csrf import csrf_exempt
 
 from django.core.urlresolvers import reverse_lazy
 
-from base.models import producto, distribuidor, cliente, proveedor
+from base.models import producto, distribuidor, cliente, proveedor, bodegas
 from catalogo.models import catalogo, catalogo_detalle
-from base.forms import ProductoForm, DistribuidorForm, ClienteForm, ProveedorForm 
+from base.forms import ProductoForm, DistribuidorForm, ClienteForm, ProveedorForm
 from django.core import serializers
 from django.http import JsonResponse
 
@@ -72,10 +73,48 @@ def Dashboard(request):
 @login_required
 def getClientesPositions(request):
 	clientes = cliente.objects.filter(ruta_activa=1)
+	bodega = bodegas.objects.get()
 	positions = []
+	bodegadata = {
+		"name":bodega.nombre,
+		"direccion":bodega.direccion,
+		"telefono":bodega.telefono,
+		"position":{"lat":bodega.pos_x,"lng":bodega.pos_y}
+	}
 	for ocliente in clientes:
-		positions.append({"name":"%s %s" % (ocliente.nombre,ocliente.apellido),"position":{"lat":ocliente.pos_x,"lng":ocliente.pos_y}})
-	return JsonResponse({"positions":positions})
+		positions.append({
+			"name":"%s %s" % (ocliente.nombre,ocliente.apellido),
+			"direccion":ocliente.direccion,
+			"telefono":ocliente.telefono,
+			"position":{"lat":ocliente.pos_x,"lng":ocliente.pos_y}
+			})
+	return JsonResponse({
+		"positions":positions,
+		"bodega":bodegadata,
+	})
+
+@csrf_exempt
+@login_required
+def setStatusRuta(request, pk):
+	clienteobj = cliente.objects.filter(id=pk).get()
+	if ( clienteobj.ruta_activa == '1' ):
+		clienteobj.ruta_activa = 0
+	else:
+		clienteobj.ruta_activa = 1
+	clienteobj.save()
+	return JsonResponse(
+		json.loads(serializers.serialize("json", [clienteobj],use_natural_foreign_keys=True, use_natural_primary_keys=True))[0]
+	)
+
+@csrf_exempt
+@login_required
+def setOrdenRuta(request, pk, orden):
+	clienteobj = cliente.objects.filter(id=pk).get()
+	clienteobj.orden_ruta = orden
+	clienteobj.save()
+	return JsonResponse(
+		json.loads(serializers.serialize("json", [clienteobj],use_natural_foreign_keys=True, use_natural_primary_keys=True))[0]
+	)
 
 class BorrarProducto(LoginRequiredMixin,DeleteView):
 	model = producto
@@ -117,10 +156,20 @@ class ActualizarCliente(LoginRequiredMixin,UpdateView):
 	template_name = 'clientes/actualizar.html'
 	success_url = reverse_lazy('listar_clientes')
 
+"""
 class ListarCliente(LoginRequiredMixin,ListView):
 
 	model = cliente
 	template_name = 'clientes/listar.html'
+"""
+
+@login_required
+def ListarCliente(request,):
+	ruta_limpiada = os.environ.get('CLEAR')
+	print(ruta_limpiada)
+
+	clientes = cliente.objects.all()
+	return render(request,'clientes/listar.html',{'object_list':clientes})
 
 class DistribuidorCreation(LoginRequiredMixin,CreateView):
 	model = distribuidor

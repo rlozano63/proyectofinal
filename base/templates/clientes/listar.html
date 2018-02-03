@@ -12,6 +12,8 @@
 				<th>Regimen</th>
 				<th>direccion</th>
 				<th>telefono</th>
+				<th>Ruta</th>
+				<th>Orden</th>
 				<th>Editar</th>
 				<th>Borrar</th>
 			</tr>
@@ -24,6 +26,19 @@
 					<td>{{ cliente.nombre_tienda }}</td>
 					<td>{{ cliente.regimen }}</td>
 					<td>{{ cliente.direccion }}</td>
+					<td>
+						<input
+							type="checkbox"
+							data-cliente="{{cliente.id}}"
+							{% if cliente.ruta_activa == '1' %}
+								checked
+							{% endif %}
+							onclick="toggleStatus(event)"
+						/>
+					</td>
+					<td>
+						<input type="number" data-cliente="{{cliente.id}}" value="{{cliente.orden_ruta}}" onchange="setOrdenRuta(event)" />
+					</td>
 					<td>{{ cliente.telefono }}</td>
 
 					<td><a href="{% url 'actualizar_cliente' cliente.pk %}">Editar</a></td>
@@ -38,3 +53,29 @@
 	</table>
 	<a class="btn btn-success" href="{% url 'crear_cliente' %}">Crear</a>
 {% endblock content %}
+{% block scripts %}
+	<script>
+		function toggleStatus(event){
+			var status = event.target.checked
+			var id = event.target.dataset.cliente
+
+			$.ajax({
+				url: `/clientes/${id}/ruta/set/status/`,
+				type: "POST",
+				success: function (response) {
+				}
+			})
+		}
+		function setOrdenRuta(event){
+			var orden = event.target.value
+			var id = event.target.dataset.cliente
+
+			$.ajax({
+				url: `/clientes/${id}/ruta/set/orden/${orden}`,
+				type: "POST",
+				success: function (response) {
+				}
+			})
+		}
+	</script>
+{% endblock scripts %}

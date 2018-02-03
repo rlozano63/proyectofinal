@@ -1,11 +1,14 @@
+from django.db.models import Sum
+from django.core import serializers
 from django.shortcuts import render
 
 from base.views import AjaxableResponseMixin
-from base.models import distribuidor, cliente
+from base.models import distribuidor, cliente, producto
 
 from django.http import JsonResponse
 
 from django.views.decorators.csrf import csrf_exempt
+import json
 
 from facturacion.forms import *
 from django.views.generic.edit import CreateView
@@ -72,8 +75,6 @@ class FacturaDetaleCreation(LoginRequiredMixin,AjaxableResponseMixin,CreateView)
 
 
 
-from django.db.models import Sum
-from django.core import serializers
 
 def verificacion_ventas_cliente(cliente_id = None):
 	compra_minima_cliente = 0
@@ -97,13 +98,15 @@ def verificacion_ventas_cliente(cliente_id = None):
 def url_verificacion_ventas_cliente(request):
 	response = verificacion_ventas_cliente()
 	return JsonResponse(response,safe=False)
+from django.db.models import Sum
+from django.db.models.functions import TruncMonth
 
 
 @login_required
 
 def reportes(request):
-	distribuidores = distribuidor.objects.all()
-	return render(request,"reportes/index.html",{"distribuidores":distribuidores})
+	clientes = cliente.objects.all()
+	return render(request,"reportes/index.html",{"clientes":clientes})
 @login_required
 
 def ReporteVentasDistribuidor(request,id_distribuidor):
@@ -111,16 +114,63 @@ def ReporteVentasDistribuidor(request,id_distribuidor):
 @login_required
 
 def ReporteVentasTotal(request):
-	fini = request.POST.get("fini")
-	ffin = request.POST.get("ffin")
-	distribuidor_id = request.POST.get("distribuidor")
-	facturas = factura.objects.filter(fecha_creacion__date__gte=fini,fecha_creacion__date__lte=ffin)
-	vttotal = factura.objects.filter(fecha_creacion__date__gte=fini,fecha_creacion__date__lte=ffin).aggregate(Sum("valor_total"))["valor_total__sum"]
+	fini = request.GET.get("fini")
+	ffin = request.GET.get("ffin")
+
+	cliente_id = request.GET.get("cliente")
+	clienteobj = None
+	if ( cliente_id == None or cliente_id == '' ):
+		facturas = factura.objects.filter(fecha_creacion__date__gte=fini,fecha_creacion__date__lte=ffin)
+		vttotal = factura.objects.filter(fecha_creacion__date__gte=fini,fecha_creacion__date__lte=ffin).aggregate(Sum("valor_total"))["valor_total__sum"]
+	else:
+		clienteobj = cliente.objects.filter(id=cliente_id).get
+		facturas = factura.objects.filter(fecha_creacion__date__gte=fini,fecha_creacion__date__lte=ffin,cliente__id=cliente_id)
+		vttotal = factura.objects.filter(fecha_creacion__date__gte=fini,fecha_creacion__date__lte=ffin,cliente__id=cliente_id).aggregate(Sum("valor_total"))["valor_total__sum"]
+
 	for fac in facturas:
 		fac.detalle = factura_detalle.objects.filter(factura = fac)
 
 
-	context = {"facturas":facturas,"vttotal":vttotal}
+	context = {
+		"facturas":facturas,
+		"vttotal":vttotal,
+		"config":{
+			"cliente": clienteobj,
+			"fini": fini,
+			"ffin": ffin,
+		}
+	}
 	return render(request,"reportes/ventasTotal.html",context)
-	
+
+def ReporteMasVendidos(request):
+	fini = request.GET.get("fini")
+	ffin = request.GET.get("ffin")
+
+	cliente_id = request.GET.get("cliente")
+	clienteobj = None
+	productos = producto.objects.all()
+
+	data = []
+	for pro in productos:
+		if ( cliente_id == None or cliente_id == '' ):
+
+			pro.detalles = factura_detalle.objects.filter(producto = pro)
+		else:
+			clienteobj = cliente.objects.filter(id=cliente_id).get
+			pro.detalles = factura_detalle.objects.filter(producto = pro,factura__cliente__id=cliente_id)
+
+		pro.cantidad = len(pro.detalles)
+		data.append([pro.nombre,pro.cantidad])
+
+	context = {
+		"productos":productos,
+		"json":json.dumps(data),
+		"config":{
+			"cliente": clienteobj,
+			"fini": fini,
+			"ffin": ffin,
+		}
+	}
+	return render(request,"reportes/masVendidos.html",context)
+
 
