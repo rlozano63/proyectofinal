@@ -13,23 +13,18 @@ log.addHandler(h)
 sched = BlockingScheduler()
 import os
 
-@sched.scheduled_job('interval', seconds=10)
-def timed_job():
-    print('This job is run every ten seconds.')
-    os.system("python manage.py resetruta")
-    # call_command('resetruta')
-    print('complete.')
-
 @sched.scheduled_job('interval', minutes=1)
 def timed_job():
-    print('This job is run every minute.')
+    can = os.environ.get('TEST_CLOCK')
+    if ( can ):
+        print('This job is run every minute.')
+        os.system("python manage.py resetruta")
+        print('Clear ruta.')
 
-    os.system("python manage.py resetruta")
-    # call_command('resetruta')
-    print('complete.')
-
-@sched.scheduled_job('cron', day_of_week='mon-fri', hour=17)
+@sched.scheduled_job('cron', day_of_week='mon-sun', hour=23)
 def scheduled_job():
-    print('This job is run every weekday at 5pm.')
+    print('This job is run every weekday at 11pm.')
+    os.system("python manage.py resetruta")
+    print('Clear ruta.')
 
 sched.start()
