@@ -7,7 +7,7 @@ sched = BlockingScheduler()
 def timed_job():
     print('This job is run every ten seconds.')
 
-@sched.scheduled_job('interval', minutes=3)
+@sched.scheduled_job('interval', minutes=1)
 def timed_job():
     call_command('resetruta')
     print('This job is run every three minutes.')
