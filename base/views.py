@@ -171,6 +171,46 @@ def ListarCliente(request,):
 	clientes = cliente.objects.all()
 	return render(request,'clientes/listar.html',{'object_list':clientes})
 
+@login_required
+def actualizarBodega(request, pk= None):
+	try:
+		bodega = bodegas.objects.first()
+	except bodegas.DoesNotExist:
+		bodega = bodegas.objects.create(
+			nombre="Bodega",
+			telefono="3122323",
+			direccion="3122323",
+			pos_x ="4.303480",
+			pos_y="-74.810741",
+		)
+	print(	request.POST)
+	request.POST = request.POST.copy()
+	request.POST.update({ 'pk': bodega.pk })
+	print(	request.POST)
+	view = ActualizarBodega.as_view()
+	return view(request)
+	# return ActualizarBodega.as_view()(request, bodega.id)
+
+class ActualizarBodega(LoginRequiredMixin,UpdateView):
+	model = bodegas
+	fields = '__all__'
+	template_name = 'bodegas/actualizar.html'
+	success_url = reverse_lazy('dashboard')
+	query_pk_and_slug = True
+
+	def get_object(queryset):
+		try:
+			bodega = bodegas.objects.first()
+		except bodegas.DoesNotExist:
+			bodega = bodegas.objects.create(
+				nombre="Bodega",
+				telefono="3122323",
+				direccion="3122323",
+				pos_x ="4.303480",
+				pos_y="-74.810741",
+			)
+		return bodega
+
 class DistribuidorCreation(LoginRequiredMixin,CreateView):
 	model = distribuidor
 	template_name = 'distribuidores/create.html'

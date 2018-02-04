@@ -33,4 +33,6 @@ urlpatterns = [
 	url(r'^proveedores/actualizar/(?P<pk>\d+)$', ActualizarProveedor.as_view(), name="actualizar_proveedor"),
 	url(r'^proveedores/borrar/(?P<pk>\d+)$', BorrarProveedor.as_view(), name="borrar_proveedor"),
 
+	url(r'^bodega/(?P<pk>\w+)$', ActualizarBodega.as_view(), name="bodega"),
+
 ]

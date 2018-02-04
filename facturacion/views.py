@@ -111,9 +111,15 @@ def reportes(request):
 
 def ReporteVentasDistribuidor(request,id_distribuidor):
 	pass
-@login_required
 
+from django.db.models.functions import TruncMonth
+from django.db.models import Sum, Count
+
+
+@login_required
 def ReporteVentasTotal(request):
+
+
 	fini = request.GET.get("fini")
 	ffin = request.GET.get("ffin")
 
@@ -122,18 +128,26 @@ def ReporteVentasTotal(request):
 	if ( cliente_id == None or cliente_id == '' ):
 		facturas = factura.objects.filter(fecha_creacion__date__gte=fini,fecha_creacion__date__lte=ffin)
 		vttotal = factura.objects.filter(fecha_creacion__date__gte=fini,fecha_creacion__date__lte=ffin).aggregate(Sum("valor_total"))["valor_total__sum"]
+
+		facturasMes = factura.objects.filter(fecha_creacion__date__gte=fini,fecha_creacion__date__lte=ffin).annotate(month=TruncMonth('fecha_creacion')).values('month').annotate(c=Count('id')).annotate(sum=Sum('valor_total')).order_by()
 	else:
 		clienteobj = cliente.objects.filter(id=cliente_id).get
 		facturas = factura.objects.filter(fecha_creacion__date__gte=fini,fecha_creacion__date__lte=ffin,cliente__id=cliente_id)
 		vttotal = factura.objects.filter(fecha_creacion__date__gte=fini,fecha_creacion__date__lte=ffin,cliente__id=cliente_id).aggregate(Sum("valor_total"))["valor_total__sum"]
+		facturasMes = factura.objects.filter(fecha_creacion__date__gte=fini,fecha_creacion__date__lte=ffin,cliente__id=cliente_id).annotate(month=TruncMonth('fecha_creacion')).values('month').annotate(c=Count('id')).annotate(sum=Sum('valor_total')).order_by()
+
 
 	for fac in facturas:
 		fac.detalle = factura_detalle.objects.filter(factura = fac)
 
+	data = []
+	for facMes in facturasMes:
+		data.append([facMes['month'].strftime("%d/%m/%y"), facMes['sum']])
 
 	context = {
 		"facturas":facturas,
 		"vttotal":vttotal,
+		"json":json.dumps(data),
 		"config":{
 			"cliente": clienteobj,
 			"fini": fini,

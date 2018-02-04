@@ -33,6 +33,8 @@
   <link rel="stylesheet" href="{% static 'css/AdminLTE/plugins/daterangepicker/daterangepicker.css' %}">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="{% static 'css/AdminLTE/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css' %}">
+  <link rel="stylesheet" href="{% static 'alertifyjs/css/alertify.min.css' %}">
+  <link rel="stylesheet" href="{% static 'alertifyjs/css/themes/bootstrap.min.css' %}">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -165,6 +167,11 @@
         <li>
           <a href="{% url 'listar_clientes' %}">
             <i class="fa fa-th"></i> <span>Clientes</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'bodega' 'main' %}">
+            <i class="fa fa-th"></i> <span>Bodega</span>
           </a>
         </li>
         <li>
@@ -546,6 +553,7 @@
 <script src="{% static 'js/AdminLTE/dist/app.min.js' %}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{% static 'js/AdminLTE/dist/pages/dashboard.js' %}"></script>
+<script src="{% static 'alertifyjs/alertify.min.js' %}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{% static 'js/qs.js' %}"></script>
 <script src="{% static 'js/vue.js' %}"></script>

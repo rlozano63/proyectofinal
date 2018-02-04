@@ -45,15 +45,15 @@
 
 	function drawChart() {
  		var header = [['Producto', 'Cantidad']];
- 		var data = {{ json|safe }}
+ 		var data = {{ json|safe }};
  		var final = header.concat(data)
- console.log(final)
+		console.log(final)
 		var data = google.visualization.arrayToDataTable(final);
 
 		var options = {
 			title: `
 				Productos Vendidos {% if config.cliente %} a {{ config.cliente.nombre }} {% endif %}
-				desde {{ config.fini }} Hasta {{ config.ffin }}
+				desde {{ config.fini }} hasta {{ config.ffin }}
 			`
 		};
 
@@ -62,6 +62,4 @@
 		chart.draw(data, options);
 	}
 </script>
-	<script type="text/javascript">
-	</script>
 {% endblock scripts %}
