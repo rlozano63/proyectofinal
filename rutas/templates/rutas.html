@@ -90,7 +90,7 @@
 					lon: response.bodega.position.lng,
 					zoom: 16,
 					title: 'Bodega',
-					        icon: 'http://maps.google.com/mapfiles/markerA.png',
+ 					icon: '/static/img/bodega.png',
 
 					html: `
 						<span>%index</span>
@@ -112,9 +112,9 @@
 					locations: locs,
 					map_div: '#gmap-polyline',
 					controls_div: '#controls-polyline',
-					controls_type: 'list',
+					controls_type: 'dropdown',
 					controls_on_map: false,
-					view_all_text: 'Start',
+					view_all_text: 'Vista General',
 					type: 'polyline'
 				}).Load();
 		}
