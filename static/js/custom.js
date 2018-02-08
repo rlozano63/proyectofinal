@@ -309,7 +309,7 @@ var AppVue = new Vue({
                 var cantidad = this.facturacion.forms.create.deta.cantidad
                 if (cantidad > producto.fields.cantidad) {
                     alert(`Cantidad inexistente, la cantidad de este producto es ${producto.fields.cantidad}`)
-                    producto.fields.cantidad = 0
+                    this.facturacion.forms.create.deta.cantidad = 0
                 }
             })
         },
@@ -345,7 +345,7 @@ var AppVue = new Vue({
                     var cantidad = this.movimientos.forms.create.deta.cantidad
                     if (cantidad > producto.fields.cantidad) {
                         alert(`Cantidad inexistente, la cantidad de este producto es ${producto.fields.cantidad}`)
-                        producto.fields.cantidad = 0
+                        this.movimientos.forms.create.deta.cantidad = 0
                     }
                 })
             }
