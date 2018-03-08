@@ -33,7 +33,7 @@ class facturaDetalleForm(forms.ModelForm):
 		self.fields['producto'].widget.attrs.update({'v-model' : 'facturacion.forms.create.deta.producto'})
 		
 		self.fields['cantidad'].label = "Cantidad"
-		self.fields['cantidad'].widget.attrs.update({'v-model' : 'facturacion.forms.create.deta.cantidad'})
+		self.fields['cantidad'].widget.attrs.update({'v-model' : 'facturacion.forms.create.deta.cantidad' , 'min':0 })
 		
 		self.fields['valor'].label = "Valor Unitario"
 		self.fields['valor'].widget.attrs.update({'v-model' : 'facturacion.forms.create.deta.valor'})

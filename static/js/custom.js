@@ -311,6 +311,14 @@ var AppVue = new Vue({
                     alert(`Cantidad inexistente, la cantidad de este producto es ${producto.fields.cantidad}`)
                     this.facturacion.forms.create.deta.cantidad = 0
                 }
+                var reg = /^\d+$/;
+                console.log(reg)
+                console.log(cantidad)
+                console.log(reg.test(cantidad))
+                if ( !reg.test(cantidad) ){
+                    alert(`valor invalido`)
+                    this.facturacion.forms.create.deta.cantidad = 0
+                }
             })
         },
         'facturacion.forms.create.deta.valor': function(){
