@@ -19,7 +19,7 @@
 						<th> Producto </th>
 						<th> Cantidad  </th>
 						<th> Valor Unitario  </th>
-						<th> Valor Total  </th> 
+						<th> Valor Total  </th>
 					</tr>
 				</thead>
 				<tbody>
@@ -34,8 +34,9 @@
 			</table>
 	</div>
 	</div>
-	
+
 	<input type="submit" class="btn btn-success btn-fixed" value="Facturar" form="form" />
+	<input type="button" @click="imprimirFacuraActual" style="top: 100px !important;" class="btn btn-success btn-fixed" value="Imprimir" form="form" />
 
 
 {% endblock content %}

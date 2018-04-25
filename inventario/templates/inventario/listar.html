@@ -15,10 +15,10 @@
 			{% for inventario in object_list %}
 				<tr>
 					<td>{{ inventario.pk }}</td>
-					<td>{{ inventario.fecha_creacion }}</td>
-					<td>{{ inventario.factualizacion }}</td>
+					<td>{{ inventario.fecha_creacion | date:'Y-m-d' }}</td>
+					<td>{{ inventario.factualizacion | date:'Y-m-d' }}</td>
 					<td><a href="{% url 'ver_inventario_detalle' inventario.pk %}">Ver</a></td>
-					
+
 				</tr>
 			{% empty %}
 				<tr>

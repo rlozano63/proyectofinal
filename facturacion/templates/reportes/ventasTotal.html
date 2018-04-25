@@ -20,8 +20,8 @@
 			{% for factura in facturas %}
 				<tr>
 					<td>{{ factura.pk }}</td>
-					<td>{{ factura.fecha_creacion }}</td>
-					<td>${{ factura.valor_total|intcomma}}</td>
+					<td>{{ factura.fecha_creacion | date:'Y-m-d' }}</td>
+					<td>${{ factura.valor_total| intcomma}}</td>
 				</tr>
 			{% endfor %}
 			<tr>
@@ -47,7 +47,6 @@
 		var data = {{ json| safe }};
 
 	var final = header.concat(data)
-	console.log(final)
 	var data = google.visualization.arrayToDataTable(final);
 
 	var options = {

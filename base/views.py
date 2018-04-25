@@ -27,6 +27,14 @@ def GetProduct(request,id):
 	response = json.loads(response)[0]
 	return JsonResponse(response,safe=False)
 
+@csrf_exempt
+@login_required
+def GetProducts(request):
+	p = producto.objects.all()
+	response = serializers.serialize('json', p)
+	response = json.loads(response)
+	return JsonResponse(response,safe=False)
+
 class AjaxableResponseMixin(object):
 	"""
 	Mixin to add AJAX support to a form.

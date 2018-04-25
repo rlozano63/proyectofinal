@@ -1,4 +1,5 @@
 {% extends 'AdminLTE/index.html' %}
+{% load humanize %}
 
 {% block content %}
 	<h1>HIstorial de Movimientos {{producto.nombre}}</h1>
@@ -21,10 +22,10 @@
 		</thead>
 		<tbody>
 			{% for movimientodetalle in movimientosdetalle %}
-				<tr 
+				<tr
 					data-tipo-movimiento="{{ movimientodetalle.movimiento.tipo.slug }}"
 				>
-					<td 
+					<td
 						class="{% if movimientodetalle.movimiento.tipo.slug == 'input' %} bg-success {% else %} bg-danger {% endif %}"
 					>
 						{% if movimientodetalle.movimiento.tipo.slug == 'input' %}
@@ -36,14 +37,14 @@
 					<td>
 						{{ movimientodetalle.pk }}
 						{% if movimientodetalle.movimiento.factura %}
-							<a href="{% url 'ver_factura_detalle' movimientodetalle.movimiento.factura.id %}"> Factura #{{movimientodetalle.movimiento.factura.id}} </a>	
+							<a href="{% url 'ver_factura_detalle' movimientodetalle.movimiento.factura.id %}"> Factura #{{movimientodetalle.movimiento.factura.id}} </a>
 						{% endif %}
 					</td>
-					<td>{{ movimientodetalle.movimiento.fecha_creacion }}</td>
+					<td>{{ movimientodetalle.movimiento.fecha_creacion | date:'Y-m-d' }}</td>
 					<td>{{ movimientodetalle.movimiento.tipo }}</td>
 					<td>{{ movimientodetalle.cantidad }}</td>
-					<td>{{ movimientodetalle.valor }}</td>
-					<td>{{ movimientodetalle.valor_total }}</td>
+					<td>{{ movimientodetalle.valor | intcomma }}</td>
+					<td>{{ movimientodetalle.valor_total  | intcomma }}</td>
 				</tr>
 			{% empty %}
 				<tr>

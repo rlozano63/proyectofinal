@@ -149,3 +149,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+DATE_FORMAT = 'Y-m-d'
+SHORT_DATE_FORMAT = 'Y-m-d'
+SHORT_DATETIME_FORMAT = 'm/d/Y P'
+TIME_FORMAT = 'P'
+DATETIME_FORMAT = 'Y-m-d P'
+SHORT_DATETIME_FORMAT = 'm/d/Y P'

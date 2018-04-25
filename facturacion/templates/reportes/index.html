@@ -41,11 +41,11 @@
 			var ffin = $('[name=ffin]').val()
 			var cliente = $('[name=cliente]').val()
 
-			if ( fini &&  ffin  ){
+			if ( fini &&  ffin ){
 				url = `${url}?fini=${fini}&ffin=${ffin}&cliente=${cliente}`
 				window.open(url)
 			}else{
-				alert("Verifique los campos")
+				alertify.error("Verifique los campos")
 			}
 		})
 		$("#report_mas_vendidos").click(function(event){
@@ -59,7 +59,7 @@
 				url = `${url}?fini=${fini}&ffin=${ffin}&cliente=${cliente}`
 				window.open(url)
 			}else{
-				alert("Verifique los campos")
+				alertify.error("Verifique los campos")
 			}
 		})
 

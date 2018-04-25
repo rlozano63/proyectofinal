@@ -4,6 +4,9 @@ from django.contrib.auth.models import User
 
 import datetime
 
+from faker import Faker
+fake = Faker()
+
 User.objects.all().delete()
 bodegas.objects.all().delete()
 factura.objects.all().delete()
@@ -68,13 +71,104 @@ p4 = producto.objects.create(
 	stock_maximo="200",
 )
 
+producto.objects.create(
+	nombre="juego",
+	cantidad="100",
+	precio="12000",
+	fecha=datetime.datetime(2017, 5, 10),
+	unida=u1,
+	stock_minimo="50",
+	stock_maximo="200",
+)
+producto.objects.create(
+	nombre="fresas",
+	cantidad="100",
+	precio="12000",
+	fecha=datetime.datetime(2017, 5, 10),
+	unida=u1,
+	stock_minimo="50",
+	stock_maximo="200",
+)
+
+producto.objects.create(
+	nombre="manzanas",
+	cantidad="100",
+	precio="12000",
+	fecha=datetime.datetime(2017, 5, 10),
+	unida=u1,
+	stock_minimo="50",
+	stock_maximo="200",
+)
+producto.objects.create(
+	nombre="peras",
+	cantidad="100",
+	precio="12000",
+	fecha=datetime.datetime(2017, 5, 10),
+	unida=u1,
+	stock_minimo="50",
+	stock_maximo="200",
+)
+producto.objects.create(
+	nombre="uvas",
+	cantidad="100",
+	precio="12000",
+	fecha=datetime.datetime(2017, 5, 10),
+	unida=u1,
+	stock_minimo="50",
+	stock_maximo="200",
+)
+producto.objects.create(
+	nombre="mandarinas",
+	cantidad="100",
+	precio="12000",
+	fecha=datetime.datetime(2017, 5, 10),
+	unida=u1,
+	stock_minimo="50",
+	stock_maximo="200",
+)
+producto.objects.create(
+	nombre="melocoton",
+	cantidad="100",
+	precio="12000",
+	fecha=datetime.datetime(2017, 5, 10),
+	unida=u1,
+	stock_minimo="50",
+	stock_maximo="200",
+)
+producto.objects.create(
+	nombre="toronja",
+	cantidad="100",
+	precio="12000",
+	fecha=datetime.datetime(2017, 5, 10),
+	unida=u1,
+	stock_minimo="50",
+	stock_maximo="200",
+)
+producto.objects.create(
+	nombre="papas",
+	cantidad="100",
+	precio="12000",
+	fecha=datetime.datetime(2017, 5, 10),
+	unida=u1,
+	stock_minimo="50",
+	stock_maximo="200",
+)
+producto.objects.create(
+	nombre="yuca",
+	cantidad="100",
+	precio="12000",
+	fecha=datetime.datetime(2017, 5, 10),
+	unida=u1,
+	stock_minimo="50",
+	stock_maximo="200",
+)
 c1 =cliente.objects.create(
 
-	nombre="carlos",
-	apellido="lunar",
-	nombre_tienda="Don lunar",
+	nombre=fake.name(),
+	apellido="",
+	nombre_tienda=fake.company(),
 	regimen ="comun",
-	telefono="3122323123",
+	telefono=fake.phone_number(),
 	orden_ruta="1",
 	pos_x ="4.303876",
 	pos_y="-74.805881",
@@ -83,11 +177,11 @@ c1 =cliente.objects.create(
 )
 c2 =cliente.objects.create(
 
-	nombre="michael",
-	apellido="sol",
-	nombre_tienda="Don myky",
+	nombre=fake.name(),
+	apellido="",
+	nombre_tienda=fake.company(),
 	regimen ="comun",
-	telefono="3122323",
+	telefono=fake.phone_number(),
 	orden_ruta="2",
 	pos_x ="4.303480",
 	pos_y="-74.810741",
@@ -97,11 +191,11 @@ c2 =cliente.objects.create(
 
 c3 =cliente.objects.create(
 
-	nombre="sol",
-	apellido="luz",
-	nombre_tienda="Don soluz",
+	nombre=fake.name(),
+	apellido="",
+	nombre_tienda=fake.company(),
 	regimen ="comun",
-	telefono="312232113",
+	telefono=fake.phone_number(),
 	orden_ruta="3",
 	pos_x ="4.306026",
 	pos_y="-74.803811",
@@ -110,11 +204,11 @@ c3 =cliente.objects.create(
 )
 c4 =cliente.objects.create(
 
-	nombre="solilo",
-	apellido="pillo",
-	nombre_tienda="pillos",
+	nombre=fake.name(),
+	apellido="",
+	nombre_tienda=fake.company(),
 	regimen ="comun",
-	telefono="31223212",
+	telefono=fake.phone_number(),
 	orden_ruta="4",
 	pos_x ="4.301576 ",
 	pos_y="-74.811879",
@@ -123,11 +217,11 @@ c4 =cliente.objects.create(
 )
 c5 =cliente.objects.create(
 
-	nombre="musga",
-	apellido="suoll",
-	nombre_tienda="musgos",
+	nombre=fake.name(),
+	apellido="",
+	nombre_tienda=fake.company(),
 	regimen ="comun",
-	telefono="312232113",
+	telefono=fake.phone_number(),
 	orden_ruta="5",
 	pos_x ="4.300098",
 	pos_y="-74.801661",
@@ -137,16 +231,16 @@ c5 =cliente.objects.create(
 
 proveedor.objects.create(
 
-	nombre="jose",
-	apellido="manuel",
+	nombre=fake.name(),
+	apellido="",
 	cedula="103212312",
 	empresa="ARBOLEDA",
 )
 
 distribuidor.objects.create(
 
-	nombre="jorge",
-	apellido="bermudez",
+	nombre=fake.name(),
+	apellido="",
 	cedula="1231231212",
 	usuario=d1,
 
@@ -591,8 +685,8 @@ factura_detalle.objects.create(
 
 bodega =bodegas.objects.create(
 	nombre="Bodega",
-	telefono="3122323",
-	direccion="3122323",
+	telefono=fake.phone_number(),
+	direccion=fake.address(),
 	pos_x ="4.303480",
 	pos_y="-74.810741",
 )

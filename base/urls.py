@@ -11,6 +11,7 @@ urlpatterns = [
 	url(r'^productos/actualizar/(?P<pk>\d+)$', ActualizarProducto.as_view(), name="actualizar_producto"),
 	url(r'^productos/borrar/(?P<pk>\d+)$', BorrarProducto.as_view(), name="borrar_producto"),
 
+	url(r'^api/products/$', GetProducts, name="get_products"),
 	url(r'^api/product/(?P<id>\d+)$', GetProduct, name="get_product"),
 
 	url(r'^clientes/$', ListarCliente, name="listar_clientes"),

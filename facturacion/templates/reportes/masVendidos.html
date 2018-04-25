@@ -47,7 +47,6 @@
  		var header = [['Producto', 'Cantidad']];
  		var data = {{ json|safe }};
  		var final = header.concat(data)
-		console.log(final)
 		var data = google.visualization.arrayToDataTable(final);
 
 		var options = {

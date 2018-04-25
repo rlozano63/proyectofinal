@@ -1,0 +1,175 @@
+{% load static %}
+{% load humanize %}
+
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Factura</title>
+	<style>
+		@page {
+			size: A4 landscape
+		}
+		.invoice-box {
+			padding: 6px;
+			font-size: 16px;
+			font-family: Helvetica, Arial, sans-serif;
+		}
+
+		.invoice-box table {
+			width: 100%;
+			text-align: left;
+		}
+		.invoice-box table td {
+			padding: 5px;
+		}
+
+		.invoice-box table tr td:nth-child(2) {
+			text-align: right;
+		}
+
+		.invoice-box table tr.top table td {
+			padding-bottom: 0px;
+		}
+
+		.invoice-box table tr.top {
+			border: 1px solid #eee;
+		}
+		.invoice-box table tr.top table td.title {
+
+			font-size: 45px;
+			color: #333;
+		}
+
+		.invoice-box table tr.information table td {
+			padding-bottom: 0px;
+		}
+
+		.invoice-box table tr.heading td {
+			background: rgb(156, 49, 49);
+			border-bottom: 1px solid #ddd;
+			font-weight: bold;
+		}
+
+		.invoice-box table tr.details td {
+			padding-bottom: 3px;
+		}
+
+		/*
+		.invoice-box table tr.item td {
+			border-bottom: 1px solid #eee;
+		}
+
+		.invoice-box table tr.item.last td {
+			border-bottom: none;
+		}
+		*/
+
+		.invoice-box table tr.total td:nth-child(2) {
+			border-top: 2px solid #eee;
+			font-weight: bold;
+		}
+		/*
+		*/
+
+
+	</style>
+</head>
+
+<body>
+	<div class="invoice-box">
+		<table cellpadding="0" cellspacing="0">
+			<tr class="top">
+				<td colspan="4">
+					<table>
+						<tr>
+							<td class="title">
+								<img src="https://www.sparksuite.com/images/logo.png" style="width:100%; max-width:300px;">
+							</td>
+
+							<td>
+								Factura #: {{objfactura.pk}}
+								<br> Fecha: {{ objfactura.fecha_creacion | date:'Y-m-d' }}
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+
+			<tr class="information">
+				<td colspan="4">
+					<table>
+						<tr>
+							<td>
+								<b>Tienda: </b>{{ objfactura.cliente.nombre_tienda }}
+								<br> <b>Dirección: </b> {{ objfactura.cliente.direccion }}
+							</td>
+
+							<td>
+								<br> <b>Cliente: </b> {{ objfactura.cliente.nombre }} - {{ objfactura.cliente.apellido }}
+								<br> <b>Telefono: </b> {{ objfactura.cliente.telefono }}
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+
+			<!--
+			<tr class="heading">
+				<td width="50%">
+					Payment Method
+				</td>
+
+				<td width="50%">
+					Check #
+				</td>
+			</tr>
+
+			<tr class="details">
+				<td width="50%">
+					Check
+				</td>
+
+				<td width="50%">
+					1000
+				</td>
+			</tr>
+			-->
+			<tr class="heading" style="background-color: rgb(156, 49, 49);border-bottom: 1px solid #ddd;font-weight: bold;">
+				<td width="30%"> Item </td>
+				<td width="10%"> Cantidad </td>
+				<td width="30%"> Valor </td>
+				<td width="30%"> Valor Total </td>
+			</tr>
+			{% for det in objfactura.detalle %}
+			<tr class="item" style="border-bottom: 1px solid #eee;">
+				<td width="30%"> {{ det.producto }} </td>
+				<td width="10%"> {{ det.cantidad }} </td>
+				<td width="30%"> $ {{ det.valor | intcomma }} </td>
+				<td width="30%"> $ {{ det.valor_total | intcomma }}  </td>
+			</tr>
+			{% empty %}
+			<tr>
+				<td width="30%">Sin detalle</td>
+				<td width="10%"></td>
+				<td width="30%"></td>
+				<td width="30%"></td>
+			</tr>
+		   {% endfor %}
+
+			<tr class="total">
+				<td width="30%"> <b>Total: </b> </td>
+				<td width="10%"></td>
+				<td width="30%"></td>
+
+				<td style="font-size: 30px" width="30%">
+					<b>${{objfactura.valor_total | intcomma}}</b>
+				</td>
+			</tr>
+		</table>
+	</div>
+</body>
+
+</html>
+

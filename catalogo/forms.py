@@ -6,8 +6,15 @@ class catalogoForm(forms.ModelForm):
 	class Meta:
 		model = catalogo
 		fields = "__all__"
+		exclude = ["factualizacion"]
 		widgets = {}
 		labels = {}
+
+	def __init__(self, *args, **kwargs):
+		super(catalogoForm, self).__init__(*args, **kwargs)
+		self.fields['fecha_creacion'].label = "Fecha"
+		self.fields['fecha_creacion'].widget.attrs.update({'v-model' : 'catalogo.forms.create.fecha_creacion'})
+
 
 class catalogoDetalleForm(forms.ModelForm):
 	#cantidad = forms.IntegerField(label='cantidad')
@@ -18,3 +25,14 @@ class catalogoDetalleForm(forms.ModelForm):
 		fields = "__all__"
 		#widgets = {}
 		#labels = {}
+
+	def __init__(self, *args, **kwargs):
+		super(catalogoDetalleForm, self).__init__(*args, **kwargs)
+		self.fields['producto'].label = "Producto"
+		self.fields['producto'].widget.attrs.update({'v-model' : 'catalogo.forms.create.deta.producto'})
+		self.fields['cantidad'].label = "Cantidad"
+		self.fields['cantidad'].widget.attrs.update({'v-model' : 'catalogo.forms.create.deta.cantidad'})
+		self.fields['valor'].label = "Valor"
+		self.fields['valor'].widget.attrs.update({'v-model' : 'catalogo.forms.create.deta.valor'})
+		self.fields['valor_total'].label = "Valor Total"
+		self.fields['valor_total'].widget.attrs.update({'readonly':True, 'v-model' : 'catalogo.forms.create.deta.valor_total'})

@@ -20,6 +20,40 @@ from inventario.views import calcular_cantidad
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 # Create your views here.
+import cStringIO as StringIO
+from xhtml2pdf import pisa
+from django.template.loader import get_template
+from django.http import HttpResponse
+
+from django.views.generic import TemplateView
+
+def fetch_resources(uri, rel):
+    path = join(settings.STATIC_ROOT, uri.replace(settings.STATIC_URL, ""))
+    return path
+
+class DemoPDFView(TemplateView):
+    template_name = 'factura/imprimir.html'
+
+    def render_to_response(self, context, **response_kwargs):
+        pkfactura = self.kwargs['pkfactura']
+
+        objfactura = factura.objects.get(pk=pkfactura)
+        print (objfactura)
+        objfactura.detalle = factura_detalle.objects.filter(factura=objfactura)
+        print (len(objfactura.detalle))
+        print (objfactura.detalle)
+
+        context['objfactura'] = objfactura
+
+        template = get_template(self.template_name)
+        html = template.render(context)
+        result = StringIO.StringIO()
+        pdf = pisa.pisaDocument(
+            StringIO.StringIO(html.encode("ISO-8859-1")),
+            dest=result, link_callback=fetch_resources)
+        if not pdf.err:
+            return HttpResponse(result.getvalue(), content_type='application/pdf')
+        return HttpResponse("Error: <pre>%s</pre>" % escape(html))
 
 class FacturaList(LoginRequiredMixin,AjaxableResponseMixin,ListView):
 	model = factura

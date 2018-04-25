@@ -41,14 +41,12 @@
       },
       enableAutocomplete: true,
       onchanged: function (currentLocation, radius, isMarkerDropped) {
-        console.log("Location changed. New location (" + currentLocation.latitude + ", " + currentLocation.longitude + ")");
       }
     });
   </script>
   <script type="text/javascript">
     function localizacion(posicion, event) {
       alertify.success("Posición Encontrada")
-      console.warn(posicion, event)
 
       var latitude = posicion.coords.latitude;
       var longitude = posicion.coords.longitude;

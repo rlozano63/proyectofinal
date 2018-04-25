@@ -5,11 +5,92 @@ axios.defaults.headers.common['X-CSRFToken'] = $("[name=csrfmiddlewaretoken]").v
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 // axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
 
+// Vue.use(VueCurrencyFilter)
+Vue.use(vueGoodTable)
+
+Vue.filter('formatDate', function(value) {
+  if (value) {
+    return moment(String(value)).format('YYYY-MM-DD')
+  }
+});
+Vue.filter('currency', function (value) {
+    return value.toFixed(0)
+  }
+)
 var AppVue = new Vue({
     el: "#vue-root",
     delimiters: ["[[","]]"],
     data:{
+        productos: {
+            items: [],
+            lista: {
+                tabla: {
+                    columns: [
+                        {
+                            label: 'Nombre',
+                            field: 'nombre',
+                            filterOptions: {
+                                enabled: true,
+                            },
+                        },
+                        {
+                            label: 'Cantidad',
+                            field: 'cantidad',
+                            type: 'number',
+                            filterOptions: {
+                                enabled: true,
+                            },
+                        },
+                        {
+                            label: 'Precio',
+                            field: 'precio',
+                            type: 'date',
+                            filterOptions: {
+                                enabled: true,
+                            },
+                        },
+                        {
+                            label: 'Fecha',
+                            field: 'fecha',
+                            filterOptions: {
+                                enabled: true,
+                            },
+                        },
+                        {
+                            label: 'Editar',
+                            field: 'editar',
+                        },
+                        {
+                            label: 'Borrar',
+                            field: 'borrar',
+                        },
+                        {
+                            label: 'Historial',
+                            field: 'historial',
+                        },
+                    ]
+                }
+            }
+        },
+        catalogo: {
+            forms: {
+                create: {
+                    fecha_creacion: moment().format("Y-M-D"),
+                    factualizacion: moment().format("Y-M-D"),
+                    valor_total: 0,
+                    cliente: null,
+                    deta:{
+                        producto: null,
+                        cantidad: 1,
+                        valor: null,
+                        valor_total: null,
+                    },
+                    productos: [],
+                }
+            }
+        },
         facturacion: {
+            facturaActual: null,
             forms: {
                 create: {
                     fecha_creacion: moment().format("Y-M-D"),
@@ -60,12 +141,28 @@ var AppVue = new Vue({
                 }
             }
         },
-        
+
     },
     methods:{
-
+        getProducts(id) {
+            return axios.get('/api/products/').then(data => {
+                this.productos.items = data.data.map((i) => {
+                    for ( x in i.fields ) {
+                        i[x] = i.fields[x]
+                    }
+                    return i
+                })
+            })
+        },
+        getProduct(id) {
+            return axios.get(`/api/product/${id}`).then(data => data.data)
+        },
         facFormCreateReset(){
+            console.error('entre aqui')
+            console.log(this.facturacion.facturaActual)
+            var fac = this.facturacion.facturaActual
             this.facturacion = {
+                facturaActual: fac,
                 forms: {
                     create: {
                         fecha_creacion: moment().format("Y-M-D"),
@@ -122,12 +219,16 @@ var AppVue = new Vue({
                 }
             };
         },
-
-        getProduct(id){
-            return axios.get(`/api/product/${id}`).then(data => data.data)
-        },
-
         /* Facturacion */
+        imprimirFacuraActual () {
+            var fac = this.facturacion.facturaActual
+            console.warn(fac)
+            if ( fac && fac.pk ){
+                window.open(`/factura/${fac.pk}/imprimir`)
+            }else {
+                alert("No se ha creado la factura")
+            }
+        },
         facFormCreateAddDetalle(){
             var form = this.facturacion.forms.create
             var formDeta = this.facturacion.forms.create.deta
@@ -160,9 +261,14 @@ var AppVue = new Vue({
                 valor_total: form.valor_total,
                 cliente: form.cliente,
             }
-            
+
             axios.post("/factura/crear/", Qs.stringify(data)).then(response => {
                 var json = response.data.json
+                console.log(json)
+                this.facturacion.facturaActual = json
+                console.log('this',this)
+                console.log(this.facturacion.facturaActual)
+
                 alert("Factura Creada. \n Ingrese los datos ")
                 var productos = form.productos
                 productos.forEach(producto => {
@@ -226,9 +332,10 @@ var AppVue = new Vue({
                 factura: form.factura,
                 tipo: form.tipo,
             }
-            
+
             axios.post("/movimiento/crear/", Qs.stringify(data)).then(response => {
                 var json = response.data.json
+
                 alert("Movimiento Creada. \n Ingrese los datos ")
                 var productos = form.productos
                 productos.forEach(producto => {
@@ -238,7 +345,7 @@ var AppVue = new Vue({
                     })
                 })
                 this.movFormCreateReset();
-                
+
             })
         },
 
@@ -286,11 +393,21 @@ var AppVue = new Vue({
                     })
                 })
                 this.invFormCreateReset();
-                
+
             })
         }
     },
     watch:{
+        /* Catalogo */
+        'catalogo.forms.create.deta.cantidad': function () {
+            var form = this.catalogo.forms.create.deta
+            form.valor_total = form.valor * form.cantidad
+        },
+        'catalogo.forms.create.deta.valor': function () {
+            var form = this.catalogo.forms.create.deta
+            form.valor_total = form.valor * form.cantidad
+        },
+
         /* Facturacion */
         'facturacion.forms.create.productos': {
             handler: function (newValue) {
@@ -303,7 +420,7 @@ var AppVue = new Vue({
             var form = this.facturacion.forms.create.deta
             form.valor_total = form.valor * form.cantidad
 
-            if ( form.producto == null ) return 
+            if ( form.producto == null ) return
 
             this.getProduct(form.producto).then(producto => {
                 var cantidad = this.facturacion.forms.create.deta.cantidad
@@ -312,9 +429,7 @@ var AppVue = new Vue({
                     this.facturacion.forms.create.deta.cantidad = 0
                 }
                 var reg = /^\d+$/;
-                console.log(reg)
-                console.log(cantidad)
-                console.log(reg.test(cantidad))
+
                 if ( !reg.test(cantidad) ){
                     alert(`valor invalido`)
                     this.facturacion.forms.create.deta.cantidad = 0
@@ -336,7 +451,6 @@ var AppVue = new Vue({
         },
         'facturacion.forms.create.deta.producto': function (newValue) {
                 this.getProduct(newValue).then(producto => {
-                    console.log(producto)
                     var form = this.facturacion.forms.create.deta
                     form.valor = producto.fields.precio
                 })
@@ -384,5 +498,8 @@ var AppVue = new Vue({
             var form = this.inventarios.forms.create.deta
             form.valor_total = form.costo * form.cantidad
         },
+    },
+    mounted () {
+        this.getProducts()
     }
 })
