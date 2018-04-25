@@ -22,6 +22,7 @@ var AppVue = new Vue({
     delimiters: ["[[","]]"],
     data:{
         productos: {
+            loading: false,
             items: [],
             lista: {
                 tabla: {
@@ -145,6 +146,7 @@ var AppVue = new Vue({
     },
     methods:{
         getProducts(id) {
+            this.productos.loading = true
             return axios.get('/api/products/').then(data => {
                 this.productos.items = data.data.map((i) => {
                     for ( x in i.fields ) {
@@ -152,6 +154,9 @@ var AppVue = new Vue({
                     }
                     return i
                 })
+                this.productos.loading = false
+            }).catch(err => {
+                this.productos.loading = false
             })
         },
         getProduct(id) {
