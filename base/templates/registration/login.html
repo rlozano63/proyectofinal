@@ -26,9 +26,13 @@
         }
 
         .form-signin {
-        max-width: 330px;
-        padding: 15px;
-        margin: 0 auto;
+            max-width: 330px;
+            padding: 15px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 5px;
+            border: 1px solid gray;
+            padding: 50px;
         }
         .form-signin .form-signin-heading,
         .form-signin .checkbox {
@@ -75,7 +79,11 @@
 <p>por favor inicia sesión para acceder a la pagina.</p>
 {% endif %} {% endif %}
 
-        <form class="form-signin" method="post" action="{% url 'login' %}">
+        <form
+            class="form-signin"
+            method="post"
+            action="{% url 'login' %}"
+        >
              {% csrf_token %}
             <h2 class="form-signin-heading">Login Forsales</h2>
             <label for="inputEmail" class="sr-only">Usuario</label>
@@ -86,7 +94,7 @@
             <!-- <input type="password" id="inputPassword" class="form-control" placeholder="Password" required=""> -->
             <!-- {{ form.password }} -->
             <input placeholder="Contraseña" id="id_password" name="password" type="password" required="" class="form-control">
-            
+
             <input type="hidden" name="next" value="{{ next }}" />
 
             <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
@@ -117,7 +125,7 @@
 <script>
     $("input, select").addClass("form-control");
     $("button, input.btn, a.btn").addClass("btn btn-raised");
-    $('body').bootstrapMaterialDesign(); 
+    $('body').bootstrapMaterialDesign();
 </script>
 
 </body>
