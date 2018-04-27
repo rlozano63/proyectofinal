@@ -7,82 +7,34 @@
 	<div id="controls-polyline"></div>
 	<div id="gmap-polyline" style="with:300px;height:500px;"></div>
 
-
+<div id="gmap-route" style="with:300px;height:500px;"></div>
+<div id="route"></div>
 
 {% endblock content %}
 {% block scripts %}
 <script src="https://maps.google.com/maps/api/js?sensor=false&libraries=geometry&v=3.22&key=AIzaSyBIPRP1nZtRNuSSGzaANaE5GJIWo_BP_lc"></script>
 <script src="{% static 'js/maplace.js' %}"></script>
-	<!--
-		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAioVIsP4V4tVrkVs57zYlezhfwRchBkoM&libraries=geometry&callback=initMap" async defer></script>
-	<script type="text/javascript">
-		function initMap() {
-			var myLatLng = {lat: 4.305146, lng: -74.804411}
-			map = new google.maps.Map(document.getElementById('map'), {
-				zoom: 15,
-				center: myLatLng
-				//disableDefaultUI: true
-			})
-			setTimeout(function(){
-				map.setZoom(13)
-			},4000)
 
-			$.ajax({
-				url : "{% url 'get_positions_clientes' %}",
-				type : "GET",
-				success: function(response) {
-					//[{position:{lat:4.306011,lng:-74.804434}},{position:{lat:4.307292,lng:-74.804486}}]
-					response.positions.forEach(function (cliente,index) {
-
-
-						cliente.position.lng = parseFloat(cliente.position.lng)
-						cliente.position.lat = parseFloat(cliente.position.lat)
-
-						var marker = new google.maps.Marker({
-							position: cliente.position,
-							//shape: shape,
-							map: map,
-							//icon:icon,
-							draggable: false,
-							animation: google.maps.Animation.DROP,
-
-							title: 'Cliente ' + cliente.name
-						});
-						//marker.addListener('click', actionBomb.bind(marker));
-						//markers.push(marker)
-					})
-
-					document.body.addEventListener("keydown",function(event){
-						if(event.ctrlKey){creando_zona = true}
-					})
-					document.body.addEventListener("keyup",function(event){
-						if(!event.ctrlKey){creando_zona = false}
-
-						cercar_zona(positions_new_zone)
-					})
-					}
-			})
-		}
-	</script>
--->
 <script>
 	$.ajax({
 			url: "{% url 'get_positions_clientes' %}",
 			type: "GET",
 			success: function (response) {
-				//[{position:{lat:4.306011,lng:-74.804434}},{position:{lat:4.307292,lng:-74.804486}}]
 				locations = response.positions.map(cliente => ({
 					lat: cliente.position.lat,
 					lon: cliente.position.lng,
-					zoom: 16,
+					// zoom: 16,
 					title: 'Cliente ' + cliente.name,
-					html: `
-						<span>%index</span>
-						<h1> %title</h1>
-						<div>direccion: ${cliente.direccion}</div>
-						<div>telefono: ${cliente.telefono}</div>
+					html: [
+						'<span>%index</span>',
+						'<h1> %title</h1>',
+						'<div>direccion: ${cliente.direccion}</div>',
+						'<div>telefono: ${cliente.telefono}</div>',
+					].join(''),
+					// visible: true,
+					// stopover: false
 
-					`
+
 				}))
 
 				var bodega = {
@@ -103,12 +55,12 @@
 
 				locs = [bodega].concat(locations)
 
-				new Maplace({
+				window.map = new Maplace({
 					map_options: {
 						set_center: center,
 						zoom: 15
 					},
-
+					show_markers: true,
 					locations: locs,
 					map_div: '#gmap-polyline',
 					controls_div: '#controls-polyline',
