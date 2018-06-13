@@ -10,7 +10,7 @@
 	</div>
 	<form method="POST" id="form" action="" target="_blank">
 		{% csrf_token %}
-		<h1>ingrese fecha de facturacion</h1>
+		<h1>Ingrese fecha de facturacion</h1>
 		<div class="row">
 
 			<div class="col-md-6">
@@ -27,6 +27,13 @@
 			{% endfor %}
 		</select>
 
+		<div class="form-group">
+			<input name="excel" id="excel" type="checkbox" class="d-inline-block">
+			<label for="excel">
+				Excel
+			</label>
+		</div>
+
 		<input id="report_ventas" data-url="{% url 'ReporteVentasTotal' %}" type="button" class="btn btn-success" value="Reporte de Ventas" />
 		<input id="report_mas_vendidos" data-url="{% url 'ReporteMasVendidos' %}" type="button" class="btn btn-success" value="Mas Vendidos" />
 	</form>
@@ -41,8 +48,12 @@
 			var ffin = $('[name=ffin]').val()
 			var cliente = $('[name=cliente]').val()
 
+			var excel = $('[name=excel]').prop('checked')
+			var formato = 'html'
+			if (excel) formato = 'excel'
+
 			if ( fini &&  ffin ){
-				url = `${url}?fini=${fini}&ffin=${ffin}&cliente=${cliente}`
+				url = `${url}?fini=${fini}&ffin=${ffin}&cliente=${cliente}&formato=${formato}`
 				window.open(url)
 			}else{
 				alertify.error("Verifique los campos")
@@ -55,8 +66,12 @@
 			var ffin = $('[name=ffin]').val()
 			var cliente = $('[name=cliente]').val()
 
+			var excel = $('[name=excel]').prop('checked')
+			var formato = 'html'
+			if (excel) formato = 'excel'
+
 			if ( fini &&  ffin ){
-				url = `${url}?fini=${fini}&ffin=${ffin}&cliente=${cliente}`
+				url = `${url}?fini=${fini}&ffin=${ffin}&cliente=${cliente}&formato=${formato}`
 				window.open(url)
 			}else{
 				alertify.error("Verifique los campos")

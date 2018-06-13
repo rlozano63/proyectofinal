@@ -149,6 +149,70 @@ def ReporteVentasDistribuidor(request,id_distribuidor):
 from django.db.models.functions import TruncMonth
 from django.db.models import Sum, Count
 
+from openpyxl import Workbook
+from django.contrib.humanize.templatetags.humanize import intcomma
+
+def ReporteMasVendidosExcel(context):
+	wb = Workbook()
+	ws = wb.active
+
+	title = 'Productos Vendidos'
+	print(context['config']['cliente'])
+	if context['config']['cliente'] != None:
+		title = title + " a {0}".format(context['config']['cliente'].nombre)
+	title = title + " desde {0} hasta {1}".format(context['config']['fini'], context['config']['ffin'])
+
+	ws['A1'] = title
+	ws.merge_cells('A1:E1')
+	ws['A3'] = 'id'
+	ws['B3'] = 'Producto'
+	ws['C3'] = 'Cantidad'
+	cont=4
+	for producto in context['productos']:
+		ws.cell(row=cont,column=1).value = producto.pk
+		ws.cell(row=cont,column=2).value = producto.nombre
+		ws.cell(row=cont,column=3).value = producto.cantidad
+		cont = cont + 1
+
+	nombre_archivo ="ReporteMasVendidos.xlsx"
+	response = HttpResponse(content_type="application/ms-excel")
+	contenido = "attachment; filename={0}".format(nombre_archivo)
+	response["Content-Disposition"] = contenido
+	wb.save(response)
+	return response
+
+def ReporteVentasTotalExcel(context):
+	wb = Workbook()
+	ws = wb.active
+
+	title = 'Reporte de Ventas Totales'
+	print(context['config']['cliente'])
+	if context['config']['cliente'] != None:
+		title = title + " a {0}".format(context['config']['cliente'].nombre)
+	title = title + " desde {0} hasta {1}".format(context['config']['fini'], context['config']['ffin'])
+
+	ws['A1'] = title
+	ws.merge_cells('A1:E1')
+	ws['A3'] = 'id'
+	ws['B3'] = 'Fecha'
+	ws['C3'] = 'Total'
+	cont=4
+
+	for factura in context['facturas']:
+		ws.cell(row=cont,column=1).value = factura.pk
+		ws.cell(row=cont,column=2).value = factura.fecha_creacion.strftime('%Y-%m-%d')
+		ws.cell(row=cont,column=3).value = "$" + intcomma(factura.valor_total)
+		cont = cont + 1
+
+	ws.cell(row=cont,column=1).value = 'Total'
+	ws.cell(row=cont,column=3).value = "$" + intcomma(context['vttotal'])
+
+	nombre_archivo ="ReporteVentasTotales.xlsx"
+	response = HttpResponse(content_type="application/ms-excel")
+	contenido = "attachment; filename={0}".format(nombre_archivo)
+	response["Content-Disposition"] = contenido
+	wb.save(response)
+	return response
 
 @login_required
 def ReporteVentasTotal(request):
@@ -156,6 +220,8 @@ def ReporteVentasTotal(request):
 
 	fini = request.GET.get("fini")
 	ffin = request.GET.get("ffin")
+
+	formato = request.GET.get("formato", "html")
 
 	cliente_id = request.GET.get("cliente")
 	clienteobj = None
@@ -165,7 +231,7 @@ def ReporteVentasTotal(request):
 
 		facturasMes = factura.objects.filter(fecha_creacion__date__gte=fini,fecha_creacion__date__lte=ffin).annotate(month=TruncMonth('fecha_creacion')).values('month').annotate(c=Count('id')).annotate(sum=Sum('valor_total')).order_by()
 	else:
-		clienteobj = cliente.objects.filter(id=cliente_id).get
+		clienteobj = cliente.objects.filter(id=cliente_id).get()
 		facturas = factura.objects.filter(fecha_creacion__date__gte=fini,fecha_creacion__date__lte=ffin,cliente__id=cliente_id)
 		vttotal = factura.objects.filter(fecha_creacion__date__gte=fini,fecha_creacion__date__lte=ffin,cliente__id=cliente_id).aggregate(Sum("valor_total"))["valor_total__sum"]
 		facturasMes = factura.objects.filter(fecha_creacion__date__gte=fini,fecha_creacion__date__lte=ffin,cliente__id=cliente_id).annotate(month=TruncMonth('fecha_creacion')).values('month').annotate(c=Count('id')).annotate(sum=Sum('valor_total')).order_by()
@@ -188,11 +254,17 @@ def ReporteVentasTotal(request):
 			"ffin": ffin,
 		}
 	}
-	return render(request,"reportes/ventasTotal.html",context)
+
+	if formato == 'excel':
+		return ReporteVentasTotalExcel(context)
+	else:
+		return render(request,"reportes/ventasTotal.html",context)
 
 def ReporteMasVendidos(request):
 	fini = request.GET.get("fini")
 	ffin = request.GET.get("ffin")
+
+	formato = request.GET.get("formato", "html")
 
 	cliente_id = request.GET.get("cliente")
 	clienteobj = None
@@ -219,6 +291,12 @@ def ReporteMasVendidos(request):
 			"ffin": ffin,
 		}
 	}
-	return render(request,"reportes/masVendidos.html",context)
+
+	if formato == 'excel':
+		return ReporteMasVendidosExcel(context)
+	else:
+		return render(request,"reportes/masVendidos.html",context)
+
+
 
 
