@@ -503,6 +503,14 @@ var AppVue = new Vue({
             var form = this.inventarios.forms.create.deta
             form.valor_total = form.costo * form.cantidad
         },
+
+        'catalogo.forms.create.deta.producto': function (newValue) {
+            alert('product ' + newValue)
+            this.getProduct(newValue).then(producto => {
+                var form = this.catalogo.forms.create.deta
+                form.valor = producto.fields.precio
+            })
+        },
     },
     mounted () {
         this.getProducts()
