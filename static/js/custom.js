@@ -505,7 +505,6 @@ var AppVue = new Vue({
         },
 
         'catalogo.forms.create.deta.producto': function (newValue) {
-            alert('product ' + newValue)
             this.getProduct(newValue).then(producto => {
                 var form = this.catalogo.forms.create.deta
                 form.valor = producto.fields.precio
