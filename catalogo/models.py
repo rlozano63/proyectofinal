@@ -4,6 +4,8 @@ from django.db import models
 import datetime
 from base.models import producto,distribuidor
 
+from django.core.validators import MinValueValidator
+
 # Create your models here.
 
 class catalogo(models.Model):
@@ -17,8 +19,8 @@ class catalogo_detalle(models.Model):
 	"""docstring for factura"""
 	catalogo = models.ForeignKey(catalogo)
 	producto = models.ForeignKey(producto,related_name="item")
-	cantidad = models.IntegerField()
-	valor = models.IntegerField()
-	valor_total = models.IntegerField()
+	cantidad = models.IntegerField(validators=[MinValueValidator(0)])
+	valor = models.IntegerField(validators=[MinValueValidator(0)])
+	valor_total = models.IntegerField(validators=[MinValueValidator(0)])
 
 

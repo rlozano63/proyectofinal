@@ -3,8 +3,10 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 
+from django.core.validators import MinValueValidator
+
 class unidades(models.Model):
-	nombre = models.CharField(max_length=20)
+	nombre = models.CharField(max_length=45)
 	def __str__(self):
 		return self.nombre
 	def natural_key(self):
@@ -15,9 +17,9 @@ class unidades(models.Model):
 class producto(models.Model):
 	"""docstring for producto"""
 
-	nombre = models.CharField(max_length=20)
-	cantidad = models.IntegerField()
-	precio = models.IntegerField()
+	nombre = models.CharField(max_length=45)
+	cantidad = models.IntegerField(validators=[MinValueValidator(0)])
+	precio = models.IntegerField(validators=[MinValueValidator(0)])
 	fecha = models.DateTimeField()
 	unida = models.ForeignKey(unidades)
 	stock_minimo = models.IntegerField(default=10)
@@ -39,10 +41,12 @@ class producto(models.Model):
 
 class distribuidor(models.Model):
 	"""docstring for ClassName"""
-	nombre = models.CharField(max_length=20)
-	apellido = models.CharField(max_length=20)
-	cedula = models.IntegerField()
+	nombre = models.CharField(max_length=45)
+	apellido = models.CharField(max_length=45)
+	cedula = models.CharField(max_length=45)
 	usuario = models.ForeignKey(User,blank=True,null=True,default=None)
+	direccion = models.CharField(max_length=45)
+	telefono = models.CharField(max_length=45)
 	#catalogo = models.ForeignKey(catalogo)
 
 	def __str__(self):
@@ -50,19 +54,21 @@ class distribuidor(models.Model):
 
 class proveedor(models.Model):
 	"""docstring for ClassName"""
-	nombre = models.CharField(max_length=20)
-	apellido = models.CharField(max_length=20)
-	cedula = models.IntegerField()
-	empresa = models.CharField(max_length=20)
+	nombre = models.CharField(max_length=45)
+	apellido = models.CharField(max_length=45)
+	cedula = models.CharField(max_length=45)
+	empresa = models.CharField(max_length=45)
+	direccion = models.CharField(max_length=45)
+	telefono = models.CharField(max_length=45)
 
 	def __str__(self):
 		return self.nombre
 
 class bodegas(models.Model):
 	"""docstring for ClassName"""
-	nombre = models.CharField(max_length=50)
-	direccion = models.CharField(max_length=50)
-	telefono = models.CharField(max_length=50)
+	nombre = models.CharField(max_length=45)
+	direccion = models.CharField(max_length=45)
+	telefono = models.CharField(max_length=45)
 	pos_x = models.CharField(max_length=50)
 	pos_y = models.CharField(max_length=50)
 
@@ -75,12 +81,12 @@ class cliente(models.Model):
 		ordering = ['orden_ruta']
 
 	"""docstring for cliente"""
-	nombre = models.CharField(max_length=10)
-	apellido = models.CharField(max_length=10)
-	nombre_tienda = models.CharField(max_length=10)
-	regimen = models.CharField(max_length=10)
-	direccion = models.CharField(max_length=10)
-	telefono = models.CharField(max_length=10)
+	nombre = models.CharField(max_length=45)
+	apellido = models.CharField(max_length=45)
+	nombre_tienda = models.CharField(max_length=45)
+	regimen = models.CharField(max_length=45)
+	direccion = models.CharField(max_length=45)
+	telefono = models.CharField(max_length=45)
 
 
 	orden_ruta = models.IntegerField()

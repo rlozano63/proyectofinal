@@ -9,7 +9,8 @@
 				<th>Nombre</th>
 				<th>Apellido</th>
 				<th>Cedula</th>
-
+				<th>Dirección</th>
+				<th>Telefono</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -18,6 +19,8 @@
 					<td>{{ distribuidor.nombre }}</td>
 					<td>{{ distribuidor.apellido }}</td>
 					<td>{{ distribuidor.cedula }}</td>
+					<td>{{ proveedor.direccion }}</td>
+					<td>{{ proveedor.telefono }}</td>
 					<td><a href="{% url 'actualizar_distribuidor' distribuidor.pk %}">Editar</a></td>
 					<td><a href="{% url 'borrar_distribuidor' distribuidor.pk %}">Borrar</a></td>
 				</tr>

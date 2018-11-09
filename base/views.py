@@ -143,8 +143,8 @@ class ListarProductos(LoginRequiredMixin,ListView):
 class ProductoCreation(LoginRequiredMixin,CreateView):
     model = producto
     template_name = 'productos/create.html'
-    fields = '__all__'
-    #form_class = ProductoForm
+    # fields = '__all__'
+    form_class = ProductoForm
     success_url = reverse_lazy('listar_productos')
 
 class ClienteCreation(LoginRequiredMixin,CreateView):

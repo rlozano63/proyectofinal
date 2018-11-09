@@ -1,3 +1,25 @@
+
+var path = location.pathname
+
+
+function jsUcfirst (string) {
+    console.log('string', string)
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+if (path.charAt(0) == '/') {
+    path = path.slice(1)
+
+}
+if (path.charAt(path.length - 1) == '/') {
+    path = path.slice(0, path.length - 1)
+}
+
+var breadcrumbs = path.split("/").map(item => jsUcfirst(item))
+
+console.log('path', path)
+console.log('breadcrumbs', breadcrumbs)
+
 axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 
@@ -21,6 +43,7 @@ var AppVue = new Vue({
     el: "#vue-root",
     delimiters: ["[[","]]"],
     data:{
+        breadcrumbs,
         productos: {
             loading: false,
             items: [],

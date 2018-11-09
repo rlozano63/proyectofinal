@@ -10,7 +10,8 @@
 				<th>Apellido</th>
 				<th>Cedula</th>
 				<th>Empresa</th>
-
+				<th>Dirección</th>
+				<th>Telefono</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -20,6 +21,8 @@
 					<td>{{ proveedor.apellido }}</td>
 					<td>{{ proveedor.cedula }}</td>
 					<td>{{ proveedor.empresa }}</td>
+					<td>{{ proveedor.direccion }}</td>
+					<td>{{ proveedor.telefono }}</td>
 					<td><a href="{% url 'actualizar_proveedor' proveedor.pk %}">Editar</a></td>
 					<td><a href="{% url 'borrar_proveedor' proveedor.pk %}">Borrar</a></td>
 				</tr>
@@ -29,7 +32,7 @@
 				</tr>
 			{% endfor %}
 		</tbody>
-	</table>	
+	</table>
 	<a class="btn btn-success" href="{% url 'crear_proveedor' %}">Nuevo</a>
 
 {% endblock content %}
