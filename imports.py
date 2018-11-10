@@ -230,21 +230,21 @@ c5 =cliente.objects.create(
 )
 
 proveedor.objects.create(
-
 	nombre=fake.name(),
 	apellido="",
 	cedula="103212312",
 	empresa="ARBOLEDA",
+	direccion="Dir",
+	telefono="000",
 )
 
 distribuidor.objects.create(
-
 	nombre=fake.name(),
 	apellido="",
 	cedula="1231231212",
 	usuario=d1,
-
-
+	direccion="Dir",
+	telefono="000",
 )
 f1 = factura.objects.create(
 

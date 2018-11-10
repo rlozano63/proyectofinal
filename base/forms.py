@@ -8,7 +8,7 @@ class ProductoForm(forms.ModelForm):
 		widgets = {
 			'fecha': forms.DateInput(attrs={'type': 'date'}),
 			'cantidad': forms.NumberInput(attrs={'min': '0', 'pattern' : "^[1-9]\d*$"}),
-			# 'precio': forms.NumberInput(attrs={'min': '0', 'pattern' : "^[1-9]\d*$"}),
+			'precio': forms.NumberInput(attrs={'min': '0', 'pattern' : "^[1-9]\d*$"}),
 		}
 
 class DistribuidorForm(forms.Form):

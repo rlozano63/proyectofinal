@@ -7,6 +7,9 @@ class inventarioForm(forms.ModelForm):
 		model = inventario
 		fields = "__all__"
 		exclude = ["factualizacion"]
+		widgets = {
+			'valor_total': forms.NumberInput(attrs={'min': '0', 'pattern' : "^[1-9]\d*$"}),
+		}
 
 	def __init__(self, *args, **kwargs):
 		super(inventarioForm, self).__init__(*args, **kwargs)
@@ -20,7 +23,11 @@ class inventarioDetalleForm(forms.ModelForm):
 		model = inventario_detalle
 		fields = "__all__"
 		exclude = ["inventario"]
-
+		widgets = {
+			'cantidad': forms.NumberInput(attrs={'min': '0', 'pattern' : "^[1-9]\d*$"}),
+			'costo': forms.NumberInput(attrs={'min': '0', 'pattern' : "^[1-9]\d*$"}),
+			'valor_total': forms.NumberInput(attrs={'min': '0', 'pattern' : "^[1-9]\d*$"}),
+		}
 
 	def __init__(self, *args, **kwargs):
 		super(inventarioDetalleForm, self).__init__(*args, **kwargs)
@@ -38,6 +45,9 @@ class movimientoForm(forms.ModelForm):
 		model = movimiento
 		fields = "__all__"
 		exclude = ["factura", "factualizacion"]
+		widgets = {
+			'valor_total': forms.NumberInput(attrs={'min': '0', 'pattern' : "^[1-9]\d*$"}),
+		}
 
 	def __init__(self, *args, **kwargs):
 		super(movimientoForm, self).__init__(*args, **kwargs)
@@ -56,7 +66,11 @@ class movimientoDetalleForm(forms.ModelForm):
 		model = movimiento_detalle
 		fields = "__all__"
 		exclude = ["movimiento"]
-		
+		widgets = {
+			'cantidad': forms.NumberInput(attrs={'min': '0', 'pattern' : "^[1-9]\d*$"}),
+			'valor': forms.NumberInput(attrs={'min': '0', 'pattern' : "^[1-9]\d*$"}),
+			'valor_total': forms.NumberInput(attrs={'min': '0', 'pattern' : "^[1-9]\d*$"}),
+		}
 
 	def __init__(self, *args, **kwargs):
 		super(movimientoDetalleForm, self).__init__(*args, **kwargs)
