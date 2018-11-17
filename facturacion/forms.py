@@ -9,7 +9,7 @@ class facturaForm(forms.ModelForm):
 		exclude = ["factualizacion"]
 		widgets = {
 			'fecha_creacion': forms.DateInput(attrs={'type': 'date'}),
-			'valor_total': forms.NumberInput(attrs={'min': '0', 'pattern' : "^[1-9]\d*$"}),
+			'valor_total': forms.NumberInput(attrs={'min': '1000', 'pattern' : "^[1-9]\d*$"}),
 		}
 
 	def __init__(self, *args, **kwargs):
@@ -30,9 +30,9 @@ class facturaDetalleForm(forms.ModelForm):
 		fields = "__all__"
 		exclude = ["factura"]
 		widgets = {
-			'cantidad': forms.NumberInput(attrs={'min': '0', 'pattern' : "^[1-9]\d*$"}),
-			'valor': forms.NumberInput(attrs={'min': '0', 'pattern' : "^[1-9]\d*$"}),
-			'valor_total': forms.NumberInput(attrs={'min': '0', 'pattern' : "^[1-9]\d*$"}),
+			'cantidad': forms.NumberInput(attrs={'min': '1', 'pattern' : "^[1-9]\d*$"}),
+			'valor': forms.NumberInput(attrs={'min': '1000', 'pattern' : "^[1-9]\d*$"}),
+			'valor_total': forms.NumberInput(attrs={'min': '1000', 'pattern' : "^[1-9]\d*$"}),
 		}
 
 	def __init__(self, *args, **kwargs):

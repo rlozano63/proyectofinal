@@ -8,7 +8,7 @@ class inventarioForm(forms.ModelForm):
 		fields = "__all__"
 		exclude = ["factualizacion"]
 		widgets = {
-			'valor_total': forms.NumberInput(attrs={'min': '0', 'pattern' : "^[1-9]\d*$"}),
+			'valor_total': forms.NumberInput(attrs={'min': '1000', 'pattern' : "^[1-9]\d*$"}),
 		}
 
 	def __init__(self, *args, **kwargs):
@@ -24,9 +24,9 @@ class inventarioDetalleForm(forms.ModelForm):
 		fields = "__all__"
 		exclude = ["inventario"]
 		widgets = {
-			'cantidad': forms.NumberInput(attrs={'min': '0', 'pattern' : "^[1-9]\d*$"}),
-			'costo': forms.NumberInput(attrs={'min': '0', 'pattern' : "^[1-9]\d*$"}),
-			'valor_total': forms.NumberInput(attrs={'min': '0', 'pattern' : "^[1-9]\d*$"}),
+			'cantidad': forms.NumberInput(attrs={'min': '1', 'pattern' : "^[1-9]\d*$"}),
+			'costo': forms.NumberInput(attrs={'min': '1000', 'pattern' : "^[1-9]\d*$"}),
+			'valor_total': forms.NumberInput(attrs={'min': '1000', 'pattern' : "^[1-9]\d*$"}),
 		}
 
 	def __init__(self, *args, **kwargs):
@@ -46,7 +46,7 @@ class movimientoForm(forms.ModelForm):
 		fields = "__all__"
 		exclude = ["factura", "factualizacion"]
 		widgets = {
-			'valor_total': forms.NumberInput(attrs={'min': '0', 'pattern' : "^[1-9]\d*$"}),
+			'valor_total': forms.NumberInput(attrs={'min': '1000', 'pattern' : "^[1-9]\d*$"}),
 		}
 
 	def __init__(self, *args, **kwargs):
@@ -67,9 +67,9 @@ class movimientoDetalleForm(forms.ModelForm):
 		fields = "__all__"
 		exclude = ["movimiento"]
 		widgets = {
-			'cantidad': forms.NumberInput(attrs={'min': '0', 'pattern' : "^[1-9]\d*$"}),
-			'valor': forms.NumberInput(attrs={'min': '0', 'pattern' : "^[1-9]\d*$"}),
-			'valor_total': forms.NumberInput(attrs={'min': '0', 'pattern' : "^[1-9]\d*$"}),
+			'cantidad': forms.NumberInput(attrs={'min': '1', 'pattern' : "^[1-9]\d*$"}),
+			'valor': forms.NumberInput(attrs={'min': '1000', 'pattern' : "^[1-9]\d*$"}),
+			'valor_total': forms.NumberInput(attrs={'min': '1000', 'pattern' : "^[1-9]\d*$"}),
 		}
 
 	def __init__(self, *args, **kwargs):
